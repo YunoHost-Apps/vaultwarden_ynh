@@ -1,0 +1,6 @@
+SOURCE_URL=https://github.com/dani-garcia/bitwarden_rs/archive/1.9.1.tar.gz
+SOURCE_SUM=33e50d2ba6db866caf7e9d1b87064523c790a2a6b7c6c2eb802702b20afa853a
+SOURCE_SUM_PRG=sha256sum
+SOURCE_FORMAT=tar.gz
+SOURCE_IN_SUBDIR=true
+SOURCE_FILENAME=

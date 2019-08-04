@@ -1,0 +1,6 @@
+SOURCE_URL=https://github.com/dani-garcia/bw_web_builds/releases/download/v2.10.1/bw_web_v2.10.1.tar.gz
+SOURCE_SUM=0bfedc69420dc87a30a1673d5b944f00e341160e724485ef47ab9ed835ed6fab
+SOURCE_SUM_PRG=sha256sum
+SOURCE_FORMAT=tar.gz
+SOURCE_IN_SUBDIR=false
+SOURCE_FILENAME=

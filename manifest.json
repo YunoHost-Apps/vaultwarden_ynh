@@ -1,0 +1,53 @@
+{
+    "name": "Bitwarden",
+    "id": "bitwarden",
+    "packaging_format": 1,
+    "description": {
+        "en": "Open source password management solutions.",
+        "fr": "Solutions de gestion de mots de passe open source."
+    },
+    "version": "1.9.1~ynh1",
+    "url": "https://github.com/dani-garcia/bitwarden_rs",
+    "license": "GPL-3.0-or-later",
+    "maintainer": {
+        "name": "yalh76"
+    },
+    "requirements": {
+        "yunohost": ">= 3.5"
+    },
+    "multi_instance": true,
+    "services": [
+        "nginx"
+    ],
+    "arguments": {
+        "install" : [
+            {
+                "name": "domain",
+                "type": "domain",
+                "ask": {
+                    "en": "Choose a domain name for Bitwarden",
+                    "fr": "Choisissez un nom de domaine pour Bitwarden"
+                },
+                "example": "example.com"
+            },
+            {
+                "name": "admin",
+                "type": "user",
+                "ask": {
+                    "en": "Choose an admin user",
+                    "fr": "Choisissez l’administrateur"
+                },
+                "example": "johndoe"
+            },
+            {
+                "name": "is_public",
+                "type": "boolean",
+                "ask": {
+                    "en": "Is it a public application?",
+                    "fr": "Est-ce une application publique ?"
+                },
+                "default": true
+            }
+        ]
+    }
+}
