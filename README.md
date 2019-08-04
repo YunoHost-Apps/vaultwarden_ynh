@@ -47,8 +47,8 @@ LDAP and HTTP auth are not supported
 ## Links
 
  * Report a bug: https://github.com/YunoHost-Apps/bitwarden_ynh/issues
- * App website: Link to the official website of this app
- * Upstream app repository: Link to the official repository of the upstream app
+ * App website: https://bitwarden.com/
+ * Upstream app repository: https://github.com/dani-garcia/bitwarden_rs
  * YunoHost website: https://yunohost.org/
 
 ---
