@@ -96,7 +96,7 @@ fi
 #=================================================
 ynh_script_progression --message="Starting a systemd service..." --time --weight=1
 
-ynh_systemd_action --service_name=$app --action="start" --log_path="systemd" --line_match="Listening for new connections on"
+ynh_systemd_action --service_name=$app --action="start" --log_path="systemd" --line_match="Rocket has launched from"
 
 #=================================================
 # RELOAD NGINX
