@@ -78,6 +78,11 @@ chown -R "$app":"$app" /var/log/$app
 #=================================================
 ynh_script_progression --message="Restoring the fail2ban configuration..." --time --weight=1
 
+# Create a dedicated fail2ban config
+mkdir -p "/var/log/$app"
+chown -R "$app":"$app" "/var/log/$app"
+touch /var/log/$app/$app.log
+
 ynh_restore_file "/etc/fail2ban/jail.d/$app.conf"
 ynh_restore_file "/etc/fail2ban/filter.d/$app.conf"
 ynh_systemd_action --action=restart --service_name=fail2ban
