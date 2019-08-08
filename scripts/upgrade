@@ -155,6 +155,7 @@ ynh_replace_string --match_string="__ADMIN_TOKEN__" --replace_string="$admin_tok
 ynh_replace_string --match_string="__DOMAIN__" --replace_string="$domain" --target_file="$config"
 ynh_replace_string --match_string="__WEBSOCKET_PORT__" --replace_string="$websocket_port" --target_file="$config"
 ynh_replace_string --match_string="__ROCKET_PORT__" --replace_string="$rocket_port" --target_file="$config"
+ynh_replace_string --match_string="__APP__" --replace_string="$rocket_port" --target_file="$config"
 
 #=================================================
 # STORE THE CONFIG FILE CHECKSUM
