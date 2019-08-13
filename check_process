@@ -26,8 +26,8 @@
 	# If the level 5 (Package linter) is forced to 1. Please add justifications here.
 	Level 5=auto
 ;;; Options
-Email=
-Notification=none
+Email=yalh@yahoo.com
+Notification=all
 ;;; Upgrade options
 	; commit=CommitHash
 		name=Name and date of the commit.
