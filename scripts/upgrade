@@ -84,8 +84,10 @@ if [ "$upgrade_type" == "UPGRADE_APP" ]
 then
 	ynh_script_progression --message="Upgrading source files..." --weight=6
 
-	# Download, check integrity, uncompress and patch the source from app.src
+	# Download, check integrity, uncompress the source of bitwarden_rs from app.src to his build directory
 	ynh_setup_source --dest_dir="$final_path/build/" --source_id=app
+
+	# Download, check integrity, uncompress and patch the source from web.src
 	ynh_setup_source --dest_dir="$final_path/live/web-vault/" --source_id=web
 fi
 
@@ -124,19 +126,22 @@ chown -R "$app":"$app" $final_path
 
 if [ "$upgrade_type" == "UPGRADE_APP" ]
 then
-	# Install
+	# Install rustup
 	pushd $final_path
 	    sudo -u "$app" RUSTUP_HOME=$final_path/.rustup CARGO_HOME=$final_path/.cargo bash -c 'curl -sSf -L https://static.rust-lang.org/rustup.sh | sh -s -- -y --default-toolchain=nightly'
 	popd
 
 	export PATH="$PATH:$final_path/.cargo/bin:$final_path/.local/bin:/usr/local/sbin" 
 
+	# Compile bitwarden_rs
 	pushd $final_path/build
 	    sudo -u "$app" env PATH=$PATH cargo build --release
 	popd
 
+	# Install bitwarden_rs
 	cp -a $final_path/build/target/release/. $final_path/live/.
 
+	# Remove build files and rustup
 	ynh_secure_remove --file="$final_path/build"
 	ynh_secure_remove --file="$final_path/.cargo"
 	ynh_secure_remove --file="$final_path/.rustup"
