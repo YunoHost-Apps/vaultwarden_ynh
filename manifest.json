@@ -6,7 +6,7 @@
         "en": "Open source password management solutions.",
         "fr": "Solutions de gestion de mots de passe open source."
     },
-    "version": "1.9.1~ynh2",
+    "version": "1.9.1~ynh3",
     "url": "https://github.com/dani-garcia/bitwarden_rs",
     "license": "GPL-3.0-or-later",
     "maintainer": {
