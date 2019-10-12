@@ -126,7 +126,7 @@ export PATH="$PATH:$final_path/.cargo/bin:$final_path/.local/bin:/usr/local/sbin
 
 # Compile bitwarden_rs
 pushd $final_path/build
-    sudo -u "$app" env PATH=$PATH cargo build --release
+    sudo -u "$app" env PATH=$PATH cargo build --features sqlite --release
 popd
 
 # Install bitwarden_rs
