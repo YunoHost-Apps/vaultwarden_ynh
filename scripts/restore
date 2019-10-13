@@ -117,6 +117,7 @@ yunohost service add $app --description "$app daemon for Bitwarden" --log "/var/
 ynh_script_progression --message="Starting a systemd service..." --weight=2
 
 ynh_systemd_action --service_name=$app --action="start" --log_path="systemd" --line_match="Rocket has launched from"
+sleep 60
 
 #=================================================
 # RESTORE THE LOGROTATE CONFIGURATION
