@@ -1,6 +1,6 @@
-SOURCE_URL=https://github.com/dani-garcia/bitwarden_rs/archive/1.11.0.tar.gz
-SOURCE_SUM=d2d8260e020c373f5d2fd9902af490b43beb840e050065003443057ac833707f
-SOURCE_SUM_PRG=sha256sum
-SOURCE_FORMAT=tar.gz
+SOURCE_URL=https://github.com/liberodark/bitwarden_rs/archive/initial-ldap-support.zip
+SOURCE_SUM=ad564c5915c1930cf4f7946d2a13894e5fba911ebc66da74cab9fb5bfddf8b9aed36f4b26434c2efc123c0077f78dc8f47933567a9c4df58985daad42d5d8125
+SOURCE_SUM_PRG=sha512sum
+SOURCE_FORMAT=zip
 SOURCE_IN_SUBDIR=true
 SOURCE_FILENAME=
