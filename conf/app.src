@@ -1,4 +1,4 @@
-SOURCE_URL=https://github.com/liberodark/bitwarden_rs/archive/430d29f46c39855e4d9b15b4256eadf4eac3896b.zip
+SOURCE_URL=https://github.com/liberodark/bitwarden_rs/archive/e1fdda4f0fd6ebc06c55a6ba73e6c3589d5283ae.zip
 SOURCE_SUM=c856be362c81e0ce8c380154dfd643a9cb756fc52d8671120979ef7e88da3494bc3f63966e0ce0508b2d7bfdcc81824e8c49f4c83a54ffae1a50133d2920e06e
 SOURCE_SUM_PRG=sha512sum
 SOURCE_FORMAT=zip
