@@ -1,5 +1,5 @@
-SOURCE_URL=https://github.com/liberodark/bitwarden_rs/archive/c36f49e3c697579fe1035fe2e27176151a01bd37.zip
-SOURCE_SUM=280a1668fa02b55b9944793ce1e77c8d8e2d7c7d61737b02b748c745620ba26d9be663b15f829c02acec66a5053c6fbcbc808e0b1d8e65ecaacfba6b533eab32
+SOURCE_URL=https://github.com/liberodark/bitwarden_rs/archive/initial-ldap-support.zip
+SOURCE_SUM=<pre>42ee91a642b08801ddaf038ee32b58778d8b32dfcecdb14ddd59ab65f20288cb5cdc4cc98b02dfd632f6200b4decb480b18239472f62fb34ee199f3c807d978c</pre>
 SOURCE_SUM_PRG=sha512sum
 SOURCE_FORMAT=zip
 SOURCE_IN_SUBDIR=true
