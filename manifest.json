@@ -3,8 +3,8 @@
     "id": "bitwarden",
     "packaging_format": 1,
     "description": {
-        "en": "Open source password management solutions.",
-        "fr": "Solutions de gestion de mots de passe open source."
+        "en": "Manage passwords and other sensitive informations",
+        "fr": "Géres les mots de passe et autres informations sensibles"
     },
     "version": "1.12.0~ynh1",
     "url": "https://github.com/dani-garcia/bitwarden_rs",
