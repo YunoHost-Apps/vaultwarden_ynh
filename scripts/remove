@@ -16,8 +16,8 @@ ynh_script_progression --message="Loading installation settings..." --weight=2
 
 app=$YNH_APP_INSTANCE_NAME
 
-domain=$(ynh_app_setting_get --app=$app --key=domain)
-final_path=$(ynh_app_setting_get --app=$app --key=final_path)
+domain=$(ynh_app_setting_get --app="$app" --key=domain)
+final_path=$(ynh_app_setting_get --app="$app" --key=final_path)
 
 #=================================================
 # STANDARD REMOVE
@@ -26,10 +26,10 @@ final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 #=================================================
 
 # Remove a service from the admin panel, added by `yunohost service add`
-if ynh_exec_warn_less yunohost service status $app >/dev/null
+if ynh_exec_warn_less yunohost service status "$app" >/dev/null
 then
 	ynh_script_progression --message="Removing $app service..." --weight=1
-	yunohost service remove $app
+	yunohost service remove "$app"
 fi
 
 #=================================================
@@ -97,7 +97,7 @@ ynh_secure_remove --file="/var/log/$app/"
 ynh_script_progression --message="Removing the dedicated system user..." --weight=1
 
 # Delete a system user
-ynh_system_user_delete --username=$app
+ynh_system_user_delete --username="$app"
 
 #=================================================
 # END OF SCRIPT
