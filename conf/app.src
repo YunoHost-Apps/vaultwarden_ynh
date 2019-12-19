@@ -1,6 +1,6 @@
-SOURCE_URL=https://github.com/dani-garcia/bitwarden_rs/archive/1.11.0.tar.gz
-SOURCE_SUM=d2d8260e020c373f5d2fd9902af490b43beb840e050065003443057ac833707f
-SOURCE_SUM_PRG=sha256sum
+SOURCE_URL=https://github.com/dani-garcia/bitwarden_rs/archive/1.13.0.tar.gz
+SOURCE_SUM=ef17482b98b8caa089c957bc3db53f3adcbcdd1b8b64cb4b94612875bf939e259b9ef5928d2aaf99490534a83b48a3ec06933c28b243be1c41bf3dfbe68f5c8d
+SOURCE_SUM_PRG=sha512sum
 SOURCE_FORMAT=tar.gz
 SOURCE_IN_SUBDIR=true
 SOURCE_FILENAME=
