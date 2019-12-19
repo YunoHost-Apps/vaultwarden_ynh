@@ -61,7 +61,7 @@ Please do your pull request to the [testing branch](https://github.com/YunoHost-
 
 To try the testing branch, please proceed like that.
 ```
-sudo yunohost app install https://github.com/YunoHost-Apps/bitwarden_ynh/tree/testing --debug
+sudo yunohost app install --debug https://github.com/YunoHost-Apps/bitwarden_ynh/tree/testing
 or
-sudo yunohost app upgrade bitwarden -u https://github.com/YunoHost-Apps/bitwarden_ynh/tree/testing --debug
+sudo yunohost app upgrade --debug bitwarden -u https://github.com/YunoHost-Apps/bitwarden_ynh/tree/testing
 ```
