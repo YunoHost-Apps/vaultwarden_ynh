@@ -9,7 +9,7 @@ If you don't have YunoHost, please see [here](https://yunohost.org/#/install) to
 ## Overview
 Open source password management solutions.
 
-**Shipped version:** 1.12.0
+**Shipped version:** 1.13.0
 
 ## Important points to read before installing
 
@@ -61,7 +61,7 @@ Please do your pull request to the [testing branch](https://github.com/YunoHost-
 
 To try the testing branch, please proceed like that.
 ```
-sudo yunohost app install https://github.com/YunoHost-Apps/bitwarden_ynh/tree/testing --debug
+sudo yunohost app install --debug https://github.com/YunoHost-Apps/bitwarden_ynh/tree/testing
 or
-sudo yunohost app upgrade bitwarden -u https://github.com/YunoHost-Apps/bitwarden_ynh/tree/testing --debug
+sudo yunohost app upgrade --debug bitwarden -u https://github.com/YunoHost-Apps/bitwarden_ynh/tree/testing
 ```
