@@ -24,10 +24,32 @@ app=$YNH_APP_INSTANCE_NAME
 #=================================================
 # LOAD SETTINGS
 #=================================================
-ynh_script_progression --message="Loading installation settings..." --weight=1
+ynh_print_info --message="Loading installation settings..."
 
 # Needed for helper "ynh_add_nginx_config"
-final_path=$(ynh_app_setting_get --app="$app" --key=final_path)
+final_path=$(ynh_app_setting_get --app=$app --key=final_path)
+
+# Add settings here as needed by your application
+#db_name=$(ynh_app_setting_get --app=$app --key=db_name)
+#db_user=$db_name
+#db_pwd=$(ynh_app_setting_get --app=$app --key=db_pwd)
+
+#=================================================
+# BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
+#=================================================
+ynh_print_info --message="Backing up the app before changing its url (may take a while)..."
+
+# Backup the current version of the app
+ynh_backup_before_upgrade
+ynh_clean_setup () {
+	# Remove the new domain config file, the remove script won't do it as it doesn't know yet its location.
+	ynh_secure_remove --file="/etc/nginx/conf.d/$new_domain.d/$app.conf"
+
+	# restore it if the upgrade fails
+	ynh_restore_upgradebackup
+}
+# Exit if an error occurs during the execution of the script
+ynh_abort_if_errors
 
 #=================================================
 # CHECK WHICH PARTS SHOULD BE CHANGED
@@ -50,14 +72,14 @@ fi
 #=================================================
 # STOP SYSTEMD SERVICE
 #=================================================
-ynh_script_progression --message="Stopping a systemd service..." --weight=1
+ynh_print_info --message="Stopping a systemd service..."
 
-ynh_systemd_action --service_name="$app" --action="stop" --log_path="systemd" --line_match="Stopped Bitwarden Server"
+ynh_systemd_action --service_name=$app --action="stop" --log_path=systemd --line_match="Stopped Bitwarden Server"
 
 #=================================================
 # MODIFY URL IN NGINX CONF
 #=================================================
-ynh_script_progression --message="Updating nginx web server configuration..." --weight=1
+ynh_print_info --message="Updating nginx web server configuration..."
 
 nginx_conf_path=/etc/nginx/conf.d/$old_domain.d/$app.conf
 
@@ -78,7 +100,7 @@ if [ $change_domain -eq 1 ]
 then
 	# Delete file checksum for the old conf file location
 	ynh_delete_file_checksum --file="$nginx_conf_path"
-	mv "$nginx_conf_path" /etc/nginx/conf.d/"$new_domain".d/"$app".conf
+	mv $nginx_conf_path /etc/nginx/conf.d/$new_domain.d/$app.conf
 	# Store file checksum for the new config file location
 	ynh_store_file_checksum --file="/etc/nginx/conf.d/$new_domain.d/$app.conf"
 fi
@@ -94,17 +116,17 @@ fi
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================
-ynh_script_progression --message="Starting a systemd service..." --weight=1
+ynh_print_info --message="Starting a systemd service..."
 
-ynh_systemd_action --service_name="$app" --action="start" --log_path="systemd" --line_match="Rocket has launched from"
+ynh_systemd_action --service_name=$app --action="start" --log_path=systemd --line_match="Rocket has launched from"
 if [ "${PACKAGE_CHECK_EXEC:-0}" -eq 1 ]; then
-	ynh_systemd_action --service_name="$app" --action="restart" --log_path="systemd" --line_match="Rocket has launched from"
+	sleep 60
 fi
 
 #=================================================
 # RELOAD NGINX
 #=================================================
-ynh_script_progression --message="Reloading nginx web server..." --weight=1
+ynh_print_info --message="Reloading nginx web server..."
 
 ynh_systemd_action --service_name=nginx --action=reload
 
@@ -112,4 +134,4 @@ ynh_systemd_action --service_name=nginx --action=reload
 # END OF SCRIPT
 #=================================================
 
-ynh_script_progression --message="Change of URL completed for $app" --last
+ynh_print_info --message="Change of URL completed for $app"
