@@ -13,6 +13,7 @@ source /usr/share/yunohost/helpers
 #=================================================
 # MANAGE SCRIPT FAILURE
 #=================================================
+ynh_print_info --message="Managing script failure..."
 
 ynh_clean_setup () {
 	ynh_clean_check_starting
@@ -23,40 +24,40 @@ ynh_abort_if_errors
 #=================================================
 # LOAD SETTINGS
 #=================================================
-ynh_script_progression --message="Loading installation settings..." --weight=2
+ynh_print_info --message="Loading installation settings..."
 
 app=$YNH_APP_INSTANCE_NAME
 
-final_path=$(ynh_app_setting_get --app="$app" --key=final_path)
-domain=$(ynh_app_setting_get --app="$app" --key=domain)
+final_path=$(ynh_app_setting_get --app=$app --key=final_path)
+domain=$(ynh_app_setting_get --app=$app --key=domain)
 
 #=================================================
 # STANDARD BACKUP STEPS
 #=================================================
 # STOP SYSTEMD SERVICE
 #=================================================
-ynh_script_progression --message="Stopping a systemd service..." --weight=2
+ynh_print_info --message="Stopping a systemd service..."
 
-ynh_systemd_action --service_name="$app" --action="stop" --log_path="systemd" --line_match="Stopped Bitwarden Server"
+ynh_systemd_action --service_name=$app --action="stop" --log_path=systemd --line_match="Stopped Bitwarden Server"
 
 #=================================================
 # BACKUP THE APP MAIN DIR
 #=================================================
-ynh_script_progression --message="Backing up the main app directory..." --weight=1
+ynh_print_info --message="Backing up the main app directory..."
 
 ynh_backup --src_path="$final_path"
 
 #=================================================
 # BACKUP THE NGINX CONFIGURATION
 #=================================================
-ynh_script_progression --message="Backing up nginx web server configuration..." --weight=1
+ynh_print_info --message="Backing up nginx web server configuration..."
 
 ynh_backup --src_path="/etc/nginx/conf.d/$domain.d/$app.conf"
 
 #=================================================
 # BACKUP FAIL2BAN CONFIGURATION
 #=================================================
-ynh_script_progression --message="Backing up fail2ban configuration..." --weight=1
+ynh_print_info --message="Backing up fail2ban configuration..."
 
 ynh_backup --src_path="/etc/fail2ban/jail.d/$app.conf"
 ynh_backup --src_path="/etc/fail2ban/filter.d/$app.conf"
@@ -66,29 +67,29 @@ ynh_backup --src_path="/etc/fail2ban/filter.d/$app.conf"
 #=================================================
 # BACKUP LOGROTATE
 #=================================================
-ynh_script_progression --message="Backing up logrotate configuration..." --weight=1
+ynh_print_info --message="Backing up logrotate configuration..."
 
 ynh_backup --src_path="/etc/logrotate.d/$app"
 
 #=================================================
 # BACKUP SYSTEMD
 #=================================================
-ynh_script_progression --message="Backing up systemd configuration..." --weight=1
+ynh_print_info --message="Backing up systemd configuration..."
 
 ynh_backup --src_path="/etc/systemd/system/$app.service"
 
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================
-ynh_script_progression --message="Starting a systemd service..." --weight=1
+ynh_print_info --message="Starting a systemd service..."
 
-ynh_systemd_action --service_name="$app" --action="start" --log_path="systemd" --line_match="Rocket has launched from"
+ynh_systemd_action --service_name=$app --action="start" --log_path=systemd --line_match="Rocket has launched from"
 if [ "${PACKAGE_CHECK_EXEC:-0}" -eq 1 ]; then
-	ynh_systemd_action --service_name="$app" --action="restart" --log_path="systemd" --line_match="Rocket has launched from"
+	sleep 60
 fi
 
 #=================================================
 # END OF SCRIPT
 #=================================================
 
-ynh_script_progression --message="Backup script completed for $app. (YunoHost will then actually copy those files to the archive)." --last
+ynh_print_info --message="Backup script completed for $app. (YunoHost will then actually copy those files to the archive)."

@@ -13,6 +13,7 @@ source /usr/share/yunohost/helpers
 #=================================================
 # MANAGE SCRIPT FAILURE
 #=================================================
+ynh_print_info --message="Managing script failure..."
 
 ynh_clean_setup () {
 	ynh_clean_check_starting
@@ -23,6 +24,7 @@ ynh_abort_if_errors
 #=================================================
 # RETRIEVE ARGUMENTS FROM THE MANIFEST
 #=================================================
+ynh_print_info --message="Retrieving arguments from the manifest..."
 
 domain=$YNH_APP_ARG_DOMAIN
 path_url="/"
@@ -37,53 +39,54 @@ admin_token=$(ynh_string_random --length=48 | base64)
 #=================================================
 # CHECK IF THE APP CAN BE INSTALLED WITH THESE ARGS
 #=================================================
-ynh_script_progression --message="Validating installation parameters..." --weight=1
+ynh_print_info --message="Validating installation parameters..."
 
 final_path=/var/www/$app
 test ! -e "$final_path" || ynh_die --message="This path already contains a folder"
 
 # Register (book) web path
-ynh_webpath_register --app="$app" --domain="$domain" --path_url=$path_url
+ynh_webpath_register --app=$app --domain=$domain --path_url=$path_url
 
 #=================================================
 # STORE SETTINGS FROM MANIFEST
 #=================================================
-ynh_script_progression --message="Storing installation settings..." --weight=2
+ynh_print_info --message="Storing installation settings..."
 
-ynh_app_setting_set --app="$app" --key=domain --value="$domain"
-ynh_app_setting_set --app="$app" --key=path --value=$path_url
-ynh_app_setting_set --app="$app" --key=admin --value="$admin"
-ynh_app_setting_set --app="$app" --key=is_public --value="$is_public"
-ynh_app_setting_set --app="$app" --key=admin_token --value="$admin_token"
+ynh_app_setting_set --app=$app --key=domain --value=$domain
+ynh_app_setting_set --app=$app --key=path --value=$path_url
+ynh_app_setting_set --app=$app --key=admin --value=$admin
+ynh_app_setting_set --app=$app --key=is_public --value=$is_public
+ynh_app_setting_set --app=$app --key=admin_token --value=$admin_token
 
 #=================================================
 # STANDARD MODIFICATIONS
 #=================================================
 # FIND AND OPEN A PORT
 #=================================================
-ynh_script_progression --message="Configuring firewall..." --weight=1
+ynh_print_info --message="Configuring firewall..."
 
-# Find a free port
+
+# Find an available port
 websocket_port=$(ynh_find_port --port=3012)
-ynh_app_setting_set --app="$app" --key=websocket_port --value="$websocket_port"
+ynh_app_setting_set --app=$app --key=websocket_port --value="$websocket_port"
 
-# Find a free port
+# Find an available port
 rocket_port=$(ynh_find_port --port=8095)
-ynh_app_setting_set --app="$app" --key=rocket_port --value="$rocket_port"
+ynh_app_setting_set --app=$app --key=rocket_port --value="$rocket_port"
 
 #=================================================
 # INSTALL DEPENDENCIES
 #=================================================
-ynh_script_progression --message="Installing dependencies..." --weight=10
+ynh_print_info --message="Installing dependencies..."
 
-ynh_install_app_dependencies "$pkg_dependencies"
+ynh_install_app_dependencies $pkg_dependencies
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
-ynh_script_progression --message="Setting up source files..." --weight=3
+ynh_print_info --message="Setting up source files..."
 
-ynh_app_setting_set --app="$app" --key=final_path --value="$final_path"
+ynh_app_setting_set --app=$app --key=final_path --value=$final_path
 
 # Download, check integrity, uncompress the source of bitwarden_rs from app.src to his build directory
 ynh_setup_source --dest_dir="$final_path/build/" --source_id=app
@@ -94,7 +97,7 @@ ynh_setup_source --dest_dir="$final_path/live/web-vault/" --source_id=web
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
-ynh_script_progression --message="Configuring nginx web server..." --weight=2
+ynh_print_info --message="Configuring nginx web server..."
 
 # Create a dedicated nginx config
 ynh_add_nginx_config "websocket_port rocket_port"
@@ -102,7 +105,7 @@ ynh_add_nginx_config "websocket_port rocket_port"
 #=================================================
 # CREATE DEDICATED USER
 #=================================================
-ynh_script_progression --message="Configuring system user..." --weight=2
+ynh_print_info --message="Configuring system user..."
 
 # Create a system user
 ynh_system_user_create --username="$app" --home_dir="$final_path"
@@ -112,7 +115,7 @@ ynh_system_user_create --username="$app" --home_dir="$final_path"
 #=================================================
 # MAKE INSTALL
 #=================================================
-ynh_script_progression --message="Making install..." --weight=780
+ynh_print_info --message="Making install..."
 
 # Set right permissions 
 chown -R "$app":"$app" "$final_path"
@@ -133,14 +136,14 @@ popd || exit
 cp -a "$final_path"/build/target/release/. "$final_path"/live/.
 
 # Remove build files and rustup
-ynh_secure_remove --file="$final_path/build"
-ynh_secure_remove --file="$final_path/.cargo"
-ynh_secure_remove --file="$final_path/.rustup"
+ynh_secure_remove --file="$final_path/build/"
+ynh_secure_remove --file="$final_path/.cargo/"
+ynh_secure_remove --file="$final_path/.rustup/"
 
 #=================================================
 # SETUP SYSTEMD
 #=================================================
-ynh_script_progression --message="Configuring a systemd service..." --weight=2
+ynh_print_info --message="Configuring a systemd service..."
 
 # Create a dedicated systemd config
 ynh_add_systemd_config
@@ -148,6 +151,7 @@ ynh_add_systemd_config
 #=================================================
 # MODIFY A CONFIG FILE
 #=================================================
+ynh_print_info --message="Modifying a config file..."
 
 config="$final_path/live/bitwarden_rs.env"
 
@@ -162,6 +166,7 @@ ynh_replace_string --match_string="__APP__" --replace_string="$app" --target_fil
 #=================================================
 # STORE THE CONFIG FILE CHECKSUM
 #=================================================
+ynh_print_info --message="Storing the config file checksum..."
 
 # Calculate and store the config file checksum into the app settings
 ynh_store_file_checksum --file="$config"
@@ -171,6 +176,7 @@ ynh_store_file_checksum --file="$config"
 #=================================================
 # SECURE FILES AND DIRECTORIES
 #=================================================
+ynh_print_info --message="Securing files and directories..."
 
 # Set permissions to app files
 chown -R "$app":"$app" "$final_path"
@@ -180,32 +186,34 @@ chown -R "$app":"$app" "/var/log/$app"
 #=================================================
 # SETUP LOGROTATE
 #=================================================
-ynh_script_progression --message="Configuring log rotation..." --weight=2
+ynh_print_info --message="Configuring log rotation..."
 
 # Use logrotate to manage application logfile(s)
 ynh_use_logrotate
 
 #=================================================
-# ADVERTISE SERVICE IN ADMIN PANEL
+# INTEGRATE SERVICE IN YUNOHOST
 #=================================================
+ynh_print_info --message="Integrating service in YunoHost..."
 
-yunohost service add "$app" --description "$app daemon for Bitwarden" --log "/var/log/$app/$app.log"
+yunohost service add $app --description "$app daemon for Bitwarden" --log "/var/log/$app/$app.log"
 
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================
-ynh_script_progression --message="Starting a systemd service..." --weight=2
+ynh_print_info --message="Starting a systemd service..."
 
 # Start a systemd service
-ynh_systemd_action --service_name="$app" --action="start" --log_path="systemd" --line_match="Rocket has launched from"
+ynh_systemd_action --service_name=$app --action="start" --log_path=systemd --line_match="Rocket has launched from"
 if [ "${PACKAGE_CHECK_EXEC:-0}" -eq 1 ]; then
 	ynh_systemd_action --service_name="$app" --action="restart" --log_path="systemd" --line_match="Rocket has launched from"
+	sleep 60
 fi
 
 #=================================================
 # SETUP FAIL2BAN
 #=================================================
-ynh_script_progression --message="Configuring fail2ban..." --weight=5
+ynh_print_info --message="Configuring fail2ban..."
 
 # Create a dedicated fail2ban config
 touch /var/log/"$app"/"$app".log
@@ -214,26 +222,26 @@ ynh_add_fail2ban_config --logpath="/var/log/$app/$app.log" --failregex="^.*Usern
 #=================================================
 # SETUP SSOWAT
 #=================================================
-ynh_script_progression --message="Configuring SSOwat..." --weight=1
+ynh_print_info --message="Configuring SSOwat..."
 
 # Make app public if necessary
-if [ "$is_public" -eq 1 ]
+if [ $is_public -eq 1 ]
 then
 	# unprotected_uris allows SSO credentials to be passed anyway.
-	ynh_app_setting_set --app="$app" --key=unprotected_uris --value="/"
+	ynh_app_setting_set --app=$app --key=unprotected_uris --value="/"
 fi
 
 #=================================================
 # RELOAD NGINX
 #=================================================
-ynh_script_progression --message="Reloading nginx web server..." --weight=1
+ynh_print_info --message="Reloading nginx web server..."
 
 ynh_systemd_action --service_name=nginx --action=reload
 
 #=================================================
 # SEND A README FOR THE ADMIN
 #=================================================
-ynh_script_progression --message="Sending a readme for the admin..." --weight=17
+ynh_print_info --message="Sending a readme for the admin..."
 
 ynh_replace_string --match_string="__ADMIN_MAIL__"    --replace_string="$admin_mail"    --target_file="../conf/message"
 ynh_replace_string --match_string="__ADMIN_TOKEN__"    --replace_string="$admin_token"    --target_file="../conf/message"
@@ -245,4 +253,4 @@ ynh_send_readme_to_admin --app_message="../conf/message" --recipients="$admin_ma
 # END OF SCRIPT
 #=================================================
 
-ynh_script_progression --message="Installation of $app completed" --last
+ynh_print_info --message="Installation of $app completed"
