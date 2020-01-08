@@ -42,7 +42,6 @@ LDAP and HTTP auth are not supported
 
 * x86-64b - [![Build Status](https://ci-apps.yunohost.org/ci/logs/bitwarden%20%28Apps%29.svg)](https://ci-apps.yunohost.org/ci/apps/bitwarden/)
 * ARMv8-A - [![Build Status](https://ci-apps-arm.yunohost.org/ci/logs/bitwarden%20%28Apps%29.svg)](https://ci-apps-arm.yunohost.org/ci/apps/bitwarden/)
-* Jessie x86-64b - [![Build Status](https://ci-stretch.nohost.me/ci/logs/bitwarden%20%28Apps%29.svg)](https://ci-stretch.nohost.me/ci/apps/bitwarden/)
 
 ## Links
 
@@ -56,7 +55,6 @@ LDAP and HTTP auth are not supported
 Developers info
 ----------------
 
-**Only if you want to use a testing branch for coding, instead of merging directly into master.**
 Please do your pull request to the [testing branch](https://github.com/YunoHost-Apps/bitwarden_ynh/tree/testing).
 
 To try the testing branch, please proceed like that.
