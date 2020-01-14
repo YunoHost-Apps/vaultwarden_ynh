@@ -136,9 +136,9 @@ popd
 cp -a "$final_path"/build/target/release/. "$final_path"/live/.
 
 # Remove build files and rustup
-ynh_secure_remove --file="$final_path/build/"
-ynh_secure_remove --file="$final_path/.cargo/"
-ynh_secure_remove --file="$final_path/.rustup/"
+ynh_secure_remove --file="$final_path/build"
+ynh_secure_remove --file="$final_path/.cargo"
+ynh_secure_remove --file="$final_path/.rustup"
 
 #=================================================
 # SETUP SYSTEMD
