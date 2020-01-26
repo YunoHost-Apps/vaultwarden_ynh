@@ -65,7 +65,6 @@ ynh_app_setting_set --app=$app --key=admin_token --value=$admin_token
 #=================================================
 ynh_script_progression --message="Configuring firewall..." --time --weight=1
 
-
 # Find an available port
 websocket_port=$(ynh_find_port --port=3012)
 ynh_app_setting_set --app=$app --key=websocket_port --value="$websocket_port"
