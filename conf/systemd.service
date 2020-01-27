@@ -15,10 +15,10 @@ ExecStart=__FINALPATH__/live/bitwarden_rs
 LimitNOFILE=1048576
 LimitNPROC=64
 # Isolate bitwarden_rs from the rest of the system
-# PrivateTmp=true
-# PrivateDevices=true
-# ProtectHome=true
-# ProtectSystem=strict
+PrivateTmp=true
+PrivateDevices=true
+ProtectHome=true
+ProtectSystem=strict
 # Only allow writes to the following directory and set it to the working directory (user and password data are stored here)
 WorkingDirectory=__FINALPATH__/live/
 ReadWriteDirectories=__FINALPATH__/live/
