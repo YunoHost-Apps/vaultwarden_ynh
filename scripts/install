@@ -253,4 +253,4 @@ ynh_send_readme_to_admin --app_message="../conf/message" --recipients="$admin_ma
 # END OF SCRIPT
 #=================================================
 
-ynh_print_info --message="Installation of $app completed" --time --last
+ynh_print_info --message="Installation of $app completed"
