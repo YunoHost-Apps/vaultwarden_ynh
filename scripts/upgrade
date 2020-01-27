@@ -164,6 +164,8 @@ ynh_replace_string --match_string="__DOMAIN__" --replace_string="$domain" --targ
 ynh_replace_string --match_string="__WEBSOCKET_PORT__" --replace_string="$websocket_port" --target_file="$config"
 ynh_replace_string --match_string="__ROCKET_PORT__" --replace_string="$rocket_port" --target_file="$config"
 ynh_replace_string --match_string="__APP__" --replace_string="$app" --target_file="$config"
+
+# Workaround for ci-apps error starting bitwarden service
 if [ ${PACKAGE_CHECK_EXEC:-0} -eq 1 ]; then
 	ynh_replace_string --match_string="WEBSOCKET_ENABLED=true" --replace_string="WEBSOCKET_ENABLED=false" --target_file="$config"
 fi
