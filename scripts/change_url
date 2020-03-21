@@ -12,6 +12,7 @@ source /usr/share/yunohost/helpers
 #=================================================
 # RETRIEVE ARGUMENTS
 #=================================================
+ynh_print_info --message="Retrieve arguments from the manifest"
 
 old_domain=$YNH_APP_OLD_DOMAIN
 old_path=$YNH_APP_OLD_PATH
@@ -108,8 +109,18 @@ fi
 #=================================================
 # SPECIFIC MODIFICATIONS
 #=================================================
-# ...
+# MODIFY A CONFIG FILE
 #=================================================
+ynh_print_info --message="Modifying a config file..."
+
+config="$final_path/live/bitwarden_rs.env"
+
+ynh_backup_if_checksum_is_different --file="$config"
+
+ynh_replace_string --match_string="DOMAIN=https://$old_domain$old_path" --replace_string="DOMAIN=https://$new_domain$new_path" --target_file="$config"
+
+# Recalculate and store the checksum of the file for the next upgrade.
+ynh_store_file_checksum --file="$config"
 
 #=================================================
 # GENERIC FINALISATION

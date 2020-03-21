@@ -31,6 +31,16 @@
                 "example": "example.com"
             },
             {
+                "name": "path",
+                "type": "path",
+                "ask": {
+                    "en": "Choose a path for Bitwarden",
+                    "fr": "Choisissez un chemin pour Bitwarden"
+                },
+                "example": "/bitwarden",
+                "default": "/bitwarden"
+            },
+            {
                 "name": "admin",
                 "type": "user",
                 "ask": {

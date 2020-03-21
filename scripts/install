@@ -27,7 +27,7 @@ ynh_abort_if_errors
 ynh_print_info --message="Retrieving arguments from the manifest..."
 
 domain=$YNH_APP_ARG_DOMAIN
-path_url="/"
+path_url=$YNH_APP_ARG_PATH
 admin=$YNH_APP_ARG_ADMIN
 is_public=$YNH_APP_ARG_IS_PUBLIC
 
@@ -158,6 +158,7 @@ cp -f ../conf/bitwarden_rs.env "$config"
 
 ynh_replace_string --match_string="__ADMIN_TOKEN__" --replace_string="$admin_token" --target_file="$config"
 ynh_replace_string --match_string="__DOMAIN__" --replace_string="$domain" --target_file="$config"
+ynh_replace_string --match_string="__PATH_URL__" --replace_string="$path_url" --target_file="$config"
 ynh_replace_string --match_string="__WEBSOCKET_PORT__" --replace_string="$websocket_port" --target_file="$config"
 ynh_replace_string --match_string="__ROCKET_PORT__" --replace_string="$rocket_port" --target_file="$config"
 ynh_replace_string --match_string="__APP__" --replace_string="$app" --target_file="$config"
