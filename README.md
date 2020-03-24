@@ -9,12 +9,11 @@ If you don't have YunoHost, please see [here](https://yunohost.org/#/install) to
 ## Overview
 Open source password management solutions.
 
-**Shipped version:** 1.13.1
+**Shipped version:** 1.14
 
 ## Important points to read before installing
 
-1. **Bitwarden** require a dedicated **root domain**, eg. bitwarden.domain.tld
-1. At the end of the installation, the admin user will receive a mail with the admin_token used to access https://bitwarden.domain.tld/admin.
+1. At the end of the installation, the admin user will receive a mail with the admin_token used to access https://your.domain.tld/bitwarden/admin.
 
 ## Screenshots
 
