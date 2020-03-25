@@ -12,6 +12,7 @@ source /usr/share/yunohost/helpers
 #=================================================
 # RETRIEVE ARGUMENTS
 #=================================================
+ynh_print_info --message="Retrieve arguments from the manifest"
 
 old_domain=$YNH_APP_OLD_DOMAIN
 old_path=$YNH_APP_OLD_PATH
@@ -33,6 +34,8 @@ final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 #db_name=$(ynh_app_setting_get --app=$app --key=db_name)
 #db_user=$db_name
 #db_pwd=$(ynh_app_setting_get --app=$app --key=db_pwd)
+rocket_port=$(ynh_app_setting_get --app=$app --key=rocket_port)
+websocket_port=$(ynh_app_setting_get --app=$app --key=websocket_port)
 
 #=================================================
 # BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
@@ -92,7 +95,7 @@ then
 	domain="$old_domain"
 	path_url="$new_path"
 	# Create a dedicated nginx config
-	ynh_add_nginx_config
+	ynh_add_nginx_config "websocket_port rocket_port"
 fi
 
 # Change the domain for nginx
@@ -108,8 +111,18 @@ fi
 #=================================================
 # SPECIFIC MODIFICATIONS
 #=================================================
-# ...
+# MODIFY A CONFIG FILE
 #=================================================
+ynh_print_info --message="Modifying a config file..."
+
+config="$final_path/live/bitwarden_rs.env"
+
+ynh_backup_if_checksum_is_different --file="$config"
+
+ynh_replace_string --match_string="DOMAIN=https://$old_domain$old_path" --replace_string="DOMAIN=https://$new_domain$new_path" --target_file="$config"
+
+# Recalculate and store the checksum of the file for the next upgrade.
+ynh_store_file_checksum --file="$config"
 
 #=================================================
 # GENERIC FINALISATION
