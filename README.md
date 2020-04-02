@@ -9,7 +9,7 @@ If you don't have YunoHost, please see [here](https://yunohost.org/#/install) to
 ## Overview
 Open source password management solutions.
 
-**Shipped version:** 1.14
+**Shipped version:** 1.14.1
 
 ## Important points to read before installing
 
