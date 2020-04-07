@@ -88,10 +88,10 @@ ynh_print_info --message="Setting up source files..."
 ynh_app_setting_set --app=$app --key=final_path --value=$final_path
 
 # Download, check integrity, uncompress the source of bitwarden_rs from app.src to his build directory
-ynh_setup_source --dest_dir="$final_path/build/" --source_id=app
+ynh_setup_source --dest_dir="$final_path/build/" --source_id="app"
 
 # Download, check integrity, uncompress and patch the source from web.src
-ynh_setup_source --dest_dir="$final_path/live/web-vault/" --source_id=web
+ynh_setup_source --dest_dir="$final_path/live/web-vault/" --source_id="web"
 
 #=================================================
 # NGINX CONFIGURATION
