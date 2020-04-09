@@ -33,7 +33,6 @@ Comment configurer cette application: via le panneau d'administration https://bi
 ## Documentation
 
  * Documentation officielle: https://help.bitwarden.com/ et https://github.com/dani-garcia/bitwarden_rs/wiki
- * Documentation YunoHost: Si une documentation spécifique est nécessaire, n'hésitez pas à contribuer.
 
 ## Caractéristiques spécifiques YunoHost
 
@@ -47,9 +46,6 @@ Comment configurer cette application: via le panneau d'administration https://bi
 * x86-64b - [![Build Status](https://ci-apps.yunohost.org/ci/logs/bitwarden%20%28Apps%29.svg)](https://ci-apps.yunohost.org/ci/apps/bitwarden/)
 * ARMv8-A - [![Build Status](https://ci-apps-arm.yunohost.org/ci/logs/bitwarden%20%28Apps%29.svg)](https://ci-apps-arm.yunohost.org/ci/apps/bitwarden/)
 
-**Plus d'informations sur la page de documentation:**  
-https://yunohost.org/packaging_apps
-
 ## Liens
 
  * Signaler un bug: https://github.com/YunoHost-Apps/bitwarden_ynh/issues
@@ -62,7 +58,6 @@ https://yunohost.org/packaging_apps
 Informations pour les développeurs
 ----------------
 
-**Seulement si vous voulez utiliser une branche de test pour le codage, au lieu de fusionner directement dans la banche principale.**
 Merci de faire vos pull request sur la [branche testing](https://github.com/YunoHost-Apps/bitwarden_ynh/tree/testing).
 
 Pour essayer la branche testing, procédez comme suit.
