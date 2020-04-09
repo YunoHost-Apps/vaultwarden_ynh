@@ -86,10 +86,10 @@ then
 	ynh_print_info --message="Upgrading source files..."
 
 	# Download, check integrity, uncompress the source of bitwarden_rs from app.src to his build directory
-	ynh_setup_source --dest_dir="$final_path/build/" --source_id=app
+	ynh_setup_source --dest_dir="$final_path/build/" --source_id="app"
 
 	# Download, check integrity, uncompress and patch the source from web.src
-	ynh_setup_source --dest_dir="$final_path/live/web-vault/" --source_id=web
+	ynh_setup_source --dest_dir="$final_path/live/web-vault/" --source_id="web"
 fi
 
 #=================================================
