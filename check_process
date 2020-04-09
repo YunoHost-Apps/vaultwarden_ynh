@@ -6,6 +6,7 @@
 ;; Test complet
 	; Manifest
 		domain="domain.tld"	(DOMAIN)
+		path="/path"	(PATH)
 		admin="john"	(USER)
 		is_public=1	(PUBLIC|public=1|private=0)
 	; Checks
@@ -22,7 +23,7 @@
 		# This test is no longer necessary since the version 2.7 (PR: https://github.com/YunoHost/yunohost/pull/304), you can still do it if your app could be installed with this version.
 		# incorrect_path=1
 		port_already_use=0
-		change_url=0
+		change_url=1
 ;;; Levels
 	# If the level 5 (Package linter) is forced to 1. Please add justifications here.
 	Level 5=auto
