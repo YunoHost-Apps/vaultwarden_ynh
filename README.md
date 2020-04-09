@@ -3,17 +3,20 @@
 [![Integration level](https://dash.yunohost.org/integration/bitwarden.svg)](https://dash.yunohost.org/appci/app/bitwarden)  
 [![Install Bitwarden with YunoHost](https://install-app.yunohost.org/install-with-yunohost.png)](https://install-app.yunohost.org/?app=bitwarden)
 
+*[Lire ce readme en français.](./README_fr.md)*
+
 > *This package allow you to install Bitwarden quickly and simply on a YunoHost server.  
 If you don't have YunoHost, please see [here](https://yunohost.org/#/install) to know how to install and enjoy it.*
 
 ## Overview
-Open source password management solutions.
+
+Bitwarden is a open source password manager.
 
 **Shipped version:** 1.14.1
 
 ## Important points to read before installing
 
-1. At the end of the installation, the admin user will receive a mail with the admin_token used to access https://your.domain.tld/bitwarden/admin.
+At the end of the installation, the admin user will receive a mail with the admin_token used to access https://your.domain.tld/bitwarden/admin.
 
 ## Screenshots
 
@@ -35,7 +38,8 @@ How to configure this app: by an admin panel at https://bitwarden.domain.tld/adm
 
 #### Multi-users support
 
-LDAP and HTTP auth are not supported
+* Are LDAP and HTTP auth supported? **No**
+* Can the app be used by multiple users? **Yes**
 
 #### Supported architectures
 
