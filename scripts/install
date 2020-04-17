@@ -242,6 +242,7 @@ ynh_print_info --message="Sending a readme for the admin..."
 ynh_replace_string --match_string="__ADMIN_MAIL__"    --replace_string="$admin_mail"    --target_file="../conf/message"
 ynh_replace_string --match_string="__ADMIN_TOKEN__"    --replace_string="$admin_token"    --target_file="../conf/message"
 ynh_replace_string --match_string="__DOMAIN__"    --replace_string="$domain"    --target_file="../conf/message"
+ynh_replace_string --match_string="__PATH_URL__"    --replace_string="$path_url"    --target_file="../conf/message"
 
 ynh_send_readme_to_admin --app_message="../conf/message" --recipients="$admin_mail" --type='install'
 
