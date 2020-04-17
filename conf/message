@@ -1,5 +1,5 @@
 Bitwarden was successfully installed :)
-Please open https://__DOMAIN__/admin
+Please open https://__DOMAIN____PATH_URL__/admin
 The admin token is: __ADMIN_TOKEN__
 You will be able to invit users to your bitwarden instance.
 If you facing an issue or want to improve this app, please open a new issue in this project: https://github.com/YunoHost-Apps/bitwarden_ynh
