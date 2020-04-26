@@ -150,6 +150,7 @@ then
 
 	# Install bitwarden_rs
 	ynh_secure_remove --file="$final_path/live"
+	mkdir -p "$final_path/live"
 	cp -a "$final_path/build/target/release/." "$final_path/live/."
 
 	# Restore files
