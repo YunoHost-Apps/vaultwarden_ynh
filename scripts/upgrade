@@ -145,7 +145,7 @@ then
 	ynh_secure_remove --file="$final_path/live/.fingerprint"
 
 	# Install bitwarden_rs
-	cp -a "$final_path"/build/target/release/. "$final_path"/live/.
+	cp -af "$final_path"/build/target/release/. "$final_path"/live/.
 
    	# Remove build files and rustup
 	ynh_secure_remove --file="$final_path/build"
