@@ -139,10 +139,15 @@ then
 	    sudo -u "$app" env PATH="$PATH" cargo build --features sqlite --release
 	popd
 
-	# Install bitwarden_rs
-	cp -a "$final_path"/build/target/release/. "$final_path"/live/.
+    # Remove old generated files before copying the new ones
+	ynh_secure_remove --file="$final_path/live/build"
+	ynh_secure_remove --file="$final_path/live/deps"
+	ynh_secure_remove --file="$final_path/live/.fingerprint"
 
-	# Remove build files and rustup
+	# Install bitwarden_rs
+	cp -af "$final_path"/build/target/release/. "$final_path"/live/.
+
+   	# Remove build files and rustup
 	ynh_secure_remove --file="$final_path/build"
 	ynh_secure_remove --file="$final_path/.cargo"
 	ynh_secure_remove --file="$final_path/.rustup"
