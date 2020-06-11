@@ -1,18 +1,18 @@
 # Bitwarden pour YunoHost
 
-[![Niveau d'intégration](https://dash.yunohost.org/integration/bitwarden.svg)](https://dash.yunohost.org/appci/app/bitwarden)  
+[![Niveau d'intégration](https://dash.yunohost.org/integration/bitwarden.svg)](https://dash.yunohost.org/appci/app/bitwarden) ![](https://ci-apps.yunohost.org/ci/badges/bitwarden.status.svg) ![](https://ci-apps.yunohost.org/ci/badges/bitwarden.maintain.svg)  
 [![Installer Bitwarden avec YunoHost](https://install-app.yunohost.org/install-with-yunohost.png)](https://install-app.yunohost.org/?app=bitwarden)
 
 *[Read this readme in english.](./README.md)* 
 
-> *Ce package vous permet d'installer Bitwarden rapidement et simplement sur un serveur Yunohost.  
+> *Ce package vous permet d'installer Bitwarden rapidement et simplement sur un serveur YunoHost.  
 Si vous n'avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour savoir comment l'installer et en profiter.*
 
 ## Vue d'ensemble
 
 Bitwarden est un gestionnaire de mots de passe open source.
 
-**Version incluse:** 1.14.2
+**Version incluse :** 1.15.1
 
 ## Points importants à lire avant l'installation
 
@@ -28,30 +28,30 @@ Après l'installation, l'utilisateur admin recevra un e-mail avec le admin_token
 
 ## Configuration
 
-Comment configurer cette application: via le panneau d'administration https://bitwarden.domain.tld/admin.
+Comment configurer cette application : via le panneau d'administration https://bitwarden.domain.tld/admin.
 
 ## Documentation
 
- * Documentation officielle: https://help.bitwarden.com/ et https://github.com/dani-garcia/bitwarden_rs/wiki
+ * Documentation officielle : https://help.bitwarden.com/ et https://github.com/dani-garcia/bitwarden_rs/wiki
 
 ## Caractéristiques spécifiques YunoHost
 
 #### Support multi-utilisateurs
 
-* L'authentification LDAP et HTTP est-elle prise en charge? **No**
-* L'application peut-elle être utilisée par plusieurs utilisateurs? **Yes**
+* L'authentification LDAP et HTTP est-elle prise en charge? **Non**
+* L'application peut-elle être utilisée par plusieurs utilisateurs ? **Oui**
 
 #### Architectures supportées
 
-* x86-64b - [![Build Status](https://ci-apps.yunohost.org/ci/logs/bitwarden%20%28Apps%29.svg)](https://ci-apps.yunohost.org/ci/apps/bitwarden/)
+* x86-64 - [![Build Status](https://ci-apps.yunohost.org/ci/logs/bitwarden%20%28Apps%29.svg)](https://ci-apps.yunohost.org/ci/apps/bitwarden/)
 * ARMv8-A - [![Build Status](https://ci-apps-arm.yunohost.org/ci/logs/bitwarden%20%28Apps%29.svg)](https://ci-apps-arm.yunohost.org/ci/apps/bitwarden/)
 
 ## Liens
 
- * Signaler un bug: https://github.com/YunoHost-Apps/bitwarden_ynh/issues
- * Site de l'application: https://bitwarden.com/
- * Dépôt de l'application principale: https://github.com/dani-garcia/bitwarden_rs
- * Site web YunoHost: https://yunohost.org/
+ * Signaler un bug : https://github.com/YunoHost-Apps/bitwarden_ynh/issues
+ * Site de l'application : https://bitwarden.com/
+ * Dépôt de l'application principale : https://github.com/dani-garcia/bitwarden_rs
+ * Site web YunoHost : https://yunohost.org/
 
 ---
 

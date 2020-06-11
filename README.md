@@ -1,6 +1,6 @@
 # Bitwarden for YunoHost
 
-[![Integration level](https://dash.yunohost.org/integration/bitwarden.svg)](https://dash.yunohost.org/appci/app/bitwarden)  
+[![Integration level](https://dash.yunohost.org/integration/bitwarden.svg)](https://dash.yunohost.org/appci/app/bitwarden) ![](https://ci-apps.yunohost.org/ci/badges/bitwarden.status.svg) ![](https://ci-apps.yunohost.org/ci/badges/bitwarden.maintain.svg)  
 [![Install Bitwarden with YunoHost](https://install-app.yunohost.org/install-with-yunohost.png)](https://install-app.yunohost.org/?app=bitwarden)
 
 *[Lire ce readme en français.](./README_fr.md)*
@@ -12,7 +12,7 @@ If you don't have YunoHost, please see [here](https://yunohost.org/#/install) to
 
 Bitwarden is a open source password manager.
 
-**Shipped version:** 1.14.2
+**Shipped version:** 1.15.1
 
 ## Important points to read before installing
 
@@ -43,7 +43,7 @@ How to configure this app: by an admin panel at https://bitwarden.domain.tld/adm
 
 #### Supported architectures
 
-* x86-64b - [![Build Status](https://ci-apps.yunohost.org/ci/logs/bitwarden%20%28Apps%29.svg)](https://ci-apps.yunohost.org/ci/apps/bitwarden/)
+* x86-64 - [![Build Status](https://ci-apps.yunohost.org/ci/logs/bitwarden%20%28Apps%29.svg)](https://ci-apps.yunohost.org/ci/apps/bitwarden/)
 * ARMv8-A - [![Build Status](https://ci-apps-arm.yunohost.org/ci/logs/bitwarden%20%28Apps%29.svg)](https://ci-apps-arm.yunohost.org/ci/apps/bitwarden/)
 
 ## Links
