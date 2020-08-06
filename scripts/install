@@ -33,7 +33,7 @@ is_public=$YNH_APP_ARG_IS_PUBLIC
 
 app=$YNH_APP_INSTANCE_NAME
 
-admin_mail=$(ynh_user_get_info "$admin" 'mail')
+admin_mail=$(ynh_user_get_info --username=$admin --key=mail)
 admin_token=$(ynh_string_random --length=48 | base64)
 
 #=================================================

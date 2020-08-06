@@ -12,7 +12,7 @@ If you don't have YunoHost, please see [here](https://yunohost.org/#/install) to
 
 Bitwarden is a open source password manager.
 
-**Shipped version:** 1.15.1
+**Shipped version:** 1.16.1
 
 ## Important points to read before installing
 
@@ -58,7 +58,7 @@ How to configure this app: by an admin panel at https://bitwarden.domain.tld/adm
 Developers info
 ----------------
 
-Please do your pull request to the [testing branch]https://github.com/YunoHost-Apps/bitwarden_ynh/tree/testing).
+Please do your pull request to the [testing branch](https://github.com/YunoHost-Apps/bitwarden_ynh/tree/testing).
 
 To try the testing branch, please proceed like that.
 ```
