@@ -12,7 +12,7 @@ If you don't have YunoHost, please see [here](https://yunohost.org/#/install) to
 
 Bitwarden is a open source password manager.
 
-**Shipped version:** 1.16.2
+**Shipped version:** 1.16.3
 
 ## Important points to read before installing
 
