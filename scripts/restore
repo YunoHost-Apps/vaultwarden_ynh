@@ -78,9 +78,9 @@ chown -R "$app":"$app" /var/log/"$app"
 #=================================================
 # RESTORE FAIL2BAN CONFIGURATION
 #=================================================
-ynh_print_info --message="Restoring the fail2ban configuration..."
+ynh_print_info --message="Restoring the Fail2Ban configuration..."
 
-# Create a dedicated fail2ban config
+# Create a dedicated Fail2Ban config
 mkdir -p "/var/log/$app"
 chown -R "$app":"$app" "/var/log/$app"
 touch /var/log/"$app"/"$app".log
@@ -133,7 +133,7 @@ ynh_restore_file --origin_path="/etc/logrotate.d/$app"
 #=================================================
 # RELOAD NGINX
 #=================================================
-ynh_print_info --message="Reloading nginx web server..."
+ynh_print_info --message="Reloading NGINX web server..."
 
 ynh_systemd_action --service_name=nginx --action=reload
 

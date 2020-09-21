@@ -96,9 +96,9 @@ ynh_setup_source --dest_dir="$final_path/live/web-vault/" --source_id="web"
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
-ynh_print_info --message="Configuring nginx web server..."
+ynh_print_info --message="Configuring NGINX web server..."
 
-# Create a dedicated nginx config
+# Create a dedicated NGINX config
 ynh_add_nginx_config "websocket_port rocket_port"
 
 #=================================================
@@ -209,9 +209,9 @@ ynh_systemd_action --service_name=$app --action="start" --log_path="systemd" --l
 #=================================================
 # SETUP FAIL2BAN
 #=================================================
-ynh_print_info --message="Configuring fail2ban..."
+ynh_print_info --message="Configuring Fail2Ban..."
 
-# Create a dedicated fail2ban config
+# Create a dedicated Fail2Ban config
 touch /var/log/"$app"/"$app".log
 ynh_add_fail2ban_config --logpath="/var/log/$app/$app.log" --failregex="^.*Username or password is incorrect\. Try again\. IP: <HOST>\. Username:.*$"
 
@@ -230,7 +230,7 @@ fi
 #=================================================
 # RELOAD NGINX
 #=================================================
-ynh_print_info --message="Reloading nginx web server..."
+ynh_print_info --message="Reloading NGINX web server..."
 
 ynh_systemd_action --service_name=nginx --action=reload
 

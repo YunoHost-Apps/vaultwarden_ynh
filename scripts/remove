@@ -60,9 +60,9 @@ ynh_secure_remove --file="$final_path"
 #=================================================
 # REMOVE NGINX CONFIGURATION
 #=================================================
-ynh_print_info --message="Removing nginx web server configuration..."
+ynh_print_info --message="Removing NGINX web server configuration..."
 
-# Remove the dedicated nginx config
+# Remove the dedicated NGINX config
 ynh_remove_nginx_config
 
 #=================================================
@@ -76,9 +76,9 @@ ynh_remove_logrotate
 #=================================================
 # REMOVE FAIL2BAN CONFIGURATION
 #=================================================
-ynh_print_info --message="Removing fail2ban configuration..."
+ynh_print_info --message="Removing Fail2Ban configuration..."
 
-# Remove the dedicated fail2ban config
+# Remove the dedicated Fail2Ban config
 ynh_remove_fail2ban_config
 
 #=================================================
