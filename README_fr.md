@@ -6,7 +6,7 @@
 *[Read this readme in english.](./README.md)* 
 
 > *Ce package vous permet d'installer Bitwarden rapidement et simplement sur un serveur YunoHost.  
-Si vous n'avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour savoir comment l'installer et en profiter.*
+Si vous n'avez pas YunoHost, consultez [le guide](https://yunohost.org/#/install) pour apprendre comment l'installer.*
 
 ## Vue d'ensemble
 
@@ -36,7 +36,7 @@ Comment configurer cette application : via le panneau d'administration https://b
 
 ## Caractéristiques spécifiques YunoHost
 
-#### Support multi-utilisateurs
+#### Support multi-utilisateur
 
 * L'authentification LDAP et HTTP est-elle prise en charge? **Non**
 * L'application peut-elle être utilisée par plusieurs utilisateurs ? **Oui**

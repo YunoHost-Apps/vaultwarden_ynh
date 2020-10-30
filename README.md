@@ -5,8 +5,8 @@
 
 *[Lire ce readme en français.](./README_fr.md)*
 
-> *This package allow you to install Bitwarden quickly and simply on a YunoHost server.  
-If you don't have YunoHost, please see [here](https://yunohost.org/#/install) to know how to install and enjoy it.*
+> *This package allows you to install Bitwarden quickly and simply on a YunoHost server.  
+If you don't have YunoHost, please consult [the guide](https://yunohost.org/#/install) to learn how to install it.*
 
 ## Overview
 
@@ -36,7 +36,7 @@ How to configure this app: by an admin panel at https://bitwarden.domain.tld/adm
 
 ## YunoHost specific features
 
-#### Multi-users support
+#### Multi-user support
 
 * Are LDAP and HTTP auth supported? **No**
 * Can the app be used by multiple users? **Yes**
@@ -55,14 +55,14 @@ How to configure this app: by an admin panel at https://bitwarden.domain.tld/adm
 
 ---
 
-Developers info
+Developer info
 ----------------
 
-Please do your pull request to the [testing branch](https://github.com/YunoHost-Apps/bitwarden_ynh/tree/testing).
+Please send your pull request to the [testing branch](https://github.com/YunoHost-Apps/bitwarden_ynh/tree/testing).
 
 To try the testing branch, please proceed like that.
 ```
-sudo yunohost app install --debug https://github.com/YunoHost-Apps/bitwarden_ynh/tree/testing
+sudo yunohost app install https://github.com/YunoHost-Apps/bitwarden_ynh/tree/testing --debug
 or
-sudo yunohost app upgrade --debug bitwarden -u https://github.com/YunoHost-Apps/bitwarden_ynh/tree/testing
+sudo yunohost app upgrade bitwarden -u https://github.com/YunoHost-Apps/bitwarden_ynh/tree/testing --debug
 ```
