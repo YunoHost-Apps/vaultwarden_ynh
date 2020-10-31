@@ -233,8 +233,8 @@ fi
 #=================================================
 ynh_script_progression --message="Starting a systemd service..."
 
-ynh_systemd_action --service_name=$app --action="start" --log_path="systemd" --line_match="unable to load Private Key" --length=100
-ynh_systemd_action --service_name=$app --action="stop" --log_path="systemd" --line_match="Stopped Bitwarden Server"
+ynh_systemd_action --service_name=$app --action="start" --log_path="systemd"
+ynh_systemd_action --service_name=$app --action="stop" --log_path="systemd"
 
 ynh_systemd_action --service_name=$app --action="start" --log_path="systemd" --line_match="Rocket has launched from" --length=100
 
