@@ -45,7 +45,7 @@
                 "type": "user",
                 "ask": {
                     "en": "Choose an admin user",
-                    "fr": "Choisissez l’administrateur"
+                    "fr": "Choisissez l'administrateur"
                 },
                 "example": "johndoe"
             },

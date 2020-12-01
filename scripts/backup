@@ -65,7 +65,6 @@ ynh_backup --src_path="/etc/logrotate.d/$app"
 #=================================================
 # BACKUP SYSTEMD
 #=================================================
-ynh_print_info --message="Backing up systemd configuration..."
 
 ynh_backup --src_path="/etc/systemd/system/$app.service"
 
