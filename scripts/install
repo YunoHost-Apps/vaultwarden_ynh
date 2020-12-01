@@ -13,7 +13,6 @@ source /usr/share/yunohost/helpers
 #=================================================
 # MANAGE SCRIPT FAILURE
 #=================================================
-ynh_print_info --message="Managing script failure..."
 
 ynh_clean_setup () {
 	ynh_clean_check_starting
@@ -24,7 +23,6 @@ ynh_abort_if_errors
 #=================================================
 # RETRIEVE ARGUMENTS FROM THE MANIFEST
 #=================================================
-ynh_print_info --message="Retrieving arguments from the manifest..."
 
 domain=$YNH_APP_ARG_DOMAIN
 path_url=$YNH_APP_ARG_PATH
@@ -39,7 +37,7 @@ admin_token=$(ynh_string_random --length=48 | base64)
 #=================================================
 # CHECK IF THE APP CAN BE INSTALLED WITH THESE ARGS
 #=================================================
-ynh_print_info --message="Validating installation parameters..."
+ynh_script_progression --message="Validating installation parameters..."
 
 final_path=/var/www/$app
 test ! -e "$final_path" || ynh_die --message="This path already contains a folder"
@@ -50,7 +48,7 @@ ynh_webpath_register --app=$app --domain=$domain --path_url=$path_url
 #=================================================
 # STORE SETTINGS FROM MANIFEST
 #=================================================
-ynh_print_info --message="Storing installation settings..."
+ynh_script_progression --message="Storing installation settings..."
 
 ynh_app_setting_set --app=$app --key=domain --value=$domain
 ynh_app_setting_set --app=$app --key=path --value=$path_url
@@ -63,7 +61,7 @@ ynh_app_setting_set --app=$app --key=admin_token --value=$admin_token
 #=================================================
 # FIND AND OPEN A PORT
 #=================================================
-ynh_print_info --message="Configuring firewall..."
+ynh_script_progression --message="Configuring firewall..."
 
 # Find an available port
 websocket_port=$(ynh_find_port --port=3012)
@@ -76,14 +74,14 @@ ynh_app_setting_set --app=$app --key=rocket_port --value="$rocket_port"
 #=================================================
 # INSTALL DEPENDENCIES
 #=================================================
-ynh_print_info --message="Installing dependencies..."
+ynh_script_progression --message="Installing dependencies..."
 
 ynh_install_app_dependencies $pkg_dependencies
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
-ynh_print_info --message="Setting up source files..."
+ynh_script_progression --message="Setting up source files..."
 
 ynh_app_setting_set --app=$app --key=final_path --value=$final_path
 
@@ -96,15 +94,15 @@ ynh_setup_source --dest_dir="$final_path/live/web-vault/" --source_id="web"
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
-ynh_print_info --message="Configuring nginx web server..."
+ynh_script_progression --message="Configuring NGINX web server..."
 
-# Create a dedicated nginx config
+# Create a dedicated NGINX config
 ynh_add_nginx_config "websocket_port rocket_port"
 
 #=================================================
 # CREATE DEDICATED USER
 #=================================================
-ynh_print_info --message="Configuring system user..."
+ynh_script_progression --message="Configuring system user..."
 
 # Create a system user
 ynh_system_user_create --username="$app" --home_dir="$final_path"
@@ -114,21 +112,21 @@ ynh_system_user_create --username="$app" --home_dir="$final_path"
 #=================================================
 # MAKE INSTALL
 #=================================================
-ynh_print_info --message="Making install..."
+ynh_script_progression --message="Making install..."
 
 # Set right permissions 
 chown -R "$app":"$app" "$final_path"
 
 # Install rustup with the toolchain needed by bitwarden_rs
 pushd "$final_path"
-    sudo -u "$app" RUSTUP_HOME="$final_path"/.rustup CARGO_HOME="$final_path"/.cargo bash -c 'curl -sSf -L https://static.rust-lang.org/rustup.sh | sh -s -- -y --default-toolchain=$(cat build/rust-toolchain)'
+	sudo -u "$app" RUSTUP_HOME="$final_path"/.rustup CARGO_HOME="$final_path"/.cargo bash -c 'curl -sSf -L https://static.rust-lang.org/rustup.sh | sh -s -- -y --default-toolchain=$(cat build/rust-toolchain)'
 popd
 
 export PATH="$PATH:$final_path/.cargo/bin:$final_path/.local/bin:/usr/local/sbin" 
 
 # Compile bitwarden_rs
 pushd "$final_path"/build
-    sudo -u "$app" env PATH="$PATH" cargo build --features sqlite --release
+	sudo -u "$app" env PATH="$PATH" cargo build --features sqlite --release
 popd
 
 # Install bitwarden_rs
@@ -142,7 +140,7 @@ ynh_secure_remove --file="$final_path/.rustup"
 #=================================================
 # SETUP SYSTEMD
 #=================================================
-ynh_print_info --message="Configuring a systemd service..."
+ynh_script_progression --message="Configuring a systemd service..."
 
 # Create a dedicated systemd config
 ynh_add_systemd_config
@@ -150,7 +148,7 @@ ynh_add_systemd_config
 #=================================================
 # MODIFY A CONFIG FILE
 #=================================================
-ynh_print_info --message="Modifying a config file..."
+ynh_script_progression --message="Modifying a config file..."
 
 config="$final_path/live/bitwarden_rs.env"
 
@@ -166,7 +164,7 @@ ynh_replace_string --match_string="__APP__" --replace_string="$app" --target_fil
 #=================================================
 # STORE THE CONFIG FILE CHECKSUM
 #=================================================
-ynh_print_info --message="Storing the config file checksum..."
+ynh_script_progression --message="Storing the config file checksum..."
 
 # Calculate and store the config file checksum into the app settings
 ynh_store_file_checksum --file="$config"
@@ -176,7 +174,7 @@ ynh_store_file_checksum --file="$config"
 #=================================================
 # SECURE FILES AND DIRECTORIES
 #=================================================
-ynh_print_info --message="Securing files and directories..."
+ynh_script_progression --message="Securing files and directories..."
 
 # Set permissions to app files
 chown -R "$app":"$app" "$final_path"
@@ -186,7 +184,7 @@ chown -R "$app":"$app" "/var/log/$app"
 #=================================================
 # SETUP LOGROTATE
 #=================================================
-ynh_print_info --message="Configuring log rotation..."
+ynh_script_progression --message="Configuring log rotation..."
 
 # Use logrotate to manage application logfile(s)
 ynh_use_logrotate
@@ -194,14 +192,14 @@ ynh_use_logrotate
 #=================================================
 # INTEGRATE SERVICE IN YUNOHOST
 #=================================================
-ynh_print_info --message="Integrating service in YunoHost..."
+ynh_script_progression --message="Integrating service in YunoHost..."
 
 yunohost service add $app --description "$app daemon for Bitwarden" --log "/var/log/$app/$app.log"
 
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================
-ynh_print_info --message="Starting a systemd service..."
+ynh_script_progression --message="Starting a systemd service..."
 
 # Start a systemd service
 ynh_systemd_action --service_name=$app --action="start" --log_path="systemd" --line_match="Rocket has launched from" --length=100
@@ -209,16 +207,16 @@ ynh_systemd_action --service_name=$app --action="start" --log_path="systemd" --l
 #=================================================
 # SETUP FAIL2BAN
 #=================================================
-ynh_print_info --message="Configuring fail2ban..."
+ynh_script_progression --message="Configuring Fail2Ban..."
 
-# Create a dedicated fail2ban config
+# Create a dedicated Fail2Ban config
 touch /var/log/"$app"/"$app".log
 ynh_add_fail2ban_config --logpath="/var/log/$app/$app.log" --failregex="^.*Username or password is incorrect\. Try again\. IP: <HOST>\. Username:.*$"
 
 #=================================================
 # SETUP SSOWAT
 #=================================================
-ynh_print_info --message="Configuring SSOwat..."
+ynh_script_progression --message="Configuring SSOwat..."
 
 # Make app public if necessary
 if [ $is_public -eq 1 ]
@@ -230,14 +228,14 @@ fi
 #=================================================
 # RELOAD NGINX
 #=================================================
-ynh_print_info --message="Reloading nginx web server..."
+ynh_script_progression --message="Reloading NGINX web server..."
 
 ynh_systemd_action --service_name=nginx --action=reload
 
 #=================================================
 # SEND A README FOR THE ADMIN
 #=================================================
-ynh_print_info --message="Sending a readme for the admin..."
+ynh_script_progression --message="Sending a readme for the admin..."
 
 ynh_replace_string --match_string="__ADMIN_MAIL__"    --replace_string="$admin_mail"    --target_file="../conf/message"
 ynh_replace_string --match_string="__ADMIN_TOKEN__"    --replace_string="$admin_token"    --target_file="../conf/message"
@@ -250,4 +248,4 @@ ynh_send_readme_to_admin --app_message="../conf/message" --recipients="$admin_ma
 # END OF SCRIPT
 #=================================================
 
-ynh_print_info --message="Installation of $app completed"
+ynh_script_progression --message="Installation of $app completed"
