@@ -1,7 +1,7 @@
 # Bitwarden pour YunoHost
 
 [![Niveau d'intégration](https://dash.yunohost.org/integration/bitwarden.svg)](https://dash.yunohost.org/appci/app/bitwarden) ![](https://ci-apps.yunohost.org/ci/badges/bitwarden.status.svg) ![](https://ci-apps.yunohost.org/ci/badges/bitwarden.maintain.svg)  
-[![Installer Bitwarden avec YunoHost](https://install-app.yunohost.org/install-with-yunohost.png)](https://install-app.yunohost.org/?app=bitwarden)
+[![Installer Bitwarden avec YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=bitwarden)
 
 *[Read this readme in english.](./README.md)* 
 
@@ -11,7 +11,7 @@ Si vous n'avez pas YunoHost, consultez [le guide](https://yunohost.org/#/install
 ## Vue d'ensemble
 Bitwarden est un gestionnaire de mots de passe open source.
 
-**Version incluse :** 1.16.3
+**Version incluse :** 1.18.0
 
 ## Points importants à lire avant l'installation
 
