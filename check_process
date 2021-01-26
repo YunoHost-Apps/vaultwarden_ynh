@@ -18,15 +18,17 @@
 		setup_public=1
 		upgrade=1
 		# 1.9.1~ynh3
-		#upgrade=1	from_commit=501bf18eafcda987ac255d12ca213d15e63c5eef
+		# upgrade=1	from_commit=501bf18eafcda987ac255d12ca213d15e63c5eef
 		# 1.14.2~ynh2
-		#upgrade=1	from_commit=2a7b9d6b6705be6e3a7217309a77b9def226eaa6
+		# upgrade=1	from_commit=2a7b9d6b6705be6e3a7217309a77b9def226eaa6
 		# 1.15.1~ynh2
-		#upgrade=1	from_commit=bb9dac9cc50e11d8ef60033a543f9e21b42d0d8e
+		# upgrade=1	from_commit=bb9dac9cc50e11d8ef60033a543f9e21b42d0d8e
 		# 1.16.1~ynh2
 		upgrade=1	from_commit=5572d0420cf500fdb313c15b4ab40e7a6c38e294
 		# 1.16.3~ynh1
 		upgrade=1	from_commit=576a173a43de914253645daa2c0b066f693a20f7
+		# 1.16.3~ynh2
+		upgrade=1	from_commit=e2e958b1885f7a08e0d5afe5dada5c0dd44dd671
 		backup_restore=1
 		multi_instance=1
 		port_already_use=0
@@ -45,3 +47,5 @@ Notification=all
 		name=1.16.1~ynh2
 	; commit=576a173a43de914253645daa2c0b066f693a20f7
 		name=1.16.3~ynh1
+	; commit=e2e958b1885f7a08e0d5afe5dada5c0dd44dd671
+		name=1.16.3~ynh2
