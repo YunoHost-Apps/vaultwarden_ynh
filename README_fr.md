@@ -15,7 +15,7 @@ Bitwarden est un gestionnaire de mots de passe open source.
 
 ## Points importants à lire avant l'installation
 
-Après l'installation, l'utilisateur admin recevra un e-mail avec le admin_token a utilisé pour accéder à l'administration de Bitwarden https://your.domain.tld/bitwarden/admin.
+Après l'installation, l'utilisateur admin recevra un e-mail avec le admin_token à utiliser pour accéder à l'administration de Bitwarden https://your.domain.tld/bitwarden/admin.
 
 ## Captures d'écran
 
