@@ -53,7 +53,6 @@ ynh_script_progression --message="Storing installation settings..."
 ynh_app_setting_set --app=$app --key=domain --value=$domain
 ynh_app_setting_set --app=$app --key=path --value=$path_url
 ynh_app_setting_set --app=$app --key=admin --value=$admin
-ynh_app_setting_set --app=$app --key=is_public --value=$is_public
 ynh_app_setting_set --app=$app --key=admin_token --value=$admin_token
 
 #=================================================
@@ -221,9 +220,11 @@ ynh_script_progression --message="Configuring SSOwat..."
 # Make app public if necessary
 if [ $is_public -eq 1 ]
 then
-	# unprotected_uris allows SSO credentials to be passed anyway.
-	ynh_app_setting_set --app=$app --key=skipped_uris --value="/"
+	ynh_permission_update --permission="main" --add="visitors"
 fi
+
+ynh_permission_create --permission="api" --url="/api" --additional_urls="/identity/connect/token" --allowed="visitors" --auth_header="false" --show_tile="false" --protected="true"
+ynh_permission_create --permission="admin" --url="/admin" --allowed="$admin" --show_tile="false"
 
 #=================================================
 # RELOAD NGINX
