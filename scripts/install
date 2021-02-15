@@ -61,7 +61,7 @@ ynh_app_setting_set --app=$app --key=admin_token --value=$admin_token
 #=================================================
 # FIND AND OPEN A PORT
 #=================================================
-ynh_script_progression --message="Configuring firewall..."
+ynh_script_progression --message="Finding an available port..."
 
 # Find an available port
 websocket_port=$(ynh_find_port --port=3012)
@@ -119,7 +119,7 @@ chown -R "$app":"$app" "$final_path"
 
 # Install rustup with the toolchain needed by bitwarden_rs
 pushd "$final_path"
-	sudo -u "$app" RUSTUP_HOME="$final_path"/.rustup CARGO_HOME="$final_path"/.cargo bash -c 'curl -sSf -L https://static.rust-lang.org/rustup.sh | sh -s -- -y --default-toolchain=$(cat build/rust-toolchain)'
+	sudo -u "$app" RUSTUP_HOME="$final_path"/.rustup CARGO_HOME="$final_path"/.cargo bash -c 'curl -sSf -L https://static.rust-lang.org/rustup.sh | sh -s -- -y --default-toolchain nightly'
 popd
 
 export PATH="$PATH:$final_path/.cargo/bin:$final_path/.local/bin:/usr/local/sbin" 
