@@ -128,8 +128,6 @@ pushd "$final_path"/build
 	sudo -u "$app" env PATH="$PATH" cargo build --features sqlite --release
 popd
 
-read -p "key"
-
 # Install bitwarden_rs
 cp -a "$final_path"/build/target/release/bitwarden_rs "$final_path"/live/bitwarden_rs
 
