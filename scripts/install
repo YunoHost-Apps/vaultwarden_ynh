@@ -136,6 +136,9 @@ ynh_secure_remove --file="$final_path/build"
 ynh_secure_remove --file="$final_path/.cargo"
 ynh_secure_remove --file="$final_path/.rustup"
 
+# Create datadir
+mkdir -p "$final_path"/live/data
+
 #=================================================
 # SETUP SYSTEMD
 #=================================================
