@@ -140,12 +140,16 @@ then
 	popd
 
 	# Remove old generated files before copying the new ones
+	ynh_secure_remove --file="$final_path/live/.fingerprint"
 	ynh_secure_remove --file="$final_path/live/build"
 	ynh_secure_remove --file="$final_path/live/deps"
-	ynh_secure_remove --file="$final_path/live/.fingerprint"
+	ynh_secure_remove --file="$final_path/live/examples"
+	ynh_secure_remove --file="$final_path/live/incremental"
+	ynh_secure_remove --file="$final_path/live/.cargo-lock"
+	ynh_secure_remove --file="$final_path/live/bitwarden_rs.d"
 
 	# Install bitwarden_rs
-	cp -af "$final_path"/build/target/release/. "$final_path"/live/.
+	cp -af "$final_path"/build/target/release/bitwarden_rs "$final_path"/live/bitwarden_rs
 
 	# Remove build files and rustup
 	ynh_secure_remove --file="$final_path/build"
