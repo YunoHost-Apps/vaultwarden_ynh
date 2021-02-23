@@ -19,7 +19,6 @@ app=$YNH_APP_INSTANCE_NAME
 domain=$(ynh_app_setting_get --app=$app --key=domain)
 path_url=$(ynh_app_setting_get --app=$app --key=path)
 admin=$(ynh_app_setting_get --app=$app --key=admin)
-is_public=$(ynh_app_setting_get --app=$app --key=is_public)
 final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 
 admin_token=$(ynh_app_setting_get --app=$app --key=admin_token)
@@ -32,6 +31,27 @@ websocket_port=$(ynh_app_setting_get --app=$app --key=websocket_port)
 ynh_script_progression --message="Checking version..."
 
 upgrade_type=$(ynh_check_app_version_changed)
+
+#=================================================
+# ENSURE DOWNWARD COMPATIBILITY
+#=================================================
+ynh_script_progression --message="Ensuring downward compatibility..."
+
+# Cleaning legacy permissions
+if ynh_legacy_permissions_exists; then
+	ynh_legacy_permissions_delete_all
+
+	ynh_app_setting_delete --app=$app --key=is_public
+fi
+
+# Create a permission if needed
+if ! ynh_permission_exists --permission="api"; then
+	ynh_permission_create --permission="api" --url="/api" --additional_urls="/identity/connect/token" --allowed="visitors" --auth_header="false" --show_tile="false" --protected="true"
+fi
+
+if ! ynh_permission_exists --permission="admin"; then
+	ynh_permission_create --permission="admin" --url="/admin" --allowed="$admin" --show_tile="false"
+fi
 
 #=================================================
 # BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
@@ -120,12 +140,16 @@ then
 	popd
 
 	# Remove old generated files before copying the new ones
+	ynh_secure_remove --file="$final_path/live/.fingerprint"
 	ynh_secure_remove --file="$final_path/live/build"
 	ynh_secure_remove --file="$final_path/live/deps"
-	ynh_secure_remove --file="$final_path/live/.fingerprint"
+	ynh_secure_remove --file="$final_path/live/examples"
+	ynh_secure_remove --file="$final_path/live/incremental"
+	ynh_secure_remove --file="$final_path/live/.cargo-lock"
+	ynh_secure_remove --file="$final_path/live/bitwarden_rs.d"
 
 	# Install bitwarden_rs
-	cp -af "$final_path"/build/target/release/. "$final_path"/live/.
+	cp -af "$final_path"/build/target/release/bitwarden_rs "$final_path"/live/bitwarden_rs
 
 	# Remove build files and rustup
 	ynh_secure_remove --file="$final_path/build"
@@ -208,18 +232,6 @@ ynh_script_progression --message="Reconfiguring Fail2Ban..."
 
 # Create a dedicated Fail2Ban config
 ynh_add_fail2ban_config --logpath="/var/log/$app/$app.log" --failregex="^.*Username or password is incorrect\. Try again\. IP: <HOST>\. Username:.*$"
-
-#=================================================
-# SETUP SSOWAT
-#=================================================
-ynh_script_progression --message="Upgrading SSOwat configuration..."
-
-# Make app public if necessary
-if [ $is_public -eq 1 ]
-then
-	# unprotected_uris allows SSO credentials to be passed anyway
-	ynh_app_setting_set --app=$app --key=skipped_uris --value="/"
-fi
 
 #=================================================
 # RELOAD NGINX
