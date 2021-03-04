@@ -44,13 +44,14 @@ if ynh_legacy_permissions_exists; then
 	ynh_app_setting_delete --app=$app --key=is_public
 fi
 
+if ! ynh_permission_exists --permission="admin"; then
+	# Create the required permissions
+	ynh_permission_create --permission="admin" --url="/admin" --allowed="$admin" --show_tile="false"
+fi
+
 # Create a permission if needed
 if ! ynh_permission_exists --permission="api"; then
 	ynh_permission_create --permission="api" --url="/api" --additional_urls="/identity/connect/token" --allowed="visitors" --auth_header="false" --show_tile="false" --protected="true"
-fi
-
-if ! ynh_permission_exists --permission="admin"; then
-	ynh_permission_create --permission="admin" --url="/admin" --allowed="$admin" --show_tile="false"
 fi
 
 #=================================================
@@ -149,7 +150,7 @@ then
 	ynh_secure_remove --file="$final_path/live/bitwarden_rs.d"
 
 	# Install bitwarden_rs
-	cp -af "$final_path"/build/target/release/bitwarden_rs "$final_path"/live/bitwarden_rs
+	cp -af "$final_path/build/target/release/bitwarden_rs" "$final_path/live/bitwarden_rs"
 
 	# Remove build files and rustup
 	ynh_secure_remove --file="$final_path/build"
@@ -170,26 +171,7 @@ ynh_add_systemd_config
 #=================================================
 ynh_script_progression --message="Modifying a config file..."
 
-config="$final_path/live/bitwarden_rs.env"
-
-ynh_backup_if_checksum_is_different --file="$config"
-
-cp -f ../conf/bitwarden_rs.env "$config"
-
-ynh_replace_string --match_string="__ADMIN_TOKEN__" --replace_string="$admin_token" --target_file="$config"
-ynh_replace_string --match_string="__DOMAIN__" --replace_string="$domain" --target_file="$config"
-ynh_replace_string --match_string="__PATH_URL__" --replace_string="$path_url" --target_file="$config"
-ynh_replace_string --match_string="__WEBSOCKET_PORT__" --replace_string="$websocket_port" --target_file="$config"
-ynh_replace_string --match_string="__ROCKET_PORT__" --replace_string="$rocket_port" --target_file="$config"
-ynh_replace_string --match_string="__APP__" --replace_string="$app" --target_file="$config"
-
-#=================================================
-# STORE THE CONFIG FILE CHECKSUM
-#=================================================
-ynh_script_progression --message="Storing the config file checksum..."
-
-# Recalculate and store the checksum of the file for the next upgrade.
-ynh_store_file_checksum --file="$config"
+ynh_add_config --template="../conf/bitwarden_rs.env" --destination="$final_path/live/bitwarden_rs.env"
 
 #=================================================
 # GENERIC FINALIZATION
