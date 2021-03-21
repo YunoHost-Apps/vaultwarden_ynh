@@ -137,7 +137,7 @@ then
 
 	# Compile bitwarden_rs
 	pushd "$final_path"/build
-		sudo -u "$app" env PATH="$PATH" cargo build --features sqlite --release
+		ynh_exec_warn_less sudo -u "$app" env PATH="$PATH" cargo build --features sqlite --release
 	popd
 
 	# Remove old generated files before copying the new ones
