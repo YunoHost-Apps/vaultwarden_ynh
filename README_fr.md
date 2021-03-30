@@ -11,7 +11,7 @@ Si vous n'avez pas YunoHost, consultez [le guide](https://yunohost.org/#/install
 ## Vue d'ensemble
 Bitwarden est un gestionnaire de mots de passe open source.
 
-**Version incluse :** 1.19.0
+**Version incluse :** 1.20.0
 
 ## Points importants à lire avant l'installation
 
