@@ -154,8 +154,8 @@ ynh_script_progression --message="Adding a config file..."
 
 ynh_add_config --template="../conf/bitwarden_rs.env" --destination="$final_path/live/bitwarden_rs.env"
 
-chmod 400 "$final_path/some_config_file"
-chown $app:$app "$final_path/some_config_file"
+chmod 400 "$final_path/live/bitwarden_rs.env"
+chown $app:$app "$final_path/live/bitwarden_rs.env"
 
 #=================================================
 # GENERIC FINALIZATION
