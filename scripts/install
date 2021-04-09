@@ -78,6 +78,14 @@ ynh_script_progression --message="Installing dependencies..."
 ynh_install_app_dependencies $pkg_dependencies
 
 #=================================================
+# CREATE DEDICATED USER
+#=================================================
+ynh_script_progression --message="Configuring system user..."
+
+# Create a system user
+ynh_system_user_create --username=$app --home_dir="$final_path"
+
+#=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 ynh_script_progression --message="Setting up source files..."
@@ -97,14 +105,6 @@ ynh_script_progression --message="Configuring NGINX web server..."
 
 # Create a dedicated NGINX config
 ynh_add_nginx_config "websocket_port rocket_port"
-
-#=================================================
-# CREATE DEDICATED USER
-#=================================================
-ynh_script_progression --message="Configuring system user..."
-
-# Create a system user
-ynh_system_user_create --username="$app" --home_dir="$final_path"
 
 #=================================================
 # SPECIFIC SETUP
@@ -148,30 +148,25 @@ ynh_script_progression --message="Configuring a systemd service..."
 ynh_add_systemd_config
 
 #=================================================
-# MODIFY A CONFIG FILE
+# ADD A CONFIGURATION
 #=================================================
-ynh_script_progression --message="Modifying a config file..."
+ynh_script_progression --message="Adding a config file..."
 
 ynh_add_config --template="../conf/bitwarden_rs.env" --destination="$final_path/live/bitwarden_rs.env"
 
+chmod 400 "$final_path/some_config_file"
+chown $app:$app "$final_path/some_config_file"
+
 #=================================================
 # GENERIC FINALIZATION
-#=================================================
-# SECURE FILES AND DIRECTORIES
-#=================================================
-ynh_script_progression --message="Securing files and directories..."
-
-# Set permissions to app files
-chown -R "$app":"$app" "$final_path"
-mkdir -p "/var/log/$app"
-chown -R "$app":"$app" "/var/log/$app"
-
 #=================================================
 # SETUP LOGROTATE
 #=================================================
 ynh_script_progression --message="Configuring log rotation..."
 
 # Use logrotate to manage application logfile(s)
+chown -R "$app":"$app" "$final_path"
+mkdir -p "/var/log/$app"
 ynh_use_logrotate
 
 #=================================================
@@ -179,7 +174,7 @@ ynh_use_logrotate
 #=================================================
 ynh_script_progression --message="Integrating service in YunoHost..."
 
-yunohost service add $app --description "$app daemon for Bitwarden" --log "/var/log/$app/$app.log"
+yunohost service add $app --description="$app daemon for Bitwarden" --log="/var/log/$app/$app.log"
 
 #=================================================
 # START SYSTEMD SERVICE
