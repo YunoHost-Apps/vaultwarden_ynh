@@ -76,7 +76,6 @@ ynh_script_progression --message="Restoring the Fail2Ban configuration..."
 
 # Create a dedicated Fail2Ban config
 mkdir -p "/var/log/$app"
-chown -R "$app":"$app" "/var/log/$app"
 touch /var/log/"$app"/"$app".log
 
 ynh_restore_file "/etc/fail2ban/jail.d/$app.conf"

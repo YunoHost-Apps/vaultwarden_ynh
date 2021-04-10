@@ -98,6 +98,10 @@ ynh_setup_source --dest_dir="$final_path/build/" --source_id="app"
 # Download, check integrity, uncompress and patch the source from web.src
 ynh_setup_source --dest_dir="$final_path/live/web-vault/" --source_id="web"
 
+chmod 750 "$final_path"
+chmod -R o-rwx "$final_path"
+chown -R root:$app "$final_path"
+
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
@@ -140,14 +144,6 @@ ynh_secure_remove --file="$final_path/.rustup"
 mkdir -p "$final_path"/live/data
 
 #=================================================
-# SETUP SYSTEMD
-#=================================================
-ynh_script_progression --message="Configuring a systemd service..."
-
-# Create a dedicated systemd config
-ynh_add_systemd_config
-
-#=================================================
 # ADD A CONFIGURATION
 #=================================================
 ynh_script_progression --message="Adding a config file..."
@@ -158,6 +154,14 @@ chmod 400 "$final_path/live/bitwarden_rs.env"
 chown $app:$app "$final_path/live/bitwarden_rs.env"
 
 #=================================================
+# SETUP SYSTEMD
+#=================================================
+ynh_script_progression --message="Configuring a systemd service..."
+
+# Create a dedicated systemd config
+ynh_add_systemd_config
+
+#=================================================
 # GENERIC FINALIZATION
 #=================================================
 # SETUP LOGROTATE
@@ -165,8 +169,6 @@ chown $app:$app "$final_path/live/bitwarden_rs.env"
 ynh_script_progression --message="Configuring log rotation..."
 
 # Use logrotate to manage application logfile(s)
-chown -R "$app":"$app" "$final_path"
-mkdir -p "/var/log/$app"
 ynh_use_logrotate
 
 #=================================================
@@ -190,6 +192,7 @@ ynh_systemd_action --service_name=$app --action="start" --log_path="systemd" --l
 ynh_script_progression --message="Configuring Fail2Ban..."
 
 # Create a dedicated Fail2Ban config
+mkdir -p "/var/log/$app"
 touch /var/log/"$app"/"$app".log
 ynh_add_fail2ban_config --logpath="/var/log/$app/$app.log" --failregex="^.*Username or password is incorrect\. Try again\. IP: <HOST>\. Username:.*$"
 
