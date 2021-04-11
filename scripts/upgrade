@@ -46,7 +46,7 @@ fi
 
 if ! ynh_permission_exists --permission="admin"; then
 	# Create the required permissions
-	ynh_permission_create --permission="admin" --url="/admin" --allowed="$admin" --show_tile="false"
+	ynh_permission_create --permission="admin" --url="/admin" --allowed=$admin --show_tile="false"
 fi
 
 # Create a permission if needed
@@ -103,7 +103,7 @@ fi
 
 chmod 750 "$final_path"
 chmod -R o-rwx "$final_path"
-chown -R root:$app "$final_path"
+chown -R $app:$app "$final_path"
 
 #=================================================
 # NGINX CONFIGURATION
