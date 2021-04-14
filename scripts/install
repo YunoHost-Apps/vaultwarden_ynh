@@ -130,7 +130,7 @@ pushd "$final_path"/build
 popd
 
 # Install bitwarden_rs
-cp -a "$final_path/build/target/release/bitwarden_rs" "$final_path/live/bitwarden_rs"
+cp -af "$final_path/build/target/release/bitwarden_rs" "$final_path/live/bitwarden_rs"
 
 # Remove build files and rustup
 ynh_secure_remove --file="$final_path/build"
