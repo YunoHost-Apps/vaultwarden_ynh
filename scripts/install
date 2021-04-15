@@ -98,7 +98,7 @@ ynh_setup_source --dest_dir="$final_path/build/" --source_id="app"
 # Download, check integrity, uncompress and patch the source from web.src
 ynh_setup_source --dest_dir="$final_path/live/web-vault/" --source_id="web"
 
-chmod 750 "$final_path"
+chmod -R 750 "$final_path"
 chmod -R o-rwx "$final_path"
 chown -R $app:$app "$final_path"
 
@@ -140,7 +140,7 @@ ynh_secure_remove --file="$final_path/.rustup"
 # Create datadir
 mkdir -p "$final_path/live/data"
 
-chmod 750 "$final_path/live/data"
+chmod -R 750 "$final_path/live/data"
 chmod -R o-rwx "$final_path/live/data"
 chown -R $app:$app "$final_path/live/data"
 
