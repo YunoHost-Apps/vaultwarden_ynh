@@ -54,6 +54,8 @@ if ! ynh_permission_exists --permission="api"; then
 	ynh_permission_create --permission="api" --url="/api" --additional_urls="/identity/connect/token" --allowed="visitors" --auth_header="false" --show_tile="false" --protected="true"
 fi
 
+ynh_remove_logrotate
+
 #=================================================
 # BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
 #=================================================
@@ -182,16 +184,6 @@ ynh_add_systemd_config
 
 #=================================================
 # GENERIC FINALIZATION
-#=================================================
-# SETUP LOGROTATE
-#=================================================
-ynh_script_progression --message="Upgrading logrotate configuration..."
-
-# Use logrotate to manage app-specific logfile(s)
-mkdir -p "/var/log/$app"
-chown -R "$app":"$app" /var/log/"$app"
-ynh_use_logrotate --non-append
-
 #=================================================
 # INTEGRATE SERVICE IN YUNOHOST
 #=================================================

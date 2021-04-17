@@ -115,13 +115,6 @@ ynh_script_progression --message="Starting a systemd service..."
 ynh_systemd_action --service_name=$app --action="start" --log_path="systemd" --line_match="Rocket has launched from" --length=100
 
 #=================================================
-# RESTORE THE LOGROTATE CONFIGURATION
-#=================================================
-ynh_script_progression --message="Restoring the logrotate configuration..."
-
-ynh_restore_file --origin_path="/etc/logrotate.d/$app"
-
-#=================================================
 # GENERIC FINALIZATION
 #=================================================
 # RELOAD NGINX
