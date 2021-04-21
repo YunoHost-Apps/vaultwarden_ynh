@@ -46,13 +46,15 @@ fi
 
 if ! ynh_permission_exists --permission="admin"; then
 	# Create the required permissions
-	ynh_permission_create --permission="admin" --url="/admin" --allowed="$admin" --show_tile="false"
+	ynh_permission_create --permission="admin" --url="/admin" --allowed=$admin --show_tile="false"
 fi
 
 # Create a permission if needed
 if ! ynh_permission_exists --permission="api"; then
 	ynh_permission_create --permission="api" --url="/api" --additional_urls="/identity/connect/token" --allowed="visitors" --auth_header="false" --show_tile="false" --protected="true"
 fi
+
+ynh_remove_logrotate
 
 #=================================================
 # BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
@@ -63,7 +65,7 @@ ynh_script_progression --message="Backing up the app before upgrading (may take 
 ynh_backup_before_upgrade
 ynh_clean_setup () {
 	ynh_clean_check_starting
-	# restore it if the upgrade fails
+	# Restore it if the upgrade fails
 	ynh_restore_upgradebackup
 }
 # Exit if an error occurs during the execution of the script
@@ -77,6 +79,14 @@ ynh_abort_if_errors
 ynh_script_progression --message="Stopping a systemd service..."
 
 ynh_systemd_action --service_name=$app --action="stop" --log_path="systemd" --line_match="Stopped Bitwarden Server"
+
+#=================================================
+# CREATE DEDICATED USER
+#=================================================
+ynh_script_progression --message="Making sure dedicated system user exists..."
+
+# Create a dedicated user (if not existing)
+ynh_system_user_create --username=$app --home_dir="$final_path"
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
@@ -93,6 +103,10 @@ then
 	ynh_setup_source --dest_dir="$final_path/live/web-vault/" --source_id="web"
 fi
 
+chmod 750 "$final_path"
+chmod -R o-rwx "$final_path"
+chown -R $app:$app "$final_path"
+
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
@@ -107,14 +121,6 @@ ynh_add_nginx_config "websocket_port rocket_port"
 ynh_script_progression --message="Upgrading dependencies..."
 
 ynh_install_app_dependencies $pkg_dependencies
-
-#=================================================
-# CREATE DEDICATED USER
-#=================================================
-ynh_script_progression --message="Making sure dedicated system user exists..."
-
-# Create a dedicated user (if not existing)
-ynh_system_user_create --username=$app --home_dir="$final_path"
 
 #=================================================
 # SPECIFIC UPGRADE
@@ -159,6 +165,16 @@ then
 fi
 
 #=================================================
+# UPDATE A CONFIG FILE
+#=================================================
+ynh_script_progression --message="Updating a config file..."
+
+ynh_add_config --template="../conf/bitwarden_rs.env" --destination="$final_path/live/bitwarden_rs.env"
+
+chmod 400 "$final_path/live/bitwarden_rs.env"
+chown $app:$app "$final_path/live/bitwarden_rs.env"
+
+#=================================================
 # SETUP SYSTEMD
 #=================================================
 ynh_script_progression --message="Upgrading systemd configuration..."
@@ -167,38 +183,13 @@ ynh_script_progression --message="Upgrading systemd configuration..."
 ynh_add_systemd_config
 
 #=================================================
-# MODIFY A CONFIG FILE
-#=================================================
-ynh_script_progression --message="Modifying a config file..."
-
-ynh_add_config --template="../conf/bitwarden_rs.env" --destination="$final_path/live/bitwarden_rs.env"
-
-#=================================================
 # GENERIC FINALIZATION
-#=================================================
-# SECURE FILES AND DIRECTORIES
-#=================================================
-ynh_script_progression --message="Securing files and directories..."
-
-# Set permissions on app files
-chown -R "$app":"$app" "$final_path"
-mkdir -p "/var/log/$app"
-chown -R "$app":"$app" /var/log/"$app"
-
-#=================================================
-# SETUP LOGROTATE
-#=================================================
-ynh_script_progression --message="Upgrading logrotate configuration..."
-
-# Use logrotate to manage app-specific logfile(s)
-ynh_use_logrotate --non-append
-
 #=================================================
 # INTEGRATE SERVICE IN YUNOHOST
 #=================================================
 ynh_script_progression --message="Integrating service in YunoHost..."
 
-yunohost service add $app --description "$app daemon for Bitwarden" --log "/var/log/$app/$app.log"
+yunohost service add $app --description="$app daemon for Bitwarden" --log="/var/log/$app/$app.log"
 
 #=================================================
 # START SYSTEMD SERVICE
