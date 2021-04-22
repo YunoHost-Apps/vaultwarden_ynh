@@ -54,8 +54,6 @@ if ! ynh_permission_exists --permission="api"; then
 	ynh_permission_create --permission="api" --url="/api" --additional_urls="/identity/connect/token" --allowed="visitors" --auth_header="false" --show_tile="false" --protected="true"
 fi
 
-ynh_remove_logrotate
-
 #=================================================
 # BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
 #=================================================
@@ -70,6 +68,8 @@ ynh_clean_setup () {
 }
 # Exit if an error occurs during the execution of the script
 ynh_abort_if_errors
+
+ynh_remove_logrotate
 
 #=================================================
 # STANDARD UPGRADE STEPS
