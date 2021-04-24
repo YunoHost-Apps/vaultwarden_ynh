@@ -42,8 +42,8 @@ Comment configurer cette application : via le panneau d'administration https://b
 
 #### Architectures supportées
 
-* x86-64 - [![Build Status](https://ci-apps.yunohost.org/ci/logs/bitwarden%20%28Apps%29.svg)](https://ci-apps.yunohost.org/ci/apps/bitwarden/)
-* ARMv8-A - [![Build Status](https://ci-apps-arm.yunohost.org/ci/logs/bitwarden%20%28Apps%29.svg)](https://ci-apps-arm.yunohost.org/ci/apps/bitwarden/)
+* x86-64 - [![Build Status](https://ci-apps.yunohost.org/ci/logs/bitwarden.svg)](https://ci-apps.yunohost.org/ci/apps/bitwarden/)
+* ARMv8-A - [![Build Status](https://ci-apps-arm.yunohost.org/ci/logs/bitwarden.svg)](https://ci-apps-arm.yunohost.org/ci/apps/bitwarden/)
 
 ## Liens
 
