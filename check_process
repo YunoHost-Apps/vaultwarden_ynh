@@ -24,17 +24,17 @@
 		# 1.15.1~ynh2
 		# upgrade=1	from_commit=bb9dac9cc50e11d8ef60033a543f9e21b42d0d8e
 		# 1.16.1~ynh2
-		upgrade=1	from_commit=5572d0420cf500fdb313c15b4ab40e7a6c38e294
+		#upgrade=1	from_commit=5572d0420cf500fdb313c15b4ab40e7a6c38e294
 		# 1.16.3~ynh1
-		upgrade=1	from_commit=576a173a43de914253645daa2c0b066f693a20f7
+		#upgrade=1	from_commit=576a173a43de914253645daa2c0b066f693a20f7
 		# 1.16.3~ynh2
-		upgrade=1	from_commit=e2e958b1885f7a08e0d5afe5dada5c0dd44dd671
+		#upgrade=1	from_commit=e2e958b1885f7a08e0d5afe5dada5c0dd44dd671
 		# 1.16.3~ynh3
-		upgrade=1	from_commit=df2a0510288c352cfc03886763149f49839ed620
+		#upgrade=1	from_commit=df2a0510288c352cfc03886763149f49839ed620
 		# 1.19.0~ynh1
-		upgrade=1	from_commit=980f625ab1eb3136437ff6275bec7990c534282c
+		#upgrade=1	from_commit=980f625ab1eb3136437ff6275bec7990c534282c
 		# 1.20.0~ynh2
-		upgrade=1	from_commit=5250a50f0bf177a79b30c25f8b6baa7ef615f75e
+		#upgrade=1	from_commit=5250a50f0bf177a79b30c25f8b6baa7ef615f75e
 		backup_restore=1
 		multi_instance=1
 		port_already_use=0
