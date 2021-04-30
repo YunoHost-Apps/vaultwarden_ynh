@@ -17,24 +17,8 @@
 		setup_private=1
 		setup_public=1
 		upgrade=1
-		# 1.9.1~ynh3
-		# upgrade=1	from_commit=501bf18eafcda987ac255d12ca213d15e63c5eef
-		# 1.14.2~ynh2
-		# upgrade=1	from_commit=2a7b9d6b6705be6e3a7217309a77b9def226eaa6
-		# 1.15.1~ynh2
-		# upgrade=1	from_commit=bb9dac9cc50e11d8ef60033a543f9e21b42d0d8e
-		# 1.16.1~ynh2
-		#upgrade=1	from_commit=5572d0420cf500fdb313c15b4ab40e7a6c38e294
-		# 1.16.3~ynh1
-		#upgrade=1	from_commit=576a173a43de914253645daa2c0b066f693a20f7
-		# 1.16.3~ynh2
-		#upgrade=1	from_commit=e2e958b1885f7a08e0d5afe5dada5c0dd44dd671
-		# 1.16.3~ynh3
-		#upgrade=1	from_commit=df2a0510288c352cfc03886763149f49839ed620
-		# 1.19.0~ynh1
-		#upgrade=1	from_commit=980f625ab1eb3136437ff6275bec7990c534282c
-		# 1.20.0~ynh2
-		#upgrade=1	from_commit=5250a50f0bf177a79b30c25f8b6baa7ef615f75e
+		# 1.20.0~ynh4
+		upgrade=1	from_commit=d5e1fa7d327c55d8e5ae4c24e7c6aaac006256db
 		backup_restore=1
 		multi_instance=1
 		port_already_use=0
@@ -43,21 +27,5 @@
 Email=yalh@yahoo.com
 Notification=all
 ;;; Upgrade options
-	; commit=501bf18eafcda987ac255d12ca213d15e63c5eef
-		name=1.9.1~ynh3
-	; commit=2a7b9d6b6705be6e3a7217309a77b9def226eaa6
-		name=1.14.2~ynh2
-	; commit=bb9dac9cc50e11d8ef60033a543f9e21b42d0d8e
-		name=1.15.1~ynh2
-	; commit=5572d0420cf500fdb313c15b4ab40e7a6c38e294
-		name=1.16.1~ynh2
-	; commit=576a173a43de914253645daa2c0b066f693a20f7
-		name=1.16.3~ynh1
-	; commit=e2e958b1885f7a08e0d5afe5dada5c0dd44dd671
-		name=1.16.3~ynh2
-	; commit=df2a0510288c352cfc03886763149f49839ed620
-		name=1.16.3~ynh3
-	; commit=980f625ab1eb3136437ff6275bec7990c534282c
-		name=1.19.0~ynh1
-	; commit=5250a50f0bf177a79b30c25f8b6baa7ef615f75e
-		name=1.20.0~ynh2
+	; commit=d5e1fa7d327c55d8e5ae4c24e7c6aaac006256db
+		name=1.20.0~ynh4
