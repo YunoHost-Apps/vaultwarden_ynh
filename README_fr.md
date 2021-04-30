@@ -19,11 +19,11 @@ Après l'installation, l'utilisateur admin recevra un e-mail avec le admin_token
 
 ## Captures d'écran
 
-![](https://vaultwarden.com/images/hero.png)
+![](https://bitwarden.com/images/hero.png)
 
 ## Démo
 
-* [Démo officielle](https://vault.vaultwarden.com/#/register)
+* [Démo officielle](https://vault.bitwarden.com/#/register)
 
 ## Configuration
 
@@ -31,7 +31,7 @@ Comment configurer cette application : via le panneau d'administration https://v
 
 ## Documentation
 
- * Documentation officielle : https://help.vaultwarden.com/ et https://github.com/dani-garcia/vaultwarden/wiki
+ * Documentation officielle : https://help.bitwarden.com/ et https://github.com/dani-garcia/vaultwarden/wiki
 
 ## Caractéristiques spécifiques YunoHost
 
@@ -48,7 +48,7 @@ Comment configurer cette application : via le panneau d'administration https://v
 ## Liens
 
  * Signaler un bug : https://github.com/YunoHost-Apps/vaultwarden_ynh/issues
- * Site de l'application : https://vaultwarden.com/
+ * Site de l'application : https://bitwarden.com/
  * Dépôt de l'application principale : https://github.com/dani-garcia/vaultwarden
  * Site web YunoHost : https://yunohost.org/
 

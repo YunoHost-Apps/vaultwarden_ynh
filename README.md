@@ -19,11 +19,11 @@ At the end of the installation, the admin user will receive a mail with the admi
 
 ## Screenshots
 
-![](https://vaultwarden.com/images/hero.png)
+![](https://bitwarden.com/images/hero.png)
 
 ## Demo
 
-* [Official demo](https://vault.vaultwarden.com/#/register)
+* [Official demo](https://vault.bitwarden.com/#/register)
 
 ## Configuration
 
@@ -31,7 +31,7 @@ How to configure this app: by an admin panel at https://vaultwarden.domain.tld/a
 
 ## Documentation
 
- * Official documentation: https://help.vaultwarden.com/ and https://github.com/dani-garcia/vaultwarden/wiki
+ * Official documentation: https://help.bitwarden.com/ and https://github.com/dani-garcia/vaultwarden/wiki
 
 ## YunoHost specific features
 
@@ -48,7 +48,7 @@ How to configure this app: by an admin panel at https://vaultwarden.domain.tld/a
 ## Links
 
  * Report a bug: https://github.com/YunoHost-Apps/vaultwarden_ynh/issues
- * App website: https://vaultwarden.com/
+ * App website: https://bitwarden.com/
  * Upstream app repository: https://github.com/dani-garcia/vaultwarden
  * YunoHost website: https://yunohost.org/
 
