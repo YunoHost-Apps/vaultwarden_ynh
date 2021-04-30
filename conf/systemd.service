@@ -1,20 +1,20 @@
 [Unit]
-Description=Bitwarden Server (Rust Edition)
-Documentation=https://github.com/dani-garcia/bitwarden_rs
+Description=vaultwarden Server (Rust Edition)
+Documentation=https://github.com/dani-garcia/vaultwarden
 After=network.target
 
 [Service]
-# The user/group bitwarden_rs is run under. the working directory (see below) should allow write and read access to this user/group
+# The user/group vaultwarden is run under. the working directory (see below) should allow write and read access to this user/group
 User=__APP__
 Group=__APP__
 # The location of the .env file for configuration
-EnvironmentFile=__FINALPATH__/live/bitwarden_rs.env
+EnvironmentFile=__FINALPATH__/live/vaultwarden.env
 # The location of the compiled binary
-ExecStart=__FINALPATH__/live/bitwarden_rs
+ExecStart=__FINALPATH__/live/vaultwarden
 # Set reasonable connection and process limits
 LimitNOFILE=1048576
 LimitNPROC=64
-# Isolate bitwarden_rs from the rest of the system
+# Isolate vaultwarden from the rest of the system
 PrivateTmp=true
 PrivateDevices=true
 ProtectHome=true
