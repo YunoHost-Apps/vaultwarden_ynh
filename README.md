@@ -1,21 +1,21 @@
-# Bitwarden for YunoHost
+# vaultwarden for YunoHost
 
-[![Integration level](https://dash.yunohost.org/integration/bitwarden.svg)](https://dash.yunohost.org/appci/app/bitwarden) ![](https://ci-apps.yunohost.org/ci/badges/bitwarden.status.svg) ![](https://ci-apps.yunohost.org/ci/badges/bitwarden.maintain.svg)  
-[![Install Bitwarden with YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=bitwarden)
+[![Integration level](https://dash.yunohost.org/integration/vaultwarden.svg)](https://dash.yunohost.org/appci/app/vaultwarden) ![](https://ci-apps.yunohost.org/ci/badges/vaultwarden.status.svg) ![](https://ci-apps.yunohost.org/ci/badges/vaultwarden.maintain.svg)  
+[![Install vaultwarden with YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=vaultwarden)
 
 *[Lire ce readme en français.](./README_fr.md)*
 
-> *This package allows you to install Bitwarden quickly and simply on a YunoHost server.  
+> *This package allows you to install vaultwarden quickly and simply on a YunoHost server.  
 If you don't have YunoHost, please consult [the guide](https://yunohost.org/#/install) to learn how to install it.*
 
 ## Overview
-Bitwarden is a open source password manager.
+vaultwarden is a open source password manager.
 
-**Shipped version:** 1.20.0
+**Shipped version:** 1.21.0
 
 ## Important points to read before installing
 
-At the end of the installation, the admin user will receive a mail with the admin_token used to access https://your.domain.tld/bitwarden/admin.
+At the end of the installation, the admin user will receive a mail with the admin_token used to access https://your.domain.tld/vaultwarden/admin.
 
 ## Screenshots
 
@@ -27,11 +27,11 @@ At the end of the installation, the admin user will receive a mail with the admi
 
 ## Configuration
 
-How to configure this app: by an admin panel at https://bitwarden.domain.tld/admin.
+How to configure this app: by an admin panel at https://vaultwarden.domain.tld/admin.
 
 ## Documentation
 
- * Official documentation: https://help.bitwarden.com/ and https://github.com/dani-garcia/bitwarden_rs/wiki
+ * Official documentation: https://help.bitwarden.com/ and https://github.com/dani-garcia/vaultwarden/wiki
 
 ## YunoHost specific features
 
@@ -42,25 +42,25 @@ How to configure this app: by an admin panel at https://bitwarden.domain.tld/adm
 
 #### Supported architectures
 
-* x86-64 - [![Build Status](https://ci-apps.yunohost.org/ci/logs/bitwarden.svg)](https://ci-apps.yunohost.org/ci/apps/bitwarden/)
-* ARMv8-A - [![Build Status](https://ci-apps-arm.yunohost.org/ci/logs/bitwarden.svg)](https://ci-apps-arm.yunohost.org/ci/apps/bitwarden/)
+* x86-64 - [![Build Status](https://ci-apps.yunohost.org/ci/logs/vaultwarden.svg)](https://ci-apps.yunohost.org/ci/apps/vaultwarden/)
+* ARMv8-A - [![Build Status](https://ci-apps-arm.yunohost.org/ci/logs/vaultwarden.svg)](https://ci-apps-arm.yunohost.org/ci/apps/vaultwarden/)
 
 ## Links
 
- * Report a bug: https://github.com/YunoHost-Apps/bitwarden_ynh/issues
+ * Report a bug: https://github.com/YunoHost-Apps/vaultwarden_ynh/issues
  * App website: https://bitwarden.com/
- * Upstream app repository: https://github.com/dani-garcia/bitwarden_rs
+ * Upstream app repository: https://github.com/dani-garcia/vaultwarden
  * YunoHost website: https://yunohost.org/
 
 ---
 
 ## Developer info
 
-Please send your pull request to the [testing branch](https://github.com/YunoHost-Apps/bitwarden_ynh/tree/testing).
+Please send your pull request to the [testing branch](https://github.com/YunoHost-Apps/vaultwarden_ynh/tree/testing).
 
 To try the testing branch, please proceed like that.
 ```
-sudo yunohost app install https://github.com/YunoHost-Apps/bitwarden_ynh/tree/testing --debug
+sudo yunohost app install https://github.com/YunoHost-Apps/vaultwarden_ynh/tree/testing --debug
 or
-sudo yunohost app upgrade bitwarden -u https://github.com/YunoHost-Apps/bitwarden_ynh/tree/testing --debug
+sudo yunohost app upgrade vaultwarden -u https://github.com/YunoHost-Apps/vaultwarden_ynh/tree/testing --debug
 ```
