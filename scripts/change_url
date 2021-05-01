@@ -76,7 +76,7 @@ fi
 #=================================================
 ynh_script_progression --message="Stopping a systemd service..."
 
-ynh_systemd_action --service_name=$app --action="stop" --log_path="systemd" --line_match="Stopped Bitwarden Server"
+ynh_systemd_action --service_name=$app --action="stop" --log_path="systemd" --line_match="Stopped vaultwarden Server"
 
 #=================================================
 # MODIFY URL IN NGINX CONF
@@ -114,7 +114,7 @@ fi
 #=================================================
 ynh_script_progression --message="Modifying a config file..."
 
-config="$final_path/live/bitwarden_rs.env"
+config="$final_path/live/vaultwarden.env"
 
 ynh_backup_if_checksum_is_different --file="$config"
 

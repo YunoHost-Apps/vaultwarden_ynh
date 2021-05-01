@@ -92,7 +92,7 @@ ynh_script_progression --message="Setting up source files..."
 
 ynh_app_setting_set --app=$app --key=final_path --value=$final_path
 
-# Download, check integrity, uncompress the source of bitwarden_rs from app.src to his build directory
+# Download, check integrity, uncompress the source of vaultwarden from app.src to his build directory
 ynh_setup_source --dest_dir="$final_path/build/" --source_id="app"
 
 # Download, check integrity, uncompress and patch the source from web.src
@@ -117,20 +117,20 @@ ynh_add_nginx_config "websocket_port rocket_port"
 #=================================================
 ynh_script_progression --message="Making install..."
 
-# Install rustup with the toolchain needed by bitwarden_rs
+# Install rustup with the toolchain needed by vaultwarden
 pushd "$final_path"
 	sudo -u "$app" RUSTUP_HOME="$final_path"/.rustup CARGO_HOME="$final_path"/.cargo bash -c 'curl -sSf -L https://static.rust-lang.org/rustup.sh | sh -s -- -y --default-toolchain nightly'
 popd
 
 export PATH="$PATH:$final_path/.cargo/bin:$final_path/.local/bin:/usr/local/sbin" 
 
-# Compile bitwarden_rs
+# Compile vaultwarden
 pushd "$final_path"/build
 	ynh_exec_warn_less sudo -u "$app" env PATH="$PATH" cargo build --features sqlite --release
 popd
 
-# Install bitwarden_rs
-cp -af "$final_path/build/target/release/bitwarden_rs" "$final_path/live/bitwarden_rs"
+# Install vaultwarden
+cp -af "$final_path/build/target/release/vaultwarden" "$final_path/live/vaultwarden"
 
 # Remove build files and rustup
 ynh_secure_remove --file="$final_path/build"
@@ -149,10 +149,10 @@ chown -R $app:$app "$final_path/live/data"
 #=================================================
 ynh_script_progression --message="Adding a config file..."
 
-ynh_add_config --template="../conf/bitwarden_rs.env" --destination="$final_path/live/bitwarden_rs.env"
+ynh_add_config --template="../conf/vaultwarden.env" --destination="$final_path/live/vaultwarden.env"
 
-chmod 400 "$final_path/live/bitwarden_rs.env"
-chown $app:$app "$final_path/live/bitwarden_rs.env"
+chmod 400 "$final_path/live/vaultwarden.env"
+chown $app:$app "$final_path/live/vaultwarden.env"
 
 #=================================================
 # SETUP SYSTEMD
@@ -169,7 +169,7 @@ ynh_add_systemd_config
 #=================================================
 ynh_script_progression --message="Integrating service in YunoHost..."
 
-yunohost service add $app --description="$app daemon for Bitwarden" --log="/var/log/$app/$app.log"
+yunohost service add $app --description="$app daemon for vaultwarden" --log="/var/log/$app/$app.log"
 
 #=================================================
 # START SYSTEMD SERVICE
