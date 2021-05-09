@@ -47,6 +47,9 @@
 # | arg: -i, --migration_id= - ID from which to migrate
 # | arg: -l, --migration_list= - File specifying every file to move (one file per line)
 ynh_handle_app_migration ()  {
+  # Need for end of install
+  ynh_package_install at
+
   #=================================================
   # LOAD SETTINGS
   #=================================================
@@ -99,7 +102,7 @@ ynh_handle_app_migration ()  {
 
     # TODO Handle multi instance apps...
     # Check that there is not already an app installed for this id.
-    (yunohost app list | grep -q "id: $new_app") \
+    (yunohost app list | grep -q -w "id: $new_app") \
     && ynh_die --message="$new_app is already installed"
 
     #=================================================
@@ -126,6 +129,7 @@ ynh_handle_app_migration ()  {
 
     local settings_dir="/etc/yunohost/apps"
     cp -a "$settings_dir/$old_app" "$settings_dir/$new_app"
+    cp -a ../{scripts,conf} "$settings_dir/$new_app"
 
     # Replace the old id by the new one
     ynh_replace_string --match_string="\(^id: .*\)$old_app" --replace_string="\1$new_app" --target_file="$settings_dir/$new_app/settings.yml"
@@ -143,6 +147,9 @@ ynh_handle_app_migration ()  {
         new_label=$(echo $new_app_id | cut -c1 | tr [:lower:] [:upper:])$(echo $new_app_id | cut -c2-)
         ynh_app_setting_set --app=$new_app --key=label --value=$new_label
     fi
+    
+    yunohost tools shell -c "from yunohost.permission import permission_delete; permission_delete('$old_app.main', force=True, sync_perm=False)"
+    yunohost tools shell -c "from yunohost.permission import permission_create; permission_create('$new_app.main', url='/' , sync_perm=True)"
 
     #=================================================
     # MOVE FILES TO THE NEW DESTINATION
@@ -211,19 +218,6 @@ ynh_handle_app_migration ()  {
     fi
 
     #=================================================
-    # CREATE A NEW USER
-    #=================================================
-
-    new_final_path=$(ynh_app_setting_get --app=$new_app --key=final_path)
-
-    # Check if the user exists on the system
-    if ynh_system_user_exists --username="$old_app"
-    then
-      ynh_print_info --message="Create a new user $new_app to replace $old_app" >&2
-      ynh_system_user_create --username=$app --home_dir="$new_final_path"
-    fi
-
-    #=================================================
     # CHANGE THE FAKE DEPENDENCIES PACKAGE
     #=================================================
 
@@ -251,7 +245,6 @@ ynh_handle_app_migration ()  {
     #=================================================
 
     app=$new_app
-
 
     # Set migration_process to 1 to inform that an upgrade has been made
     migration_process=1
