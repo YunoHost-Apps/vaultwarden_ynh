@@ -22,7 +22,7 @@ script_name="$0"
 # DELETE OLD APP'S SETTINGS
 #=================================================
 
-#ynh_secure_remove --file="/etc/yunohost/apps/$old_app"
+ynh_secure_remove --file="/etc/yunohost/apps/$old_app"
 yunohost app ssowatconf
 
 #=================================================
