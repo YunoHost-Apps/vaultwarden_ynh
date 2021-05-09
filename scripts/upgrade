@@ -97,7 +97,6 @@ then
 	ynh_delete_file_checksum --file="$final_path/live/bitwarden_rs.env"
 	ynh_store_file_checksum --file="$final_path/live/vaultwarden.env" 
 	ynh_secure_remove --file="$final_path/live/bitwarden_rs"
-	mkdir -p "/etc/yunohost/apps/bitwarden"
 fi
 
 #=================================================
