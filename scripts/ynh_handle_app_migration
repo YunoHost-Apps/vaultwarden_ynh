@@ -149,7 +149,9 @@ ynh_handle_app_migration ()  {
     fi
     
     yunohost tools shell -c "from yunohost.permission import permission_delete; permission_delete('$old_app.main', force=True, sync_perm=False)"
-    yunohost tools shell -c "from yunohost.permission import permission_create; permission_create('$new_app.main', url='/' , sync_perm=True)"
+    yunohost tools shell -c "from yunohost.permission import permission_delete; permission_delete('$old_app.admin', force=True, sync_perm=False)"
+    yunohost tools shell -c "from yunohost.permission import permission_delete; permission_delete('$old_app.api', force=True, sync_perm=False)"
+    yunohost tools shell -c "from yunohost.permission import permission_create; permission_create('$new_app.main', url='$path_url' , sync_perm=True)"
 
     #=================================================
     # MOVE FILES TO THE NEW DESTINATION
