@@ -72,10 +72,22 @@ then
 	final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 	db_name=$(ynh_app_setting_get --app=$app --key=db_name)
 
+	# Move config file
 	mv $final_path/live/bitwarden_rs.env $final_path/live/vaultwarden.env
-	ynh_delete_file_checksum --file="$final_path/live/bitwarden_rs.env"
+	ynh_delete_file_checksum --file="/var/www/$old_app/live/bitwarden_rs.env"
 	ynh_store_file_checksum --file="$final_path/live/vaultwarden.env" 
 	ynh_secure_remove --file="$final_path/live/bitwarden_rs"
+
+	# Manage permissions
+	ynh_permission_update --permission="main" --add="all_users"
+	ynh_permission_update --permission="main" --add="visitors"
+
+	# Remove the service from the list of services known by YunoHost (added from `yunohost service add`)
+	if ynh_exec_warn_less yunohost service status $old_app >/dev/null
+	then
+		ynh_script_progression --message="Removing $old_app service integration..."
+		yunohost service remove $old_app
+	fi
 fi
 
 #=================================================

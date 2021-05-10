@@ -129,7 +129,7 @@ ynh_handle_app_migration ()  {
 
     local settings_dir="/etc/yunohost/apps"
     cp -a "$settings_dir/$old_app" "$settings_dir/$new_app"
-    cp -a ../{scripts,conf} "$settings_dir/$new_app"
+    cp -a ../{scripts,conf,manifest.json} "$settings_dir/$new_app"
 
     # Replace the old id by the new one
     ynh_replace_string --match_string="\(^id: .*\)$old_app" --replace_string="\1$new_app" --target_file="$settings_dir/$new_app/settings.yml"
@@ -148,10 +148,13 @@ ynh_handle_app_migration ()  {
         ynh_app_setting_set --app=$new_app --key=label --value=$new_label
     fi
     
-    yunohost tools shell -c "from yunohost.permission import permission_delete; permission_delete('$old_app.main', force=True, sync_perm=False)"
-    yunohost tools shell -c "from yunohost.permission import permission_delete; permission_delete('$old_app.admin', force=True, sync_perm=False)"
-    yunohost tools shell -c "from yunohost.permission import permission_delete; permission_delete('$old_app.api', force=True, sync_perm=False)"
-    yunohost tools shell -c "from yunohost.permission import permission_create; permission_create('$new_app.main', url='$path_url' , sync_perm=True)"
+    permissions_name=$(yunohost user permission list $old_app --short --output-as plain)
+    for permission_name in $permissions_name
+    do
+      yunohost tools shell -c "from yunohost.permission import permission_delete; permission_delete('$permission_name', force=True, sync_perm=False)"
+    done
+
+    yunohost tools shell -c "from yunohost.permission import permission_create; permission_create('$new_app.main', url='/' , show_tile=True , sync_perm=True)"
 
     #=================================================
     # MOVE FILES TO THE NEW DESTINATION
@@ -171,13 +174,22 @@ ynh_handle_app_migration ()  {
     #=================================================
 
     # Replace nginx checksum
-    ynh_replace_string --match_string="\(^checksum__etc_nginx.*\)_$old_app" --replace_string="\1_$new_app/" --target_file="$settings_dir/$new_app/settings.yml"
+    ynh_replace_string --match_string="\(^checksum__etc_nginx.*\)_$old_app" --replace_string="\1_$new_app" --target_file="$settings_dir/$new_app/settings.yml"
 
-    # Replace php5-fpm checksums
-    ynh_replace_string --match_string="\(^checksum__etc_php5.*[-_]\)$old_app" --replace_string="\1$new_app/" --target_file="$settings_dir/$new_app/settings.yml"
+    # Replace php-fpm checksums
+    ynh_replace_string --match_string="\(^checksum__etc_php.*[-_]\)$old_app" --replace_string="\1$new_app" --target_file="$settings_dir/$new_app/settings.yml"
 
     # Replace final_path
     ynh_replace_string --match_string="\(^final_path: .*\)$old_app" --replace_string="\1$new_app" --target_file="$settings_dir/$new_app/settings.yml"
+
+    # Replace fail2ban_filter
+    ynh_replace_string --match_string="\(^checksum__etc_fail2ban_filter.*\)_$old_app" --replace_string="\1_$new_app" --target_file="$settings_dir/$new_app/settings.yml"
+
+    # Replace fail2ban_jail
+    ynh_replace_string --match_string="\(^checksum__etc_fail2ban_jail.*\)_$old_app" --replace_string="\1_$new_app" --target_file="$settings_dir/$new_app/settings.yml"
+
+    # Replace systemd
+    ynh_replace_string --match_string="\(^checksum__etc_systemd_system.*\)_$old_app" --replace_string="\1_$new_app" --target_file="$settings_dir/$new_app/settings.yml"
 
     #=================================================
     # MOVE THE MYSQL DATABASE
