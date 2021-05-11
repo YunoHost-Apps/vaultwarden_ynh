@@ -19,6 +19,8 @@
 		upgrade=1
 		# Bitwarden 1.20.0~ynh4
 		#upgrade=1	from_commit=d5e1fa7d327c55d8e5ae4c24e7c6aaac006256db
+		# 1.21.0~ynh1
+		upgrade=1	from_commit=3f7d7d2740a1cb3f16a290b64c89e84422d06ede
 		backup_restore=1
 		multi_instance=1
 		port_already_use=0
@@ -28,4 +30,6 @@ Email=yalh@yahoo.com
 Notification=all
 ;;; Upgrade options
 	; commit=d5e1fa7d327c55d8e5ae4c24e7c6aaac006256db
-		name=1.20.0~ynh4
+		name=Bitwarden 1.20.0~ynh4
+	; commit=3f7d7d2740a1cb3f16a290b64c89e84422d06ede
+		name=1.21.0~ynh1
