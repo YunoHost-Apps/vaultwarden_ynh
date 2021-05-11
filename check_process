@@ -18,7 +18,7 @@
 		setup_public=1
 		upgrade=1
 		# Bitwarden 1.20.0~ynh4
-		upgrade=1	from_commit=d5e1fa7d327c55d8e5ae4c24e7c6aaac006256db
+		#upgrade=1	from_commit=d5e1fa7d327c55d8e5ae4c24e7c6aaac006256db
 		backup_restore=1
 		multi_instance=1
 		port_already_use=0
