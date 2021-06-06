@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # App main directory
 /var/www/$app
 
