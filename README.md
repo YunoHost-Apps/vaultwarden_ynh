@@ -52,6 +52,19 @@ How to configure this app: by an admin panel at https://vaultwarden.domain.tld/a
  * Upstream app repository: https://github.com/dani-garcia/vaultwarden
  * YunoHost website: https://yunohost.org/
 
+## Migrate from Bitwarden
+
+This package handle the migration from Bitwarden to Vaultwarden.
+For that, you will have to upgrade your Bitwarden application with this repository.
+This can only be done from the command-line interface - e.g. through SSH.
+Once you're connected, you simply have to execute the following:
+
+```bash
+sudo yunohost app upgrade bitwarden -u https://github.com/YunoHost-Apps/vaultwarden_ynh --debug
+```
+
+The `--debug` option will let you see the full output. If you encounter any issue, please paste it.
+
 ---
 
 ## Developer info
