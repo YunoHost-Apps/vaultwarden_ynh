@@ -11,7 +11,7 @@ If you don't have YunoHost, please consult [the guide](https://yunohost.org/#/in
 ## Overview
 vaultwarden is a open source password manager.
 
-**Shipped version:** 1.21.0
+**Shipped version:** 1.22.1
 
 ## Important points to read before installing
 
