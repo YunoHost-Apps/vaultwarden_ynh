@@ -64,11 +64,11 @@ ynh_script_progression --message="Finding an available port..."
 
 # Find an available port
 websocket_port=$(ynh_find_port --port=3012)
-ynh_app_setting_set --app=$app --key=websocket_port --value="$websocket_port"
+ynh_app_setting_set --app=$app --key=websocket_port --value=$websocket_port
 
 # Find an available port
 rocket_port=$(ynh_find_port --port=8095)
-ynh_app_setting_set --app=$app --key=rocket_port --value="$rocket_port"
+ynh_app_setting_set --app=$app --key=rocket_port --value=$rocket_port
 
 #=================================================
 # INSTALL DEPENDENCIES
@@ -83,7 +83,7 @@ ynh_install_app_dependencies $pkg_dependencies
 ynh_script_progression --message="Configuring system user..."
 
 # Create a system user
-ynh_system_user_create --username=$app --home_dir="$final_path"
+ynh_system_user_create --username=$app --home_dir=$final_path
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
@@ -108,7 +108,7 @@ chown -R $app:$app "$final_path"
 ynh_script_progression --message="Configuring NGINX web server..."
 
 # Create a dedicated NGINX config
-ynh_add_nginx_config "websocket_port rocket_port"
+ynh_add_nginx_config
 
 #=================================================
 # SPECIFIC SETUP
@@ -137,12 +137,19 @@ ynh_secure_remove --file="$final_path/build"
 ynh_secure_remove --file="$final_path/.cargo"
 ynh_secure_remove --file="$final_path/.rustup"
 
-# Create datadir
-mkdir -p "$final_path/live/data"
+#=================================================
+# CREATE DATA DIRECTORY
+#=================================================
+ynh_script_progression --message="Creating a data directory..."
 
-chmod 750 "$final_path/live/data"
-chmod -R o-rwx "$final_path/live/data"
-chown -R $app:$app "$final_path/live/data"
+datadir=/home/yunohost.app/$app
+ynh_app_setting_set --app=$app --key=datadir --value=$datadir
+
+mkdir -p $datadir
+
+chmod 750 "$datadir"
+chmod -R o-rwx "$datadir"
+chown -R $app:$app "$datadir"
 
 #=================================================
 # ADD A CONFIGURATION
