@@ -7,6 +7,7 @@
 #=================================================
 
 source _common.sh
+source ynh_handle_app_migration
 source /usr/share/yunohost/helpers
 
 #=================================================
@@ -33,28 +34,6 @@ ynh_script_progression --message="Checking version..."
 upgrade_type=$(ynh_check_app_version_changed)
 
 #=================================================
-# ENSURE DOWNWARD COMPATIBILITY
-#=================================================
-ynh_script_progression --message="Ensuring downward compatibility..."
-
-# Cleaning legacy permissions
-if ynh_legacy_permissions_exists; then
-	ynh_legacy_permissions_delete_all
-
-	ynh_app_setting_delete --app=$app --key=is_public
-fi
-
-if ! ynh_permission_exists --permission="admin"; then
-	# Create the required permissions
-	ynh_permission_create --permission="admin" --url="/admin" --allowed=$admin --show_tile="false"
-fi
-
-# Create a permission if needed
-if ! ynh_permission_exists --permission="api"; then
-	ynh_permission_create --permission="api" --url="/api" --additional_urls="/identity/connect/token" --allowed="visitors" --auth_header="false" --show_tile="false" --protected="true"
-fi
-
-#=================================================
 # BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
 #=================================================
 ynh_script_progression --message="Backing up the app before upgrading (may take a while)..."
@@ -78,7 +57,60 @@ ynh_remove_logrotate
 #=================================================
 ynh_script_progression --message="Stopping a systemd service..."
 
-ynh_systemd_action --service_name=$app --action="stop" --log_path="systemd" --line_match="Stopped vaultwarden Server"
+ynh_systemd_action --service_name=$app --action="stop" --log_path="systemd" --line_match="Stopped"
+
+#=================================================
+# HANDLE MIGRATION FROM BITWARDEN
+#=================================================
+
+ynh_handle_app_migration --migration_id="bitwarden" --migration_list="bitwarden_migration"
+
+if [ $migration_process -eq 1 ]
+then
+	# If a migration has been perform
+	# Reload some values changed by the migration process
+	final_path=$(ynh_app_setting_get --app=$app --key=final_path)
+	db_name=$(ynh_app_setting_get --app=$app --key=db_name)
+
+	# Move config file
+	mv $final_path/live/bitwarden_rs.env $final_path/live/vaultwarden.env
+	ynh_delete_file_checksum --file="/var/www/$old_app/live/bitwarden_rs.env"
+	ynh_store_file_checksum --file="$final_path/live/vaultwarden.env" 
+	ynh_secure_remove --file="$final_path/live/bitwarden_rs"
+
+	# Manage permissions
+	ynh_permission_update --permission="main" --add="all_users"
+	ynh_permission_update --permission="main" --add="visitors"
+
+	# Remove the service from the list of services known by YunoHost (added from `yunohost service add`)
+	if ynh_exec_warn_less yunohost service status $old_app >/dev/null
+	then
+		ynh_script_progression --message="Removing $old_app service integration..."
+		yunohost service remove $old_app
+	fi
+fi
+
+#=================================================
+# ENSURE DOWNWARD COMPATIBILITY
+#=================================================
+ynh_script_progression --message="Ensuring downward compatibility..."
+
+# Cleaning legacy permissions
+if ynh_legacy_permissions_exists; then
+	ynh_legacy_permissions_delete_all
+
+	ynh_app_setting_delete --app=$app --key=is_public
+fi
+
+if ! ynh_permission_exists --permission="admin"; then
+	# Create the required permissions
+	ynh_permission_create --permission="admin" --url="/admin" --allowed=$admin --show_tile="false"
+fi
+
+# Create a permission if needed
+if ! ynh_permission_exists --permission="api"; then
+	ynh_permission_create --permission="api" --url="/api" --additional_urls="/identity/connect/token" --allowed="visitors" --auth_header="false" --show_tile="false" --protected="true"
+fi
 
 #=================================================
 # CREATE DEDICATED USER
@@ -169,13 +201,6 @@ fi
 #=================================================
 ynh_script_progression --message="Updating a config file..."
 
-# Manage app name change
-if test -f "$final_path/live/bitwarden_rs.env"; then
-    mv -a "$final_path/live/bitwarden_rs.env" "$final_path/live/vaultwarden.env"
-    ynh_delete_file_checksum --file="$final_path/live/bitwarden_rs.env"
-    ynh_store_file_checksum --file="$final_path/live/vaultwarden.env"
-fi
-
 ynh_add_config --template="../conf/vaultwarden.env" --destination="$final_path/live/vaultwarden.env"
 
 chmod 400 "$final_path/live/vaultwarden.env"
@@ -210,6 +235,8 @@ ynh_systemd_action --service_name=$app --action="start" --log_path="systemd" --l
 #=================================================
 ynh_script_progression --message="Reconfiguring Fail2Ban..."
 
+mkdir -p "/var/log/$app"
+touch /var/log/"$app"/"$app".log
 # Create a dedicated Fail2Ban config
 ynh_add_fail2ban_config --logpath="/var/log/$app/$app.log" --failregex="^.*Username or password is incorrect\. Try again\. IP: <HOST>\. Username:.*$"
 
@@ -219,6 +246,24 @@ ynh_add_fail2ban_config --logpath="/var/log/$app/$app.log" --failregex="^.*Usern
 ynh_script_progression --message="Reloading NGINX web server..."
 
 ynh_systemd_action --service_name=nginx --action=reload
+
+#=================================================
+# FINISH MIGRATION PROCESS
+#=================================================
+
+if [ $migration_process -eq 1 ]
+then
+	ynh_script_progression --message="Bitwarden has been successfully migrated to Vaultwarden! \
+A last scheduled operation will run in a couple of minutes to finish the \
+migration in YunoHost side. Do not proceed any application operation while \
+you don't see Vaultwarden as installed."
+	script_post_migration=bitwarden_post_migration.sh
+	cp ../conf/$script_post_migration /tmp
+	ynh_replace_string --match_string="__OLD_APP__" --replace_string="$old_app" --target_file=/tmp/$script_post_migration
+	ynh_replace_string --match_string="__NEW_APP__" --replace_string="$app" --target_file=/tmp/$script_post_migration
+	chmod +x /tmp/$script_post_migration
+	(cd /tmp; echo "/tmp/$script_post_migration > /tmp/$script_post_migration.log 2>&1" | at now + 2 minutes)
+fi
 
 #=================================================
 # END OF SCRIPT

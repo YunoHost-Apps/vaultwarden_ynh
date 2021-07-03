@@ -1,0 +1,15 @@
+# App main directory
+/var/www/$app
+
+# NGINX web server configuration
+/etc/nginx/conf.d/$domain.d/$app.conf
+
+# App logs
+/var/log/$app/
+
+# Service configuration
+/etc/systemd/system/$app.service
+
+# Fail2Ban configuration
+/etc/fail2ban/jail.d/$app.conf
+/etc/fail2ban/filter.d/$app.conf
