@@ -5,7 +5,9 @@
 #=================================================
 
 # dependencies used by the app
-pkg_dependencies="curl tar pkg-config libssl-dev libc6-dev"
+pkg_dependencies="postgresql postgresql-contrib"
+
+VAULTWARDEN_VERSION=1.21.0
 
 #=================================================
 # PERSONAL HELPERS

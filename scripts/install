@@ -93,7 +93,7 @@ ynh_script_progression --message="Setting up source files..."
 ynh_app_setting_set --app=$app --key=final_path --value=$final_path
 
 # Download, check integrity, uncompress the source of vaultwarden from app.src to his build directory
-ynh_setup_source --dest_dir="$final_path/build/" --source_id="app"
+ynh_setup_source --dest_dir="$final_path/build/" --source_id="docker-image-extract"
 
 # Download, check integrity, uncompress and patch the source from web.src
 ynh_setup_source --dest_dir="$final_path/live/web-vault/" --source_id="web"
@@ -117,20 +117,13 @@ ynh_add_nginx_config
 #=================================================
 ynh_script_progression --message="Making install..."
 
-# Install rustup with the toolchain needed by vaultwarden
-pushd "$final_path"
-	sudo -u "$app" RUSTUP_HOME="$final_path"/.rustup CARGO_HOME="$final_path"/.cargo bash -c 'curl -sSf -L https://static.rust-lang.org/rustup.sh | sh -s -- -y --default-toolchain nightly'
-popd
-
-export PATH="$PATH:$final_path/.cargo/bin:$final_path/.local/bin:/usr/local/sbin" 
-
 # Compile vaultwarden
 pushd "$final_path"/build
-	ynh_exec_warn_less sudo -u "$app" env PATH="$PATH" cargo build --features sqlite --release
+	./docker-image-extract vaultwarden/server:$VAULTWARDEN_VERSION
 popd
 
 # Install vaultwarden
-cp -af "$final_path/build/target/release/vaultwarden" "$final_path/live/vaultwarden"
+cp -af "$final_path/build/output/vaultwarden" "$final_path/live/vaultwarden"
 
 # Remove build files and rustup
 ynh_secure_remove --file="$final_path/build"
