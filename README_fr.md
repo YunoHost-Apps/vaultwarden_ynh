@@ -11,7 +11,7 @@ Si vous n'avez pas YunoHost, consultez [le guide](https://yunohost.org/#/install
 ## Vue d'ensemble
 vaultwarden est un gestionnaire de mots de passe open source.
 
-**Version incluse :** 1.21.0
+**Version incluse :** 1.22.2
 
 ## Points importants à lire avant l'installation
 
