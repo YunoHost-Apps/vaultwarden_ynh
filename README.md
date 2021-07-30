@@ -15,7 +15,9 @@ If you don't have YunoHost, please consult [the guide](https://yunohost.org/#/in
 
 ## Overview
 
-**Shipped version:** 1.22.2
+Manage passwords and other sensitive informations
+
+**Shipped version:** 1.22.2~ynh1
 
 **Demo:** https://vault.bitwarden.com/#/register
 
