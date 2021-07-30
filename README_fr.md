@@ -1,58 +1,54 @@
-# vaultwarden pour YunoHost
+# Vaultwarden pour YunoHost
 
 [![Niveau d'intégration](https://dash.yunohost.org/integration/vaultwarden.svg)](https://dash.yunohost.org/appci/app/vaultwarden) ![](https://ci-apps.yunohost.org/ci/badges/vaultwarden.status.svg) ![](https://ci-apps.yunohost.org/ci/badges/vaultwarden.maintain.svg)  
-[![Installer vaultwarden avec YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=vaultwarden)
+[![Installer Vaultwarden avec YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=vaultwarden)
 
-*[Read this readme in english.](./README.md)* 
+*[Read this readme in english.](./README.md)*
+*[Lire ce readme en français.](./README_fr.md)*
 
-> *Ce package vous permet d'installer vaultwarden rapidement et simplement sur un serveur YunoHost.  
-Si vous n'avez pas YunoHost, consultez [le guide](https://yunohost.org/#/install) pour apprendre comment l'installer.*
+> *Ce package vous permet d'installer Vaultwarden rapidement et simplement sur un serveur YunoHost.
+Si vous n'avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour savoir comment l'installer et en profiter.*
 
 ## Vue d'ensemble
-vaultwarden est un gestionnaire de mots de passe open source.
 
 **Version incluse :** 1.22.2
 
-## Points importants à lire avant l'installation
-
-Après l'installation, l'utilisateur admin recevra un e-mail avec le admin_token à utiliser pour accéder à l'administration de vaultwarden https://your.domain.tld/vaultwarden/admin.
+**Démo :** https://vault.bitwarden.com/#/register
 
 ## Captures d'écran
 
-![](https://bitwarden.com/images/hero.png)
+![](./doc/screenshots/screenshot1.png)
 
-## Démo
+## Avertissements / informations importantes
 
-* [Démo officielle](https://vault.bitwarden.com/#/register)
+* Any known limitations, constrains or stuff not working, such as (but not limited to):
+    * single-sign on and LDAP integration are not-working
+    * installation took a lot of time
 
-## Configuration
+* Other infos that people should be aware of, such as:
+    * At the end of the installation, the admin user will receive a mail with the admin_token used to access https://your.domain.tld/vaultwarden/admin.
+    * You can configure this app using the admin panel at https://vaultwarden.domain.tld/admin.
 
-Comment configurer cette application : via le panneau d'administration https://vaultwarden.domain.tld/admin.
+## Migrate from Bitwarden
 
-## Documentation
+This package handle the migration from Bitwarden to Vaultwarden.
+For that, you will have to upgrade your Bitwarden application with this repository.
+This can only be done from the command-line interface - e.g. through SSH.
+Once you're connected, you simply have to execute the following:
 
- * Documentation officielle : https://help.bitwarden.com/ et https://github.com/dani-garcia/vaultwarden/wiki
+```bash
+sudo yunohost app upgrade bitwarden -u https://github.com/YunoHost-Apps/vaultwarden_ynh --debug
+```
 
-## Caractéristiques spécifiques YunoHost
+The `--debug` option will let you see the full output. If you encounter any issue, please paste it.
 
-#### Support multi-utilisateur
+## Documentations et ressources
 
-* L'authentification LDAP et HTTP est-elle prise en charge? **Non**
-* L'application peut-elle être utilisée par plusieurs utilisateurs ? **Oui**
-
-#### Architectures supportées
-
-* x86-64 - [![Build Status](https://ci-apps.yunohost.org/ci/logs/vaultwarden.svg)](https://ci-apps.yunohost.org/ci/apps/vaultwarden/)
-* ARMv8-A - [![Build Status](https://ci-apps-arm.yunohost.org/ci/logs/vaultwarden.svg)](https://ci-apps-arm.yunohost.org/ci/apps/vaultwarden/)
-
-## Liens
-
- * Signaler un bug : https://github.com/YunoHost-Apps/vaultwarden_ynh/issues
- * Site de l'application : https://bitwarden.com/
- * Dépôt de l'application principale : https://github.com/dani-garcia/vaultwarden
- * Site web YunoHost : https://yunohost.org/
-
----
+* Documentation officielle utilisateur : https://help.bitwarden.com/
+* Documentation officielle de l'admin : https://github.com/dani-garcia/vaultwarden/wiki
+* Dépôt de code officiel de l'app : https://github.com/dani-garcia/vaultwarden
+* Documentation YunoHost pour cette app : https://yunohost.org/app_vaultwarden
+* Signaler un bug : https://github.com/YunoHost-Apps/vaultwarden_ynh/issues
 
 ## Informations pour les développeurs
 
@@ -64,3 +60,5 @@ sudo yunohost app install https://github.com/YunoHost-Apps/vaultwarden_ynh/tree/
 ou
 sudo yunohost app upgrade vaultwarden -u https://github.com/YunoHost-Apps/vaultwarden_ynh/tree/testing --debug
 ```
+
+**Plus d'infos sur le packaging d'applications :** https://yunohost.org/packaging_apps
