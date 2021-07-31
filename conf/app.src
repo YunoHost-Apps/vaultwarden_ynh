@@ -1,5 +1,5 @@
-SOURCE_URL=https://github.com/dani-garcia/vaultwarden/archive/1.21.0.tar.gz
-SOURCE_SUM=ba7e6600f3f05d9e06706e348a287b144ed34eac595b895567e64aebf551f3b852a4601ae62d8d84813154a9917011e53db44c61b49d46436afef4a740fc397f
+SOURCE_URL=https://github.com/dani-garcia/vaultwarden/archive/1.22.2.tar.gz
+SOURCE_SUM=c0d6e30033f4660086a63462b2cecd245a4c314d6c4abbd5b3b4a6f721a912237e7b85fd2967ee58756da4713b19d08ca559be02c97e0e8ece65832558af61b6
 SOURCE_SUM_PRG=sha512sum
 SOURCE_FORMAT=tar.gz
 SOURCE_IN_SUBDIR=true
