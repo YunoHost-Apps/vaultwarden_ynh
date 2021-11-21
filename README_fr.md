@@ -13,7 +13,7 @@ Si vous n'avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour
 
 Gérez les mots de passe et autres informations sensibles
 
-**Version incluse :** 1.22.2~ynh1
+**Version incluse :** 1.23.0~ynh1
 
 **Démo :** https://vault.bitwarden.com/#/register
 
