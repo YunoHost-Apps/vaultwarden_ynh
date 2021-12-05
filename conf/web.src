@@ -1,7 +1,6 @@
-SOURCE_URL=https://github.com/dani-garcia/bw_web_builds/releases/download/v2.23.0/bw_web_v2.23.0.tar.gz
-SOURCE_SUM=d91e82151a72d04c86686e02ec1eced644005dfb2655adeec6dd1cea1b631dcdcb338e3e526caad14b74d50de1a3e7651e5a2bad159f168cd408f04737d25667
+SOURCE_URL=https://github.com/dani-garcia/bw_web_builds/releases/download/v2.23.0/bw_web_v2.24.1.tar.gz
+SOURCE_SUM=f883f3746d245ad15816db477af35fba626ada420103b4b7ef54f062033b80384c71aed873a7db6800f906a3dd9afd4d8a9a0677142675e7eeac0285a3a8426e
 SOURCE_SUM_PRG=sha512sum
 SOURCE_FORMAT=tar.gz
 SOURCE_IN_SUBDIR=true
-SOURCE_FILENAME=
 SOURCE_EXTRACT=true
