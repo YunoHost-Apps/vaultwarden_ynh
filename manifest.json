@@ -6,7 +6,7 @@
         "en": "Manage passwords and other sensitive informations",
         "fr": "Gérez les mots de passe et autres informations sensibles"
     },
-    "version": "1.22.2~ynh1",
+    "version": "1.23.0~ynh1",
     "url": "https://github.com/dani-garcia/vaultwarden",
     "upstream": {
         "license": "GPL-3.0-or-later",
@@ -20,7 +20,7 @@
         "name": "yalh76"
     },
     "requirements": {
-        "yunohost": ">= 4.2.0"
+        "yunohost": ">= 4.3.0"
     },
     "multi_instance": true,
     "services": [
@@ -30,8 +30,7 @@
         "install" : [
             {
                 "name": "domain",
-                "type": "domain",
-                "example": "example.com"
+                "type": "domain"
             },
             {
                 "name": "path",
@@ -41,8 +40,7 @@
             },
             {
                 "name": "admin",
-                "type": "user",
-                "example": "johndoe"
+                "type": "user"
             },
             {
                 "name": "is_public",
