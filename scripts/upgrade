@@ -21,6 +21,7 @@ domain=$(ynh_app_setting_get --app=$app --key=domain)
 path_url=$(ynh_app_setting_get --app=$app --key=path)
 admin=$(ynh_app_setting_get --app=$app --key=admin)
 final_path=$(ynh_app_setting_get --app=$app --key=final_path)
+datadir=$(ynh_app_setting_get --app=$app --key=datadir)
 
 admin_token=$(ynh_app_setting_get --app=$app --key=admin_token)
 rocket_port=$(ynh_app_setting_get --app=$app --key=rocket_port)
@@ -47,8 +48,6 @@ ynh_clean_setup () {
 }
 # Exit if an error occurs during the execution of the script
 ynh_abort_if_errors
-
-ynh_remove_logrotate
 
 #=================================================
 # STANDARD UPGRADE STEPS
@@ -88,6 +87,20 @@ then
 		ynh_script_progression --message="Removing $old_app service integration..."
 		yunohost service remove $old_app
 	fi
+fi
+
+ynh_remove_logrotate
+
+# If datadir doesn't exist, create it
+if [ -z $datadir ]; then
+	datadir=/home/yunohost.app/$app
+	ynh_app_setting_set --app=$app --key=datadir --value=$datadir
+	mkdir -p $datadir
+	rsync -arz "$final_path/live/data/" "$datadir/" --delete-after --remove-source-files
+	ynh_secure_remove --file="$final_path/live/data"
+	chmod 750 "$datadir"
+	chmod -R o-rwx "$datadir"
+	chown -R $app:$app "$datadir"
 fi
 
 #=================================================
@@ -168,14 +181,14 @@ if [ "$upgrade_type" == "UPGRADE_APP" ]
 then
 	# Install rustup with the toolchain needed by vaultwarden
 	pushd "$final_path"
-		sudo -u "$app" RUSTUP_HOME="$final_path"/.rustup CARGO_HOME="$final_path"/.cargo bash -c 'curl -sSf -L https://static.rust-lang.org/rustup.sh | sh -s -- -y --default-toolchain nightly'
+		ynh_exec_as "$app" RUSTUP_HOME="$final_path"/.rustup CARGO_HOME="$final_path"/.cargo bash -c 'curl -sSf -L https://static.rust-lang.org/rustup.sh | sh -s -- -y --default-toolchain nightly'
 	popd
 
 	export PATH="$PATH:$final_path/.cargo/bin:$final_path/.local/bin:/usr/local/sbin" 
 
 	# Compile vaultwarden
 	pushd "$final_path"/build
-		ynh_exec_warn_less sudo -u "$app" env PATH="$PATH" cargo build --features sqlite --release
+		ynh_exec_warn_less ynh_exec_as "$app" env PATH="$PATH" cargo build --features sqlite --release
 	popd
 
 	# Remove old generated files before copying the new ones
