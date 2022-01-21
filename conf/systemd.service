@@ -7,21 +7,23 @@ After=network.target
 # The user/group vaultwarden is run under. the working directory (see below) should allow write and read access to this user/group
 User=__APP__
 Group=__APP__
-# The location of the .env file for configuration
+WorkingDirectory=__FINALPATH__/live/
+ReadWriteDirectories=__FINALPATH__/live/
 EnvironmentFile=__FINALPATH__/live/vaultwarden.env
-# The location of the compiled binary
 ExecStart=__FINALPATH__/live/vaultwarden
+
 # Set reasonable connection and process limits
 LimitNOFILE=1048576
 LimitNPROC=64
-# Isolate vaultwarden from the rest of the system
-PrivateTmp=true
-PrivateDevices=true
+
+# Sandboxing options to harden security
+# Depending on specificities of your service/app, you may need to tweak these 
+# .. but this should be a good baseline
+# Details for these options: https://www.freedesktop.org/software/systemd/man/systemd.exec.html
+PrivateTmp=yes
+PrivateDevices=yes
 ProtectHome=true
 ProtectSystem=strict
-# Only allow writes to the following directory and set it to the working directory (user and password data are stored here)
-WorkingDirectory=__FINALPATH__/live/
-ReadWriteDirectories=__FINALPATH__/live/
 
 [Install]
 WantedBy=multi-user.target
