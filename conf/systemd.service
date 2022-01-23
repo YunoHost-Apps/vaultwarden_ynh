@@ -8,8 +8,8 @@ After=network.target
 User=__APP__
 Group=__APP__
 WorkingDirectory=__FINALPATH__/live/
-ReadWriteDirectories=__FINALPATH__/live/
-EnvironmentFile=__FINALPATH__/live/vaultwarden.env
+ReadWriteDirectories=__FINALPATH__/live/ __DATADIR__
+EnvironmentFile=__FINALPATH__/live/.env
 ExecStart=__FINALPATH__/live/vaultwarden
 
 # Set reasonable connection and process limits

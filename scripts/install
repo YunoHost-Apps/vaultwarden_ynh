@@ -156,10 +156,10 @@ chown -R $app:$app "$datadir"
 #=================================================
 ynh_script_progression --message="Adding a configuration file..."
 
-ynh_add_config --template="../conf/vaultwarden.env" --destination="$final_path/live/vaultwarden.env"
+ynh_add_config --template="../conf/vaultwarden.env" --destination="$final_path/live/.env"
 
-chmod 400 "$final_path/live/vaultwarden.env"
-chown $app:$app "$final_path/live/vaultwarden.env"
+chmod 400 "$final_path/live/vaulwarden.env"
+chown $app:$app "$final_path/live/.env"
 
 #=================================================
 # SETUP SYSTEMD
