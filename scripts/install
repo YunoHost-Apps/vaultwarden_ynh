@@ -158,7 +158,7 @@ ynh_script_progression --message="Adding a configuration file..."
 
 ynh_add_config --template="../conf/vaultwarden.env" --destination="$final_path/live/.env"
 
-chmod 400 "$final_path/live/vaulwarden.env"
+chmod 400 "$final_path/live/.env"
 chown $app:$app "$final_path/live/.env"
 
 #=================================================
