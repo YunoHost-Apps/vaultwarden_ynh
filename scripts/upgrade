@@ -91,18 +91,6 @@ fi
 
 ynh_remove_logrotate
 
-# If datadir doesn't exist, create it
-if [ -z $datadir ]; then
-	datadir=/home/yunohost.app/$app
-	ynh_app_setting_set --app=$app --key=datadir --value=$datadir
-	mkdir -p $datadir
-	rsync -arz "$final_path/live/data/" "$datadir/" --delete-after --remove-source-files
-	ynh_secure_remove --file="$final_path/live/data"
-	chmod 750 "$datadir"
-	chmod -R o-rwx "$datadir"
-	chown -R $app:$app "$datadir"
-fi
-
 #=================================================
 # ENSURE DOWNWARD COMPATIBILITY
 #=================================================
@@ -132,6 +120,23 @@ ynh_script_progression --message="Making sure dedicated system user exists..."
 
 # Create a dedicated user (if not existing)
 ynh_system_user_create --username=$app --home_dir=$final_path
+
+#=================================================
+# CREATE DATA DIRECTORY
+#=================================================
+ynh_script_progression --message="Making sure data directory exists..."
+
+# If datadir doesn't exist, create it
+if [ -z $datadir ]; then
+	datadir=/home/yunohost.app/$app
+	ynh_app_setting_set --app=$app --key=datadir --value=$datadir
+	mkdir -p $datadir
+	rsync -arz "$final_path/live/data/" "$datadir/" --delete-after --remove-source-files
+	ynh_secure_remove --file="$final_path/live/data"
+	chmod 750 "$datadir"
+	chmod -R o-rwx "$datadir"
+	chown -R $app:$app "$datadir"
+fi
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
