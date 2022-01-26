@@ -72,9 +72,9 @@ then
 	db_name=$(ynh_app_setting_get --app=$app --key=db_name)
 
 	# Move config file
-	mv $final_path/live/bitwarden_rs.env $final_path/live/vaultwarden.env
+	mv $final_path/live/bitwarden_rs.env $final_path/live/.env
 	ynh_delete_file_checksum --file="/var/www/$old_app/live/bitwarden_rs.env"
-	ynh_store_file_checksum --file="$final_path/live/vaultwarden.env" 
+	ynh_store_file_checksum --file="$final_path/live/.env" 
 	ynh_secure_remove --file="$final_path/live/bitwarden_rs"
 
 	# Manage permissions
@@ -219,10 +219,10 @@ fi
 #=================================================
 ynh_script_progression --message="Updating a configuration file..."
 
-ynh_add_config --template="../conf/vaultwarden.env" --destination="$final_path/live/vaultwarden.env"
+ynh_add_config --template="../conf/vaultwarden.env" --destination="$final_path/live/.env"
 
-chmod 400 "$final_path/live/vaultwarden.env"
-chown $app:$app "$final_path/live/vaultwarden.env"
+chmod 400 "$final_path/live/.env"
+chown $app:$app "$final_path/live/.env"
 
 #=================================================
 # SETUP SYSTEMD
