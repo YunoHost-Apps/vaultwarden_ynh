@@ -72,9 +72,9 @@ then
 	db_name=$(ynh_app_setting_get --app=$app --key=db_name)
 
 	# Move config file
-	mv $final_path/live/bitwarden_rs.env $final_path/live/vaultwarden.env
+	mv $final_path/live/bitwarden_rs.env $final_path/live/.env
 	ynh_delete_file_checksum --file="/var/www/$old_app/live/bitwarden_rs.env"
-	ynh_store_file_checksum --file="$final_path/live/vaultwarden.env" 
+	ynh_store_file_checksum --file="$final_path/live/.env" 
 	ynh_secure_remove --file="$final_path/live/bitwarden_rs"
 
 	# Manage permissions
@@ -90,18 +90,6 @@ then
 fi
 
 ynh_remove_logrotate
-
-# If datadir doesn't exist, create it
-if [ -z $datadir ]; then
-	datadir=/home/yunohost.app/$app
-	ynh_app_setting_set --app=$app --key=datadir --value=$datadir
-	mkdir -p $datadir
-	rsync -arz "$final_path/live/data/" "$datadir/" --delete-after --remove-source-files
-	ynh_secure_remove --file="$final_path/live/data"
-	chmod 750 "$datadir"
-	chmod -R o-rwx "$datadir"
-	chown -R $app:$app "$datadir"
-fi
 
 #=================================================
 # ENSURE DOWNWARD COMPATIBILITY
@@ -132,6 +120,23 @@ ynh_script_progression --message="Making sure dedicated system user exists..."
 
 # Create a dedicated user (if not existing)
 ynh_system_user_create --username=$app --home_dir=$final_path
+
+#=================================================
+# CREATE DATA DIRECTORY
+#=================================================
+ynh_script_progression --message="Making sure data directory exists..."
+
+# If datadir doesn't exist, create it
+if [ -z $datadir ]; then
+	datadir=/home/yunohost.app/$app
+	ynh_app_setting_set --app=$app --key=datadir --value=$datadir
+	mkdir -p $datadir
+	rsync -arz "$final_path/live/data/" "$datadir/" --delete-after --remove-source-files
+	ynh_secure_remove --file="$final_path/live/data"
+	chmod 750 "$datadir"
+	chmod -R o-rwx "$datadir"
+	chown -R $app:$app "$datadir"
+fi
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
@@ -214,10 +219,10 @@ fi
 #=================================================
 ynh_script_progression --message="Updating a configuration file..."
 
-ynh_add_config --template="../conf/vaultwarden.env" --destination="$final_path/live/vaultwarden.env"
+ynh_add_config --template="../conf/vaultwarden.env" --destination="$final_path/live/.env"
 
-chmod 400 "$final_path/live/vaultwarden.env"
-chown $app:$app "$final_path/live/vaultwarden.env"
+chmod 400 "$final_path/live/.env"
+chown $app:$app "$final_path/live/.env"
 
 #=================================================
 # SETUP SYSTEMD
