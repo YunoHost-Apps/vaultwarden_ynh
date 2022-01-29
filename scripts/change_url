@@ -114,7 +114,7 @@ fi
 #=================================================
 ynh_script_progression --message="Modifying a config file..."
 
-config="$final_path/live/vaultwarden.env"
+config="$final_path/live/.env"
 
 ynh_backup_if_checksum_is_different --file="$config"
 
