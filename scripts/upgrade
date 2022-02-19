@@ -151,6 +151,9 @@ then
 
 	# Download, check integrity, uncompress and patch the source from web.src
 	ynh_setup_source --dest_dir="$final_path/live/web-vault/" --source_id="web"
+
+	mkdir -p "$final_path/.rustup"
+	mkdir -p "$final_path/.cargo"
 fi
 
 chmod 750 "$final_path"
@@ -186,7 +189,7 @@ if [ "$upgrade_type" == "UPGRADE_APP" ]
 then
 	# Install rustup with the toolchain needed by vaultwarden
 	pushd "$final_path"
-		ynh_exec_as "$app" RUSTUP_HOME="$final_path"/.rustup CARGO_HOME="$final_path"/.cargo bash -c 'curl -sSf -L https://static.rust-lang.org/rustup.sh | sh -s -- -y --default-toolchain nightly'
+		ynh_exec_as "$app" RUSTUP_HOME="$final_path/.rustup" CARGO_HOME="$final_path/.cargo" bash -c 'curl -sSf -L https://static.rust-lang.org/rustup.sh | sh -s -- -y --default-toolchain nightly'
 	popd
 
 	export PATH="$PATH:$final_path/.cargo/bin:$final_path/.local/bin:/usr/local/sbin" 
