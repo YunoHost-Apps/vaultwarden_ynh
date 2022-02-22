@@ -23,15 +23,14 @@ Alternative implementation of the Bitwarden server API written in Rust and compa
 
 ## Avertissements / informations importantes
 
-* Any known limitations, constrains or stuff not working, such as (but not limited to):
-    * single-sign on and LDAP integration are not-working
-    * installation took a lot of time
+### Install
 
-* Other infos that people should be aware of, such as:
-    * At the end of the installation, the admin user will receive a mail with the admin_token used to access https://your.domain.tld/vaultwarden/admin.
-    * You can configure this app using the admin panel at https://vaultwarden.domain.tld/admin.
+This package compile Vaultwarden from sources, that can take a long time on a small computer :
 
-## Migrate from Bitwarden
+* When installing on a Raspberry Pi 3, this can take more than 1 hour.
+* When installing from the webadmin, you can encounter the "504 Gateway Timeout": this is fine, just let it finish in the background.
+
+### Migrate from Bitwarden
 
 This package handle the migration from Bitwarden to Vaultwarden.
 For that, you will have to upgrade your Bitwarden application with this repository.
