@@ -104,7 +104,7 @@ for asset_url in ${assets[@]}; do
         cat <<EOT > conf/$src.src
 SOURCE_URL=$asset_url
 SOURCE_SUM=$checksum
-SOURCE_SUM_PRG=sha512sum
+SOURCE_SUM_PRG=sha256sum
 SOURCE_FORMAT=tar.gz
 SOURCE_IN_SUBDIR=true
 SOURCE_FILENAME=

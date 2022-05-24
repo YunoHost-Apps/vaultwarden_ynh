@@ -1,6 +1,6 @@
 SOURCE_URL=https://api.github.com/repos/dani-garcia/bw_web_builds/tarball/v2.28.1
 SOURCE_SUM=7d8acca3efdbcf5fd0035c33a16a243af1e24a012b881b12b1aa0f4d8effe14c
-SOURCE_SUM_PRG=sha512sum
+SOURCE_SUM_PRG=sha256sum
 SOURCE_FORMAT=tar.gz
 SOURCE_IN_SUBDIR=true
 SOURCE_FILENAME=
