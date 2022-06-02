@@ -1,6 +1,6 @@
-SOURCE_URL=https://github.com/dani-garcia/vaultwarden/archive/1.24.0.tar.gz
-SOURCE_SUM=c28d9616c5519be5043822145a0cac8d4c550bd443bb2e6715580b316e8586a3892331a669bce1545c4263e143e6193617ac27e9b730a63225c0951d91bef97e
-SOURCE_SUM_PRG=sha512sum
+SOURCE_URL=https://api.github.com/repos/dani-garcia/vaultwarden/tarball/1.25.0
+SOURCE_SUM=39b5e9fa094e94630ddb69ea10116faf71467b56af0f015c41bbb3f775a5958d
+SOURCE_SUM_PRG=sha256sum
 SOURCE_FORMAT=tar.gz
 SOURCE_IN_SUBDIR=true
 SOURCE_FILENAME=
