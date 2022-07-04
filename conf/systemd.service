@@ -8,7 +8,7 @@ After=network.target
 User=__APP__
 Group=__APP__
 WorkingDirectory=__FINALPATH__/live/
-ReadWriteDirectories=__FINALPATH__/live/ __DATADIR__
+ReadWriteDirectories=__FINALPATH__/live/ __DATADIR__ /var/log/__APP__/
 EnvironmentFile=__FINALPATH__/live/.env
 ExecStart=__FINALPATH__/live/vaultwarden
 
