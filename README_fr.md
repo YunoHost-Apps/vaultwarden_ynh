@@ -17,7 +17,7 @@ Si vous n'avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour
 
 Alternative implementation of the Bitwarden server API written in Rust and compatible with upstream Bitwarden clients*, perfect for self-hosted deployment where running the official resource-heavy service might not be ideal.
 
-**Version incluse :** 1.25.0~ynh1
+**Version incluse :** 1.25.0~ynh2
 
 **Démo :** https://vault.bitwarden.com/#/register
 
