@@ -192,11 +192,11 @@ then
 		ynh_exec_as "$app" RUSTUP_HOME="$final_path/.rustup" CARGO_HOME="$final_path/.cargo" bash -c 'curl -sSf -L https://static.rust-lang.org/rustup.sh | sh -s -- -y --default-toolchain nightly'
 	popd
 
-	export PATH="$PATH:$final_path/.cargo/bin:$final_path/.local/bin:/usr/local/sbin" 
+	export PATH="$PATH:$final_path/.cargo/bin:$final_path/.local/bin:/usr/local/sbin"
 
 	# Compile vaultwarden
 	pushd "$final_path"/build
-		ynh_exec_warn_less ynh_exec_as "$app" env PATH="$PATH" cargo build --features sqlite --release
+		ynh_exec_warn_less ynh_exec_as "$app" env PATH="$PATH" CARGO_HOME="$final_path/.cargo" $final_path/.cargo/bin/cargo build --features sqlite --release
 	popd
 
 	# Remove old generated files before copying the new ones
@@ -257,7 +257,8 @@ ynh_systemd_action --service_name=$app --action="start" --log_path="systemd" --l
 ynh_script_progression --message="Reconfiguring Fail2Ban..."
 
 mkdir -p "/var/log/$app"
-touch /var/log/"$app"/"$app".log
+touch "/var/log/$app/$app.log"
+chown -R $app:$app "/var/log/$app"
 # Create a dedicated Fail2Ban config
 ynh_add_fail2ban_config --logpath="/var/log/$app/$app.log" --failregex="^.*Username or password is incorrect\. Try again\. IP: <HOST>\. Username:.*$"
 
