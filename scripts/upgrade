@@ -89,8 +89,6 @@ then
 	fi
 fi
 
-ynh_remove_logrotate
-
 #=================================================
 # ENSURE DOWNWARD COMPATIBILITY
 #=================================================
@@ -113,21 +111,9 @@ if ! ynh_permission_exists --permission="api"; then
 	ynh_permission_create --permission="api" --url="/api" --additional_urls="/identity/connect/token" --allowed="visitors" --auth_header="false" --show_tile="false" --protected="true"
 fi
 
-#=================================================
-# CREATE DEDICATED USER
-#=================================================
-ynh_script_progression --message="Making sure dedicated system user exists..."
-
-# Create a dedicated user (if not existing)
-ynh_system_user_create --username=$app --home_dir=$final_path
-
-#=================================================
-# CREATE DATA DIRECTORY
-#=================================================
-ynh_script_progression --message="Making sure data directory exists..."
-
 # If datadir doesn't exist, create it
 if [ -z $datadir ]; then
+	ynh_script_progression --message="Making sure data directory exists..."
 	datadir=/home/yunohost.app/$app
 	ynh_app_setting_set --app=$app --key=datadir --value=$datadir
 	mkdir -p $datadir
@@ -137,6 +123,14 @@ if [ -z $datadir ]; then
 	chmod -R o-rwx "$datadir"
 	chown -R $app:$app "$datadir"
 fi
+
+#=================================================
+# CREATE DEDICATED USER
+#=================================================
+ynh_script_progression --message="Making sure dedicated system user exists..."
+
+# Create a dedicated user (if not existing)
+ynh_system_user_create --username=$app --home_dir="$final_path"
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
@@ -161,19 +155,19 @@ chmod -R o-rwx "$final_path"
 chown -R $app:$app "$final_path"
 
 #=================================================
+# UPGRADE DEPENDENCIES
+#=================================================
+ynh_script_progression --message="Upgrading dependencies..."
+
+ynh_install_app_dependencies $pkg_dependencies
+
+#=================================================
 # NGINX CONFIGURATION
 #=================================================
 ynh_script_progression --message="Upgrading NGINX web server configuration..."
 
 # Create a dedicated NGINX config
 ynh_add_nginx_config
-
-#=================================================
-# UPGRADE DEPENDENCIES
-#=================================================
-ynh_script_progression --message="Upgrading dependencies..."
-
-ynh_install_app_dependencies $pkg_dependencies
 
 #=================================================
 # SPECIFIC UPGRADE
@@ -237,6 +231,16 @@ ynh_add_systemd_config
 
 #=================================================
 # GENERIC FINALIZATION
+#=================================================
+# SETUP LOGROTATE
+#=================================================
+ynh_script_progression --message="Upgrading logrotate configuration..."
+
+mkdir -p "/var/log/$app"
+chown -R $app:$app "/var/log/$app"
+# Use logrotate to manage app-specific logfile(s)
+ynh_use_logrotate --non-append
+
 #=================================================
 # INTEGRATE SERVICE IN YUNOHOST
 #=================================================
