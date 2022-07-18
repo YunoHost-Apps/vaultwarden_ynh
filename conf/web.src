@@ -1,7 +1,0 @@
-SOURCE_URL=https://github.com/dani-garcia/bw_web_builds/releases/download/v2022.6.2/bw_web_v2022.6.2.tar.gz
-SOURCE_SUM=206fde0814d46bb78a79a7a5ab10963beaeb5c952e05a9e1b18c2495fb7174e1
-SOURCE_SUM_PRG=sha256sum
-SOURCE_FORMAT=tar.gz
-SOURCE_IN_SUBDIR=true
-SOURCE_FILENAME=
-SOURCE_EXTRACT=true

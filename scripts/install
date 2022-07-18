@@ -91,14 +91,9 @@ ynh_system_user_create --username=$app --home_dir="$final_path"
 ynh_script_progression --message="Setting up source files..."
 
 ynh_app_setting_set --app=$app --key=final_path --value=$final_path
-# Download, check integrity, uncompress the source of vaultwarden from app.src to his build directory
-ynh_setup_source --dest_dir="$final_path/build/" --source_id="app"
-
-# Download, check integrity, uncompress and patch the source from web.src
-ynh_setup_source --dest_dir="$final_path/live/web-vault/" --source_id="web"
-
-mkdir -p "$final_path/.rustup"
-mkdir -p "$final_path/.cargo"
+# Download, check integrity, uncompress and patch the source from app.src
+ynh_setup_source --dest_dir="$final_path/build/" --source_id="docker-image-extract"
+mkdir -p "$final_path/live/"
 
 chmod 750 "$final_path"
 chmod -R o-rwx "$final_path"
@@ -115,31 +110,6 @@ ynh_add_nginx_config
 #=================================================
 # SPECIFIC SETUP
 #=================================================
-# MAKE INSTALL
-#=================================================
-ynh_script_progression --message="Making install..."
-
-# Install rustup with the toolchain needed by vaultwarden
-pushd "$final_path"
-	ynh_exec_warn_less ynh_exec_as "$app" RUSTUP_HOME="$final_path/.rustup" CARGO_HOME="$final_path/.cargo" bash -c 'curl -sSf -L https://static.rust-lang.org/rustup.sh | sh -s -- -y --default-toolchain stable'
-popd
-
-export PATH="$PATH:$final_path/.cargo/bin:$final_path/.local/bin:/usr/local/sbin"
-
-# Compile vaultwarden
-pushd "$final_path"/build
-	ynh_exec_warn_less ynh_exec_as "$app" env PATH="$PATH" CARGO_HOME="$final_path/.cargo" $final_path/.cargo/bin/cargo build --features sqlite --release
-popd
-
-# Install vaultwarden
-cp -af "$final_path/build/target/release/vaultwarden" "$final_path/live/vaultwarden"
-
-# Remove build files and rustup
-ynh_secure_remove --file="$final_path/build"
-ynh_secure_remove --file="$final_path/.cargo"
-ynh_secure_remove --file="$final_path/.rustup"
-
-#=================================================
 # CREATE DATA DIRECTORY
 #=================================================
 ynh_script_progression --message="Creating a data directory..."
@@ -152,6 +122,23 @@ mkdir -p $datadir
 chmod 750 "$datadir"
 chmod -R o-rwx "$datadir"
 chown -R $app:$app "$datadir"
+
+#=================================================
+# MAKE INSTALL
+#=================================================
+ynh_script_progression --message="Making install..."
+
+pushd "$final_path"/build
+	./docker-image-extract vaultwarden/server:$(ynh_app_upstream_version)
+popd
+
+mv -f "$final_path/build/output/vaultwarden" "$final_path/live/vaultwarden"
+rsync -a "$final_path/build/output/web-vault/" "$final_path/live/web-vault/"
+ynh_secure_remove --file="$final_path/build"
+
+chmod 750 "$final_path"
+chmod -R o-rwx "$final_path"
+chown -R $app:$app "$final_path"
 
 #=================================================
 # ADD A CONFIGURATION
