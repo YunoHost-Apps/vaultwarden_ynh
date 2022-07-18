@@ -26,8 +26,8 @@ ynh_abort_if_errors
 
 domain=$YNH_APP_ARG_DOMAIN
 path_url=$YNH_APP_ARG_PATH
-admin=$YNH_APP_ARG_ADMIN
 is_public=$YNH_APP_ARG_IS_PUBLIC
+admin=$YNH_APP_ARG_ADMIN
 
 app=$YNH_APP_INSTANCE_NAME
 
@@ -83,7 +83,7 @@ ynh_install_app_dependencies $pkg_dependencies
 ynh_script_progression --message="Configuring system user..."
 
 # Create a system user
-ynh_system_user_create --username=$app --home_dir=$final_path
+ynh_system_user_create --username=$app --home_dir="$final_path"
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
@@ -91,7 +91,6 @@ ynh_system_user_create --username=$app --home_dir=$final_path
 ynh_script_progression --message="Setting up source files..."
 
 ynh_app_setting_set --app=$app --key=final_path --value=$final_path
-
 # Download, check integrity, uncompress the source of vaultwarden from app.src to his build directory
 ynh_setup_source --dest_dir="$final_path/build/" --source_id="app"
 
@@ -122,7 +121,7 @@ ynh_script_progression --message="Making install..."
 
 # Install rustup with the toolchain needed by vaultwarden
 pushd "$final_path"
-	ynh_exec_as "$app" RUSTUP_HOME="$final_path/.rustup" CARGO_HOME="$final_path/.cargo" bash -c 'curl -sSf -L https://static.rust-lang.org/rustup.sh | sh -s -- -y --default-toolchain nightly'
+	ynh_exec_warn_less ynh_exec_as "$app" RUSTUP_HOME="$final_path/.rustup" CARGO_HOME="$final_path/.cargo" bash -c 'curl -sSf -L https://static.rust-lang.org/rustup.sh | sh -s -- -y --default-toolchain stable'
 popd
 
 export PATH="$PATH:$final_path/.cargo/bin:$final_path/.local/bin:/usr/local/sbin"
@@ -174,6 +173,16 @@ ynh_add_systemd_config
 
 #=================================================
 # GENERIC FINALIZATION
+#=================================================
+# SETUP LOGROTATE
+#=================================================
+ynh_script_progression --message="Configuring log rotation..."
+
+# Use logrotate to manage application logfile(s)
+mkdir -p "/var/log/$app"
+chown -R $app:$app "/var/log/$app"
+ynh_use_logrotate
+
 #=================================================
 # INTEGRATE SERVICE IN YUNOHOST
 #=================================================
