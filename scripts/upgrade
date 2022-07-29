@@ -183,7 +183,7 @@ if [ "$upgrade_type" == "UPGRADE_APP" ]
 then
 	# Install rustup with the toolchain needed by vaultwarden
 	pushd "$final_path"
-		ynh_exec_warn_less ynh_exec_as "$app" RUSTUP_HOME="$final_path/.rustup" CARGO_HOME="$final_path/.cargo" bash -c 'curl -sSf -L https://static.rust-lang.org/rustup.sh | sh -s -- -y --default-toolchain stable'
+		ynh_exec_warn_less ynh_exec_as "$app" RUSTUP_HOME="$final_path/.rustup" CARGO_HOME="$final_path/.cargo" bash -c 'curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh'
 	popd
 
 	export PATH="$PATH:$final_path/.cargo/bin:$final_path/.local/bin:/usr/local/sbin"
