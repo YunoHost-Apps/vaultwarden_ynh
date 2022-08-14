@@ -186,7 +186,7 @@ then
 		ynh_exec_warn_less ynh_exec_as "$app" RUSTUP_HOME="$final_path/.rustup" CARGO_HOME="$final_path/.cargo" bash -c 'curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -q -y'
 	popd
 
-	export PATH="$PATH:$final_path/.cargo/bin:$final_path/.local/bin:/usr/local/sbin"
+	export PATH="$final_path/.cargo/bin:$final_path/.local/bin:/usr/local/sbin:$PATH"
 
 	# Compile vaultwarden
 	pushd "$final_path"/build
