@@ -19,6 +19,7 @@ Alternative implementation of the Bitwarden server API written in Rust and compa
 
 **Shipped version:** 1.25.2~ynh2
 
+
 **Demo:** https://vault.bitwarden.com/#/register
 
 ## Screenshots
