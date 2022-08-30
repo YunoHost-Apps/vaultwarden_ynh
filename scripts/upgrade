@@ -119,6 +119,7 @@ if [ -z $datadir ]; then
 	mkdir -p $datadir
 	rsync -arz "$final_path/live/data/" "$datadir/" --delete-after --remove-source-files
 	ynh_secure_remove --file="$final_path/live/data"
+	ynh_system_user_create --username=$app --home_dir="$final_path"
 	chmod 750 "$datadir"
 	chmod -R o-rwx "$datadir"
 	chown -R $app:$app "$datadir"
