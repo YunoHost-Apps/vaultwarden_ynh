@@ -198,8 +198,7 @@ ynh_handle_app_migration ()  {
     old_db_name=$(ynh_app_setting_get --app=$old_app --key=db_name)
     
     # Check if a database exists before trying to move it
-    local mysql_root_password=$(cat $MYSQL_ROOT_PWD_FILE)
-    if [ -n "$old_db_name" ] && mysqlshow -u root -p$mysql_root_password | grep -q "^| $old_db_name"
+    if [ -n "$old_db_name" ] && mysqlshow | grep -q "^| $old_db_name"
     then
         old_db_user=$old_db_name
         db_pwd=$(ynh_app_setting_get --app=$old_app --key=mysqlpwd)
