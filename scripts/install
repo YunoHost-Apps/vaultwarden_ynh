@@ -7,6 +7,7 @@
 #=================================================
 
 source _common.sh
+source ynh_docker_image_extract
 source ynh_send_readme_to_admin__2
 source /usr/share/yunohost/helpers
 
@@ -92,7 +93,7 @@ ynh_script_progression --message="Setting up source files..."
 
 ynh_app_setting_set --app=$app --key=final_path --value=$final_path
 # Download, check integrity, uncompress and patch the source from app.src
-ynh_setup_source --dest_dir="$final_path/build/" --source_id="docker-image-extract"
+ynh_docker_image_extract --dest_dir="$final_path/build/" --image_spec="vaultwarden/server:$(ynh_app_upstream_version)"
 mkdir -p "$final_path/live/"
 
 chmod 750 "$final_path"
@@ -128,12 +129,8 @@ chown -R $app:$app "$datadir"
 #=================================================
 ynh_script_progression --message="Making install..."
 
-pushd "$final_path"/build
-	./docker-image-extract vaultwarden/server:$(ynh_app_upstream_version)
-popd
-
-mv -f "$final_path/build/output/vaultwarden" "$final_path/live/vaultwarden"
-rsync -a "$final_path/build/output/web-vault/" "$final_path/live/web-vault/"
+mv -f "$final_path/build/vaultwarden" "$final_path/live/vaultwarden"
+rsync -a "$final_path/build/web-vault/" "$final_path/live/web-vault/"
 ynh_secure_remove --file="$final_path/build"
 
 chmod 750 "$final_path"
