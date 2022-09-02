@@ -1,7 +1,0 @@
-SOURCE_URL=https://codeload.github.com/jjlin/docker-image-extract/tar.gz/a9e455e44bbbfba897bf3342d9661b182cee67a9
-SOURCE_SUM=9eb0c734e83a3fd7102fc7209af4977024ec467fbc819782491af47295675f67
-SOURCE_SUM_PRG=sha256sum
-SOURCE_FORMAT=tar.gz
-SOURCE_IN_SUBDIR=true
-SOURCE_FILENAME=
-SOURCE_EXTRACT=true
