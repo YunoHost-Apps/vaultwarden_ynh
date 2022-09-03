@@ -143,7 +143,7 @@ then
 	ynh_script_progression --message="Upgrading source files..."
 
 	# Download, check integrity, uncompress the source of vaultwarden from app.src to his build directory
-	ynh_docker_image_extract --dest_dir="$final_path/build/" --image_spec="vaultwarden/server:$(ynh_app_upstream_version)"
+	ynh_docker_image_extract --dest_dir="$final_path/build/" --image_spec="$pkg_image:$(ynh_app_upstream_version)"
 	mkdir -p "$final_path/live/"
 fi
 
