@@ -7,6 +7,7 @@
 #=================================================
 
 source _common.sh
+source ynh_docker_image_extract
 source ynh_handle_app_migration
 source /usr/share/yunohost/helpers
 
@@ -142,7 +143,7 @@ then
 	ynh_script_progression --message="Upgrading source files..."
 
 	# Download, check integrity, uncompress the source of vaultwarden from app.src to his build directory
-	ynh_setup_source --dest_dir="$final_path/build/" --source_id="docker-image-extract"
+	ynh_docker_image_extract --dest_dir="$final_path/build/" --image_spec="$pkg_image:$(ynh_app_upstream_version)"
 	mkdir -p "$final_path/live/"
 fi
 
@@ -174,13 +175,9 @@ ynh_script_progression --message="Making upgrade..."
 
 if [ "$upgrade_type" == "UPGRADE_APP" ]
 then
-	pushd "$final_path"/build
-		./docker-image-extract vaultwarden/server:$(ynh_app_upstream_version)
-	popd
-
-	mv -f "$final_path/build/output/vaultwarden" "$final_path/live/vaultwarden"
+	mv -f "$final_path/build/vaultwarden" "$final_path/live/vaultwarden"
 	ynh_secure_remove --file="$final_path/live/web-vault/"
-	rsync -a "$final_path/build/output/web-vault/" "$final_path/live/web-vault/"
+	rsync -a "$final_path/build/web-vault/" "$final_path/live/web-vault/"
 	ynh_secure_remove --file="$final_path/build"
 fi
 

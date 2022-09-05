@@ -1,0 +1,76 @@
+#!/bin/bash
+
+#
+# This script pulls and extracts all files from an image in Docker Hub.
+#
+# usage: ynh_docker_image_extract --dest_dir=dest_dir --image_spec=image_spec [--os_arch_variant=os_arch_variant]
+# | arg: -d, --dest_dir=		- Directory where to setup sources
+# | arg: -i, --image_spec=		- Image specification
+# | arg: -o, --os_arch_variant=	- OS, architecture and variant seen as OS/ARCH on Docker Hub default:linux/$YNH_ARCH.
+#
+# Pull and extract all files from the 'hello-world' image tagged 'latest'.
+# example: ynh_docker_image_extract --dest_dir="dest_dir" --image_spec="hello-world:latest"
+#
+# Same as above; tag defaults to 'latest'.
+# example: ynh_docker_image_extract --dest_dir="dest_dir" --image_spec="hello-world"
+#
+# Same as above; tag defaults from 'latest' for a specific OS/ARCH.
+# example: ynh_docker_image_extract --dest_dir="dest_dir" --image_spec="hello-world "--os_arch_variant=="linux/arm/v6"
+#
+# Same as above, but specify the image by digest, don't require the specific OS/ARCH.
+# example: ynh_docker_image_extract --dest_dir="dest_dir" --image_spec="hello-world:sha256:90659bf80b44ce6be8234e6ff90a1ac34acbeb826903b02cfa0da11c82cbc042"
+#
+# This helper will pulls and extracts all files from the image $image_spec in Docker Hub.
+#
+# The helper will:
+# - Download `$image_spec` and extract it to `$dest_dir`.
+# - Patches named `sources/patches/${src_id}-*.patch` will be applied to `$dest_dir`
+# - Extra files in `sources/extra_files/$src_id` will be copied to dest_dir
+#
+# Requires YunoHost version *.*.* or higher.
+ynh_docker_image_extract() {
+	# Declare an array to define the options of this helper.
+	local legacy_args=dio
+	local -A args_array=([d]=dest_dir= [i]=image_spec= [o]=os_arch_variant=)
+	local dest_dir
+	local image_spec
+	local os_arch_variant
+	# Manage arguments with getopts
+	ynh_handle_getopts_args "$@"
+	os_arch_variant="${os_arch_variant:-"linux/$YNH_ARCH"}"
+
+	# Extract source into the app dir
+	mkdir --parents "$dest_dir"
+
+	if [ -n "${final_path:-}" ] && [ "$dest_dir" == "$final_path" ]; then
+		_ynh_apply_default_permissions $dest_dir
+	fi
+
+	tempdir="$(mktemp -d)"
+	pushd $tempdir
+		git init -q
+		git remote add -f -t main origin https://github.com/jjlin/docker-image-extract.git > /dev/null 2>&1
+		git checkout -q -b main origin/main
+		./docker-image-extract -p $os_arch_variant -o $dest_dir $image_spec 2>&1
+	popd
+	rm -rf $tempdir
+
+	# Apply patches
+	if [ -d "$YNH_APP_BASEDIR/sources/patches/" ]; then
+		local patches_folder=$(realpath $YNH_APP_BASEDIR/sources/patches/)
+		if (($(find $patches_folder -type f -name "${image_spec}-*.patch" 2>/dev/null | wc --lines) > "0")); then
+			(
+				cd "$dest_dir"
+				for p in $patches_folder/${image_spec}-*.patch; do
+					echo $p
+					patch --strip=1 <$p
+				done
+			) || ynh_die --message="Unable to apply patches"
+		fi
+	fi
+
+	# Add supplementary files
+	if test -e "$YNH_APP_BASEDIR/sources/extra_files/${image_spec}"; then
+		cp --archive $YNH_APP_BASEDIR/sources/extra_files/$image_spec/. "$dest_dir"
+	fi
+}
