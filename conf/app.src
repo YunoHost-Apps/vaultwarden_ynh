@@ -1,7 +1,7 @@
-SOURCE_URL=vaultwarden/server:$(ynh_app_upstream_version)
+SOURCE_URL=vaultwarden/server:1.25.2
 SOURCE_SUM=sha256 checksum
 SOURCE_SUM_PRG=sha256sum
 SOURCE_FORMAT=docker
 SOURCE_IN_SUBDIR=true
 SOURCE_FILENAME=
-SOURCE_EXTRACT=false
+SOURCE_EXTRACT=true
