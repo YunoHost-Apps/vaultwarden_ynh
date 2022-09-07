@@ -1,76 +1,196 @@
 #!/bin/bash
 
+# Download, check integrity, uncompress and patch the source from app.src
 #
-# This script pulls and extracts all files from an image in Docker Hub.
+# usage: ynh_setup_source_docker --dest_dir=dest_dir [--source_id=source_id] [--keep="file1 file2"]
+# | arg: -d, --dest_dir=    - Directory where to setup sources
+# | arg: -s, --source_id=   - Name of the source, defaults to `app`
+# | arg: -k, --keep=        - Space-separated list of files/folders that will be backup/restored in $dest_dir, such as a config file you don't want to overwrite. For example 'conf.json secrets.json logs/'
 #
-# usage: ynh_docker_image_extract --dest_dir=dest_dir --image_spec=image_spec [--os_arch_variant=os_arch_variant]
-# | arg: -d, --dest_dir=		- Directory where to setup sources
-# | arg: -i, --image_spec=		- Image specification
-# | arg: -o, --os_arch_variant=	- OS, architecture and variant seen as OS/ARCH on Docker Hub default:linux/$YNH_ARCH.
+# This helper will read `conf/${source_id}.src`, download and install the sources.
 #
-# Pull and extract all files from the 'hello-world' image tagged 'latest'.
-# example: ynh_docker_image_extract --dest_dir="dest_dir" --image_spec="hello-world:latest"
-#
-# Same as above; tag defaults to 'latest'.
-# example: ynh_docker_image_extract --dest_dir="dest_dir" --image_spec="hello-world"
-#
-# Same as above; tag defaults from 'latest' for a specific OS/ARCH.
-# example: ynh_docker_image_extract --dest_dir="dest_dir" --image_spec="hello-world "--os_arch_variant=="linux/arm/v6"
-#
-# Same as above, but specify the image by digest, don't require the specific OS/ARCH.
-# example: ynh_docker_image_extract --dest_dir="dest_dir" --image_spec="hello-world:sha256:90659bf80b44ce6be8234e6ff90a1ac34acbeb826903b02cfa0da11c82cbc042"
-#
-# This helper will pulls and extracts all files from the image $image_spec in Docker Hub.
+# The src file need to contains:
+# ```
+# SOURCE_URL=Address to download the app archive
+# SOURCE_SUM=Control sum
+# # (Optional) Program to check the integrity (sha256sum, md5sum...). Default: sha256
+# SOURCE_SUM_PRG=sha256
+# # (Optional) Archive format. Default: tar.gz
+# SOURCE_FORMAT=tar.gz
+# # (Optional) Put false if sources are directly in the archive root. Default: true
+# # Instead of true, SOURCE_IN_SUBDIR could be the number of sub directories to remove.
+# SOURCE_IN_SUBDIR=false
+# # (Optionnal) Name of the local archive (offline setup support). Default: ${src_id}.${src_format}
+# SOURCE_FILENAME=example.tar.gz
+# # (Optional) If it set as false don't extract the source. Default: true
+# # (Useful to get a debian package or a python wheel.)
+# SOURCE_EXTRACT=(true|false)
+# # (Optionnal) Name of the plateform. Default: "linux/$YNH_ARCH"
+# SOURCE_FILENAME=linux/arm64/v8
+# ```
 #
 # The helper will:
-# - Download `$image_spec` and extract it to `$dest_dir`.
+# - Check if there is a local source archive in `/opt/yunohost-apps-src/$APP_ID/$SOURCE_FILENAME`
+# - Download `$SOURCE_URL` if there is no local archive
+# - Check the integrity with `$SOURCE_SUM_PRG -c --status`
+# - Uncompress the archive to `$dest_dir`.
+#   - If `$SOURCE_IN_SUBDIR` is true, the first level directory of the archive will be removed.
+#   - If `$SOURCE_IN_SUBDIR` is a numeric value, the N first level directories will be removed.
 # - Patches named `sources/patches/${src_id}-*.patch` will be applied to `$dest_dir`
 # - Extra files in `sources/extra_files/$src_id` will be copied to dest_dir
 #
-# Requires YunoHost version *.*.* or higher.
-ynh_docker_image_extract() {
-	# Declare an array to define the options of this helper.
-	local legacy_args=dio
-	local -A args_array=([d]=dest_dir= [i]=image_spec= [o]=os_arch_variant=)
-	local dest_dir
-	local image_spec
-	local os_arch_variant
-	# Manage arguments with getopts
-	ynh_handle_getopts_args "$@"
-	os_arch_variant="${os_arch_variant:-"linux/$YNH_ARCH"}"
+# Requires YunoHost version 2.6.4 or higher.
+ynh_setup_source_docker() {
+    # Declare an array to define the options of this helper.
+    local legacy_args=dsk
+    local -A args_array=([d]=dest_dir= [s]=source_id= [k]=keep=)
+    local dest_dir
+    local source_id
+    local keep
+    # Manage arguments with getopts
+    ynh_handle_getopts_args "$@"
+    source_id="${source_id:-app}"
+    keep="${keep:-}"
 
-	# Extract source into the app dir
-	mkdir --parents "$dest_dir"
+    local src_file_path="$YNH_APP_BASEDIR/conf/${source_id}.src"
 
-	if [ -n "${final_path:-}" ] && [ "$dest_dir" == "$final_path" ]; then
-		_ynh_apply_default_permissions $dest_dir
+    # Load value from configuration file (see above for a small doc about this file
+    # format)
+    local src_url=$(grep 'SOURCE_URL=' "$src_file_path" | cut --delimiter='=' --fields=2-)
+    local src_sum=$(grep 'SOURCE_SUM=' "$src_file_path" | cut --delimiter='=' --fields=2-)
+    local src_sumprg=$(grep 'SOURCE_SUM_PRG=' "$src_file_path" | cut --delimiter='=' --fields=2-)
+    local src_format=$(grep 'SOURCE_FORMAT=' "$src_file_path" | cut --delimiter='=' --fields=2-)
+    local src_in_subdir=$(grep 'SOURCE_IN_SUBDIR=' "$src_file_path" | cut --delimiter='=' --fields=2-)
+    local src_filename=$(grep 'SOURCE_FILENAME=' "$src_file_path" | cut --delimiter='=' --fields=2-)
+    local src_extract=$(grep 'SOURCE_EXTRACT=' "$src_file_path" | cut --delimiter='=' --fields=2-)
+    local src_plateform=$(grep 'SOURCE_PLATFORM=' "$src_file_path" | cut --delimiter='=' --fields=2-)
+
+    # Default value
+    src_sumprg=${src_sumprg:-sha256sum}
+    src_in_subdir=${src_in_subdir:-true}
+    src_format=${src_format:-tar.gz}
+    src_format=$(echo "$src_format" | tr '[:upper:]' '[:lower:]')
+    src_extract=${src_extract:-true}
+    if [ "$src_filename" = "" ]; then
+        src_filename="${source_id}.${src_format}"
+    fi
+
+    # (Unused?) mecanism where one can have the file in a special local cache to not have to download it...
+    local local_src="/opt/yunohost-apps-src/${YNH_APP_ID}/${src_filename}"
+
+    mkdir -p /var/cache/yunohost/download/${YNH_APP_ID}/
+    src_filename="/var/cache/yunohost/download/${YNH_APP_ID}/${src_filename}"
+
+	if [ "$src_format" = "docker" ]; then
+	    src_plateform="${src_plateform:-"linux/$YNH_ARCH"}"
+	else
+	    if test -e "$local_src"; then
+	        cp $local_src $src_filename
+	    else
+	        [ -n "$src_url" ] || ynh_die "Couldn't parse SOURCE_URL from $src_file_path ?"
+	
+	        # NB. we have to declare the var as local first,
+	        # otherwise 'local foo=$(false) || echo 'pwet'" does'nt work
+	        # because local always return 0 ...
+	        local out
+	        # Timeout option is here to enforce the timeout on dns query and tcp connect (c.f. man wget)
+	        out=$(wget --tries 3 --no-dns-cache --timeout 900 --no-verbose --output-document=$src_filename $src_url 2>&1) \
+	            || ynh_die --message="$out"
+	    fi
+	
+	    # Check the control sum
+	    echo "${src_sum} ${src_filename}" | ${src_sumprg} --check --status \
+	        || ynh_die --message="Corrupt source"
 	fi
 
-	tempdir="$(mktemp -d)"
-	pushd $tempdir
-		git init -q
-		git remote add -f -t main origin https://github.com/jjlin/docker-image-extract.git > /dev/null 2>&1
-		git checkout -q -b main origin/main
-		./docker-image-extract -p $os_arch_variant -o $dest_dir $image_spec 2>&1
-	popd
-	rm -rf $tempdir
+    # Keep files to be backup/restored at the end of the helper
+    # Assuming $dest_dir already exists
+    rm -rf /var/cache/yunohost/files_to_keep_during_setup_source/
+    if [ -n "$keep" ] && [ -e "$dest_dir" ]; then
+        local keep_dir=/var/cache/yunohost/files_to_keep_during_setup_source/${YNH_APP_ID}
+        mkdir -p $keep_dir
+        local stuff_to_keep
+        for stuff_to_keep in $keep; do
+            if [ -e "$dest_dir/$stuff_to_keep" ]; then
+                mkdir --parents "$(dirname "$keep_dir/$stuff_to_keep")"
+                cp --archive "$dest_dir/$stuff_to_keep" "$keep_dir/$stuff_to_keep"
+            fi
+        done
+    fi
 
-	# Apply patches
-	if [ -d "$YNH_APP_BASEDIR/sources/patches/" ]; then
-		local patches_folder=$(realpath $YNH_APP_BASEDIR/sources/patches/)
-		if (($(find $patches_folder -type f -name "${image_spec}-*.patch" 2>/dev/null | wc --lines) > "0")); then
-			(
-				cd "$dest_dir"
-				for p in $patches_folder/${image_spec}-*.patch; do
-					echo $p
-					patch --strip=1 <$p
-				done
-			) || ynh_die --message="Unable to apply patches"
-		fi
-	fi
+    # Extract source into the app dir
+    mkdir --parents "$dest_dir"
 
-	# Add supplementary files
-	if test -e "$YNH_APP_BASEDIR/sources/extra_files/${image_spec}"; then
-		cp --archive $YNH_APP_BASEDIR/sources/extra_files/$image_spec/. "$dest_dir"
-	fi
+    if [ -n "${final_path:-}" ] && [ "$dest_dir" == "$final_path" ]; then
+        _ynh_apply_default_permissions $dest_dir
+    fi
+
+    if ! "$src_extract"; then
+        mv $src_filename $dest_dir
+    elif [ "$src_format" = "docker" ]; then
+        $YNH_APP_BASEDIR/script/vendor/docker-image-extract -p $src_plateform -o $src_filename $src_url 2>&1
+        mv $src_filename $dest_dir
+        ynh_secure_remove --file="$src_filename"
+    elif [ "$src_format" = "zip" ]; then
+        # Zip format
+        # Using of a temp directory, because unzip doesn't manage --strip-components
+        if $src_in_subdir; then
+            local tmp_dir=$(mktemp --directory)
+            unzip -quo $src_filename -d "$tmp_dir"
+            cp --archive $tmp_dir/*/. "$dest_dir"
+            ynh_secure_remove --file="$tmp_dir"
+        else
+            unzip -quo $src_filename -d "$dest_dir"
+        fi
+        ynh_secure_remove --file="$src_filename"
+    else
+        local strip=""
+        if [ "$src_in_subdir" != "false" ]; then
+            if [ "$src_in_subdir" == "true" ]; then
+                local sub_dirs=1
+            else
+                local sub_dirs="$src_in_subdir"
+            fi
+            strip="--strip-components $sub_dirs"
+        fi
+        if [[ "$src_format" =~ ^tar.gz|tar.bz2|tar.xz$ ]]; then
+            tar --extract --file=$src_filename --directory="$dest_dir" $strip
+        else
+            ynh_die --message="Archive format unrecognized."
+        fi
+        ynh_secure_remove --file="$src_filename"
+    fi
+
+    # Apply patches
+    if [ -d "$YNH_APP_BASEDIR/sources/patches/" ]; then
+        local patches_folder=$(realpath $YNH_APP_BASEDIR/sources/patches/)
+        if (($(find $patches_folder -type f -name "${source_id}-*.patch" 2>/dev/null | wc --lines) > "0")); then
+            (
+                cd "$dest_dir"
+                for p in $patches_folder/${source_id}-*.patch; do
+                    echo $p
+                    patch --strip=1 <$p
+                done
+            ) || ynh_die --message="Unable to apply patches"
+        fi
+    fi
+
+    # Add supplementary files
+    if test -e "$YNH_APP_BASEDIR/sources/extra_files/${source_id}"; then
+        cp --archive $YNH_APP_BASEDIR/sources/extra_files/$source_id/. "$dest_dir"
+    fi
+
+    # Keep files to be backup/restored at the end of the helper
+    # Assuming $dest_dir already exists
+    if [ -n "$keep" ]; then
+        local keep_dir=/var/cache/yunohost/files_to_keep_during_setup_source/${YNH_APP_ID}
+        local stuff_to_keep
+        for stuff_to_keep in $keep; do
+            if [ -e "$keep_dir/$stuff_to_keep" ]; then
+                mkdir --parents "$(dirname "$dest_dir/$stuff_to_keep")"
+                cp --archive "$keep_dir/$stuff_to_keep" "$dest_dir/$stuff_to_keep"
+            fi
+        done
+    fi
+    rm -rf /var/cache/yunohost/files_to_keep_during_setup_source/
 }

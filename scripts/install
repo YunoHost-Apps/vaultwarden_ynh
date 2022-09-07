@@ -93,7 +93,7 @@ ynh_script_progression --message="Setting up source files..."
 
 ynh_app_setting_set --app=$app --key=final_path --value=$final_path
 # Download, check integrity, uncompress and patch the source from app.src
-ynh_docker_image_extract --dest_dir="$final_path/build/" --image_spec="$pkg_image:$(ynh_app_upstream_version)"
+ynh_setup_source_docker --dest_dir="$final_path"
 mkdir -p "$final_path/live/"
 
 chmod 750 "$final_path"
