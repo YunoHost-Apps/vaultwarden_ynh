@@ -4,10 +4,8 @@
 # COMMON VARIABLES
 #=================================================
 
-# dependencies used by the app
+# dependencies used by the app (must be on a single line)
 pkg_dependencies="libpq5"
-
-pkg_image="vaultwarden/server"
 
 #=================================================
 # PERSONAL HELPERS
