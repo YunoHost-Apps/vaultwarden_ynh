@@ -37,10 +37,6 @@ ynh_docker_image_extract() {
 	local os_arch_variant
 	# Manage arguments with getopts
 	ynh_handle_getopts_args "$@"
-	if [ $YNH_ARCH == "armhf" ] 
-	then
-		YNH_ARCH="arm/v7"
-	fi
 	os_arch_variant="${os_arch_variant:-"linux/$YNH_ARCH"}"
 
 	# Extract source into the app dir
