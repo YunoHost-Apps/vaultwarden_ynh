@@ -146,7 +146,7 @@ then
 	docker_arg=""
 	if [ $YNH_ARCH == "armhf" ] 
 	then
-		docker_arg="--os_arch_variant=\"linux/arm/v7\""
+		docker_arg="--os_arch_variant=linux/arm/v7"
 	fi
 	ynh_docker_image_extract --dest_dir="$final_path/build/" --image_spec="$pkg_image:$(ynh_app_upstream_version)" $docker_arg
 	mkdir -p "$final_path/live/"
