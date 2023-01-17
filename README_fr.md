@@ -5,25 +5,25 @@ It shall NOT be edited by hand.
 
 # Vaultwarden pour YunoHost
 
-[![Niveau d'intégration](https://dash.yunohost.org/integration/vaultwarden.svg)](https://dash.yunohost.org/appci/app/vaultwarden) ![Statut du fonctionnement](https://ci-apps.yunohost.org/ci/badges/vaultwarden.status.svg) ![Statut de maintenance](https://ci-apps.yunohost.org/ci/badges/vaultwarden.maintain.svg)  
+[![Niveau d’intégration](https://dash.yunohost.org/integration/vaultwarden.svg)](https://dash.yunohost.org/appci/app/vaultwarden) ![Statut du fonctionnement](https://ci-apps.yunohost.org/ci/badges/vaultwarden.status.svg) ![Statut de maintenance](https://ci-apps.yunohost.org/ci/badges/vaultwarden.maintain.svg)  
 [![Installer Vaultwarden avec YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=vaultwarden)
 
 *[Read this readme in english.](./README.md)*
 
-> *Ce package vous permet d'installer Vaultwarden rapidement et simplement sur un serveur YunoHost.
-Si vous n'avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour savoir comment l'installer et en profiter.*
+> *Ce package vous permet d’installer Vaultwarden rapidement et simplement sur un serveur YunoHost.
+Si vous n’avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour savoir comment l’installer et en profiter.*
 
-## Vue d'ensemble
+## Vue d’ensemble
 
 Alternative implementation of the Bitwarden server API written in Rust and compatible with upstream Bitwarden clients*, perfect for self-hosted deployment where running the official resource-heavy service might not be ideal.
 
-**Version incluse :** 1.26.0~ynh2
+**Version incluse :** 1.27.0~ynh1
 
 **Démo :** https://vault.bitwarden.com/#/register
 
-## Captures d'écran
+## Captures d’écran
 
-![Capture d'écran de Vaultwarden](./doc/screenshots/screenshot1.png)
+![Capture d’écran de Vaultwarden](./doc/screenshots/screenshot1.png)
 
 ## Avertissements / informations importantes
 
@@ -50,8 +50,8 @@ The `--debug` option will let you see the full output. If you encounter any issu
 ## Documentations et ressources
 
 * Documentation officielle utilisateur : <https://help.bitwarden.com/>
-* Documentation officielle de l'admin : <https://github.com/dani-garcia/vaultwarden/wiki>
-* Dépôt de code officiel de l'app : <https://github.com/dani-garcia/vaultwarden>
+* Documentation officielle de l’admin : <https://github.com/dani-garcia/vaultwarden/wiki>
+* Dépôt de code officiel de l’app : <https://github.com/dani-garcia/vaultwarden>
 * Documentation YunoHost pour cette app : <https://yunohost.org/app_vaultwarden>
 * Signaler un bug : <https://github.com/YunoHost-Apps/vaultwarden_ynh/issues>
 
@@ -67,4 +67,4 @@ ou
 sudo yunohost app upgrade vaultwarden -u https://github.com/YunoHost-Apps/vaultwarden_ynh/tree/testing --debug
 ```
 
-**Plus d'infos sur le packaging d'applications :** <https://yunohost.org/packaging_apps>
+**Plus d’infos sur le packaging d’applications :** <https://yunohost.org/packaging_apps>
