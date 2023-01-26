@@ -5,7 +5,7 @@ It shall NOT be edited by hand.
 
 # Vaultwarden for YunoHost
 
-[![Integration level](https://dash.yunohost.org/integration/vaultwarden.svg)](https://dash.yunohost.org/appci/app/vaultwarden) ![Working status](https://ci-apps.yunohost.org/ci/badges/vaultwarden.status.svg) ![Maintenance status](https://ci-apps.yunohost.org/ci/badges/vaultwarden.maintain.svg)  
+[![Integration level](https://dash.yunohost.org/integration/vaultwarden.svg)](https://dash.yunohost.org/appci/app/vaultwarden) ![Working status](https://ci-apps.yunohost.org/ci/badges/vaultwarden.status.svg) ![Maintenance status](https://ci-apps.yunohost.org/ci/badges/vaultwarden.maintain.svg)
 [![Install Vaultwarden with YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=vaultwarden)
 
 *[Lire ce readme en français.](./README_fr.md)*
@@ -17,7 +17,7 @@ If you don't have YunoHost, please consult [the guide](https://yunohost.org/#/in
 
 Alternative implementation of the Bitwarden server API written in Rust and compatible with upstream Bitwarden clients*, perfect for self-hosted deployment where running the official resource-heavy service might not be ideal.
 
-**Shipped version:** 1.26.0~ynh2
+**Shipped version:** 1.27.0~ynh1
 
 **Demo:** https://vault.bitwarden.com/#/register
 
