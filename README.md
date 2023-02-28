@@ -6,6 +6,7 @@ It shall NOT be edited by hand.
 # Vaultwarden for YunoHost
 
 [![Integration level](https://dash.yunohost.org/integration/vaultwarden.svg)](https://dash.yunohost.org/appci/app/vaultwarden) ![Working status](https://ci-apps.yunohost.org/ci/badges/vaultwarden.status.svg) ![Maintenance status](https://ci-apps.yunohost.org/ci/badges/vaultwarden.maintain.svg)
+
 [![Install Vaultwarden with YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=vaultwarden)
 
 *[Lire ce readme en français.](./README_fr.md)*
