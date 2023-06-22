@@ -1,5 +1,5 @@
 vaultwarden was successfully installed :)
-Please open https://__DOMAIN____PATH_URL__/admin
+Please open https://__DOMAIN____PATH__/admin
 The admin token is: __ADMIN_TOKEN__
 You will be able to invite users to your vaultwarden instance.
 If you facing an issue or want to improve this app, please open a new issue in this project: https://github.com/YunoHost-Apps/vaultwarden_ynh

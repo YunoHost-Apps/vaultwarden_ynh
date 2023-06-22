@@ -12,13 +12,13 @@ source /usr/share/yunohost/helpers
 #=================================================
 # LOAD SETTINGS
 #=================================================
-ynh_script_progression --message="Loading installation settings..."
+#REMOVEME? ynh_script_progression --message="Loading installation settings..."
 
-app=$YNH_APP_INSTANCE_NAME
+#REMOVEME? app=$YNH_APP_INSTANCE_NAME
 
-domain=$(ynh_app_setting_get --app=$app --key=domain)
-final_path=$(ynh_app_setting_get --app=$app --key=final_path)
-datadir=$(ynh_app_setting_get --app=$app --key=datadir)
+#REMOVEME? domain=$(ynh_app_setting_get --app=$app --key=domain)
+#REMOVEME? #REMOVEME? install_dir=$(ynh_app_setting_get --app=$app --key=install_dir)
+#REMOVEME? data_dir=$(ynh_app_setting_get --app=$app --key=data_dir)
 
 #=================================================
 # STANDARD REMOVE
@@ -44,10 +44,10 @@ ynh_remove_systemd_config
 #=================================================
 # REMOVE APP MAIN DIR
 #=================================================
-ynh_script_progression --message="Removing app main directory..."
+#REMOVEME? ynh_script_progression --message="Removing app main directory..."
 
 # Remove the app directory securely
-ynh_secure_remove --file="$final_path"
+#REMOVEME? ynh_secure_remove --file="$install_dir"
 
 #=================================================
 # REMOVE DATA DIR
@@ -57,7 +57,7 @@ ynh_secure_remove --file="$final_path"
 if [ "${YNH_APP_PURGE:-0}" -eq 1 ]
 then
 	ynh_script_progression --message="Removing app data directory..."
-	ynh_secure_remove --file="$datadir"
+#REMOVEME? 	ynh_secure_remove --file="$data_dir"
 fi
 
 #=================================================
@@ -71,10 +71,10 @@ ynh_remove_nginx_config
 #=================================================
 # REMOVE DEPENDENCIES
 #=================================================
-ynh_script_progression --message="Removing dependencies..."
+#REMOVEME? ynh_script_progression --message="Removing dependencies..."
 
 # Remove metapackage and its dependencies
-ynh_remove_app_dependencies
+#REMOVEME? ynh_remove_app_dependencies
 
 #=================================================
 # REMOVE FAIL2BAN CONFIGURATION
@@ -99,10 +99,10 @@ ynh_secure_remove --file="/var/log/$app"
 #=================================================
 # REMOVE DEDICATED USER
 #=================================================
-ynh_script_progression --message="Removing the dedicated system user..."
+#REMOVEME? ynh_script_progression --message="Removing the dedicated system user..."
 
 # Delete a system user
-ynh_system_user_delete --username=$app
+#REMOVEME? ynh_system_user_delete --username=$app
 
 #=================================================
 # END OF SCRIPT

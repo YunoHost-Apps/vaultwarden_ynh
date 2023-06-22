@@ -7,10 +7,10 @@ After=network.target
 # The user/group vaultwarden is run under. the working directory (see below) should allow write and read access to this user/group
 User=__APP__
 Group=__APP__
-WorkingDirectory=__FINALPATH__/live/
-ReadWriteDirectories=__FINALPATH__/live/ __DATADIR__/ /var/log/__APP__/
-EnvironmentFile=__FINALPATH__/live/.env
-ExecStart=__FINALPATH__/live/vaultwarden
+WorkingDirectory=__INSTALL_DIR__/live/
+ReadWriteDirectories=__INSTALL_DIR__/live/ __DATA_DIR__/ /var/log/__APP__/
+EnvironmentFile=__INSTALL_DIR__/live/.env
+ExecStart=__INSTALL_DIR__/live/vaultwarden
 
 # Set reasonable connection and process limits
 LimitNOFILE=1048576
