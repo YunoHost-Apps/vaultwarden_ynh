@@ -15,7 +15,6 @@ demo = "https://vault.bitwarden.com/#/register"
 admindoc = "https://github.com/dani-garcia/vaultwarden/wiki"
 userdoc = "https://help.bitwarden.com/"
 code = "https://github.com/dani-garcia/vaultwarden"
-website = "https://github.com/dani-garcia/vaultwarden"
 
 [integration]
 yunohost = ">= 11.1.21"
