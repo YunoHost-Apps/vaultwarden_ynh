@@ -1,5 +1,5 @@
 [Unit]
-Description=vaultwarden Server (Rust Edition)
+Description=Vaultwarden Server (Rust Edition)
 Documentation=https://github.com/dani-garcia/vaultwarden
 After=network.target
 

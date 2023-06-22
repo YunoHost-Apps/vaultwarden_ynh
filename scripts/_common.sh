@@ -4,9 +4,6 @@
 # COMMON VARIABLES
 #=================================================
 
-# dependencies used by the app
-#REMOVEME? pkg_dependencies="libpq5"
-
 pkg_image="vaultwarden/server"
 
 #=================================================
