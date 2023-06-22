@@ -28,7 +28,6 @@ Alternative implementation of the Bitwarden server API written in Rust and compa
 
 ## Documentations et ressources
 
-* Site officiel de l’app : <https://github.com/dani-garcia/vaultwarden>
 * Documentation officielle utilisateur : <https://help.bitwarden.com/>
 * Documentation officielle de l’admin : <https://github.com/dani-garcia/vaultwarden/wiki>
 * Dépôt de code officiel de l’app : <https://github.com/dani-garcia/vaultwarden>
