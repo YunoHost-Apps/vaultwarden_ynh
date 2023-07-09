@@ -109,7 +109,9 @@ fi
 
 # Create a permission if needed
 if ! ynh_permission_exists --permission="api"; then
-	ynh_permission_create --permission="api" --url="/api" --additional_urls="/identity/connect/token" --allowed="visitors" --auth_header="false" --show_tile="false" --protected="true"
+	ynh_permission_create --permission="api" --url="/api" --additional_urls="/identity" --allowed="visitors" --auth_header="false" --show_tile="false" --protected="true"
+else
+	ynh_permission_url --permission="api" --remove_url="/identity/connect/token" --add_url="/identity"
 fi
 
 # If datadir doesn't exist, create it
