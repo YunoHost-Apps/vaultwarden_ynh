@@ -56,7 +56,7 @@ ram.runtime = "50M"
     [resources.permissions]
     main.url = "/"
     api.url = "/api"
-    api.additional_urls = ["/identity/connect/token"]
+    api.additional_urls = ["/identity"]
     api.allowed = "visitors"
     api.auth_header = false
     api.show_tile = false
