@@ -6,7 +6,7 @@
         "en": "Manage passwords and other sensitive informations",
         "fr": "Gérez les mots de passe et autres informations sensibles"
     },
-    "version": "1.28.1~ynh2",
+    "version": "1.29.0~ynh1",
     "url": "https://github.com/dani-garcia/vaultwarden",
     "upstream": {
         "license": "GPL-3.0-or-later",
