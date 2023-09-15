@@ -96,7 +96,7 @@ touch "/var/log/$app/$app.log"
 chown -R $app:$app "/var/log/$app"
 
 # Create a dedicated Fail2Ban config
-ynh_add_fail2ban_config --logpath="/var/log/$app/$app.log" --failregex="^.*Username or password is incorrect\. Try again\. IP: <HOST>\. Username:.*$"
+ynh_add_fail2ban_config --logpath="/var/log/$app/$app.log" --failregex="^.*Username or password is incorrect\. Try again\. IP: <ADDR>\. Username:.*$"
 
 yunohost service add $app --description="$app daemon for vaultwarden" --log="/var/log/$app/$app.log"
 
