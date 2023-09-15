@@ -66,4 +66,4 @@ ram.runtime = "50M"
     admin.show_tile = false
 
     [resources.apt]
-    packages = "libpq5"
+    packages = "libpq5 rsync"
