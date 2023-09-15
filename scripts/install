@@ -59,6 +59,13 @@ chown -R $app:$app "/var/log/$app"
 
 ynh_use_logrotate
 
+# Create a dedicated Fail2Ban config
+mkdir -p "/var/log/$app"
+touch "/var/log/$app/$app.log"
+chown -R $app:$app "/var/log/$app"
+
+ynh_add_fail2ban_config --logpath="/var/log/$app/$app.log" --failregex="^.*Username or password is incorrect\. Try again\. IP: <ADDR>\. Username:.*$"
+
 yunohost service add $app --description="$app daemon for vaultwarden" --log="/var/log/$app/$app.log"
 
 #=================================================
@@ -90,17 +97,6 @@ ynh_script_progression --message="Starting a systemd service..."
 
 # Start a systemd service
 ynh_systemd_action --service_name=$app --action="start" --log_path="systemd" --line_match="Rocket has launched from" --length=100
-
-#=================================================
-# SETUP FAIL2BAN
-#=================================================
-ynh_script_progression --message="Configuring Fail2Ban..."
-
-# Create a dedicated Fail2Ban config
-mkdir -p "/var/log/$app"
-touch "/var/log/$app/$app.log"
-chown -R $app:$app "/var/log/$app"
-ynh_add_fail2ban_config --logpath="/var/log/$app/$app.log" --failregex="^.*Username or password is incorrect\. Try again\. IP: <ADDR>\. Username:.*$"
 
 #=================================================
 # END OF SCRIPT

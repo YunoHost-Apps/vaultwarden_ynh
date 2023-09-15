@@ -47,14 +47,6 @@ chmod -R o-rwx "$install_dir"
 chown -R $app:$app "$install_dir"
 
 #=================================================
-# NGINX CONFIGURATION
-#=================================================
-ynh_script_progression --message="Upgrading NGINX web server configuration..."
-
-# Create a dedicated NGINX config
-ynh_add_nginx_config
-
-#=================================================
 # SPECIFIC UPGRADE
 #=================================================
 # MAKE UPGRADE
@@ -88,25 +80,23 @@ chown $app:$app "$install_dir/live/.env"
 #=================================================
 ynh_script_progression --message="Upgrading systemd configuration..."
 
+# Create a dedicated NGINX config
+ynh_add_nginx_config
+
 # Create a dedicated systemd config
 ynh_add_systemd_config
-
-#=================================================
-# GENERIC FINALIZATION
-#=================================================
-# SETUP LOGROTATE
-#=================================================
-ynh_script_progression --message="Upgrading logrotate configuration..."
 
 mkdir -p "/var/log/$app"
 chown -R $app:$app "/var/log/$app"
 # Use logrotate to manage app-specific logfile(s)
 ynh_use_logrotate --non-append
 
-#=================================================
-# INTEGRATE SERVICE IN YUNOHOST
-#=================================================
-ynh_script_progression --message="Integrating service in YunoHost..."
+mkdir -p "/var/log/$app"
+touch "/var/log/$app/$app.log"
+chown -R $app:$app "/var/log/$app"
+
+# Create a dedicated Fail2Ban config
+ynh_add_fail2ban_config --logpath="/var/log/$app/$app.log" --failregex="^.*Username or password is incorrect\. Try again\. IP: <HOST>\. Username:.*$"
 
 yunohost service add $app --description="$app daemon for vaultwarden" --log="/var/log/$app/$app.log"
 
@@ -116,17 +106,6 @@ yunohost service add $app --description="$app daemon for vaultwarden" --log="/va
 ynh_script_progression --message="Starting a systemd service..."
 
 ynh_systemd_action --service_name=$app --action="start" --log_path="systemd" --line_match="Rocket has launched from" --length=100
-
-#=================================================
-# UPGRADE FAIL2BAN
-#=================================================
-ynh_script_progression --message="Reconfiguring Fail2Ban..."
-
-mkdir -p "/var/log/$app"
-touch "/var/log/$app/$app.log"
-chown -R $app:$app "/var/log/$app"
-# Create a dedicated Fail2Ban config
-ynh_add_fail2ban_config --logpath="/var/log/$app/$app.log" --failregex="^.*Username or password is incorrect\. Try again\. IP: <HOST>\. Username:.*$"
 
 #=================================================
 # END OF SCRIPT
