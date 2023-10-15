@@ -31,7 +31,6 @@ Implémentation alternative de l'API du serveur Bitwarden écrite en Rust et com
 * Documentation officielle utilisateur : <https://help.bitwarden.com/>
 * Documentation officielle de l’admin : <https://github.com/dani-garcia/vaultwarden/wiki>
 * Dépôt de code officiel de l’app : <https://github.com/dani-garcia/vaultwarden>
-* Documentation YunoHost pour cette app : <https://yunohost.org/app_vaultwarden>
 * Signaler un bug : <https://github.com/YunoHost-Apps/vaultwarden_ynh/issues>
 
 ## Informations pour les développeurs
