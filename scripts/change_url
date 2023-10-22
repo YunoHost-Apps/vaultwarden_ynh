@@ -16,7 +16,7 @@ source /usr/share/yunohost/helpers
 #=================================================
 ynh_script_progression --message="Stopping a systemd service..."
 
-ynh_systemd_action --service_name=$app --action="stop" --log_path="systemd" --line_match="Stopped vaultwarden Server"
+ynh_systemd_action --service_name=$app --action="stop" --log_path="systemd" --line_match="Stopped vaultwarden Server" 
 
 #=================================================
 # MODIFY URL IN NGINX CONF
@@ -32,14 +32,17 @@ ynh_change_url_nginx_config
 #=================================================
 ynh_script_progression --message="Modifying a config file..."
 
-config="$install_dir/live/.env"
+ynh_add_config --template="vaultwarden.env" --destination="$install_dir/live/.env"
 
-ynh_backup_if_checksum_is_different --file="$config"
+chmod 400 "$install_dir/live/.env"
+chown $app:$app "$install_dir/live/.env"
 
-ynh_replace_string --match_string="DOMAIN=https://$old_domain$old_path" --replace_string="DOMAIN=https://$new_domain$new_path" --target_file="$config"
+#ynh_backup_if_checksum_is_different --file="$install_dir/live/.env"
+
+#ynh_replace_string --match_string="DOMAIN=https://$old_domain$old_path" --replace_string="DOMAIN=https://$new_domain$new_path" --target_file="$install_dir/live/.env"
 
 # Recalculate and store the checksum of the file for the next upgrade.
-ynh_store_file_checksum --file="$config"
+#ynh_store_file_checksum --file="$install_dir/live/.env"
 
 #=================================================
 # GENERIC FINALISATION

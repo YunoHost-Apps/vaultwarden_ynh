@@ -85,7 +85,7 @@ chown -R $app:$app "$install_dir"
 #=================================================
 ynh_script_progression --message="Adding a configuration file..."
 
-ynh_add_config --template="../conf/vaultwarden.env" --destination="$install_dir/live/.env"
+ynh_add_config --template="vaultwarden.env" --destination="$install_dir/live/.env"
 
 chmod 400 "$install_dir/live/.env"
 chown $app:$app "$install_dir/live/.env"
