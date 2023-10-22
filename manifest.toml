@@ -43,16 +43,17 @@ ram.runtime = "50M"
 
 [resources]
 
-    [resources.ports]
-    websocket.default = 3012
-    rocket.default = 8095
-
     [resources.system_user]
+    allow_email = true
 
     [resources.install_dir]
 
     [resources.data_dir]
 
+    [resources.ports]
+    websocket.default = 3012
+    rocket.default = 8095
+    
     [resources.permissions]
     main.url = "/"
     api.url = "/api"
