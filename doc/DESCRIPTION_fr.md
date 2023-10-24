@@ -1,0 +1,1 @@
+Implémentation alternative de l'API du serveur Bitwarden écrite en Rust et compatible avec les clients Bitwarden en amont*, parfaite pour un déploiement auto-hébergé où l'exécution du service officiel gourmand en ressources n'est peut-être pas idéale.

@@ -16,9 +16,9 @@ Si vous n’avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) po
 
 ## Vue d’ensemble
 
-Alternative implementation of the Bitwarden server API written in Rust and compatible with upstream Bitwarden clients*, perfect for self-hosted deployment where running the official resource-heavy service might not be ideal.
+Implémentation alternative de l'API du serveur Bitwarden écrite en Rust et compatible avec les clients Bitwarden en amont*, parfaite pour un déploiement auto-hébergé où l'exécution du service officiel gourmand en ressources n'est peut-être pas idéale.
 
-**Version incluse :** 1.29.1~ynh1
+**Version incluse :** 1.29.1~ynh2
 
 **Démo :** https://vault.bitwarden.com/#/register
 
@@ -26,34 +26,11 @@ Alternative implementation of the Bitwarden server API written in Rust and compa
 
 ![Capture d’écran de Vaultwarden](./doc/screenshots/screenshot1.png)
 
-## Avertissements / informations importantes
-
-### Install
-
-This package compile Vaultwarden from sources, that can take a long time on a small computer :
-
-* When installing on a Raspberry Pi 3, this can take more than 1 hour.
-* When installing from the webadmin, you can encounter the "504 Gateway Timeout": this is fine, just let it finish in the background.
-
-### Migrate from Bitwarden
-
-This package handle the migration from Bitwarden to Vaultwarden.
-For that, you will have to upgrade your Bitwarden application with this repository.
-This can only be done from the command-line interface - e.g. through SSH.
-Once you're connected, you simply have to execute the following:
-
-```bash
-sudo yunohost app upgrade bitwarden -u https://github.com/YunoHost-Apps/vaultwarden_ynh --debug
-```
-
-The `--debug` option will let you see the full output. If you encounter any issue, please paste it.
-
 ## Documentations et ressources
 
 * Documentation officielle utilisateur : <https://help.bitwarden.com/>
 * Documentation officielle de l’admin : <https://github.com/dani-garcia/vaultwarden/wiki>
 * Dépôt de code officiel de l’app : <https://github.com/dani-garcia/vaultwarden>
-* Documentation YunoHost pour cette app : <https://yunohost.org/app_vaultwarden>
 * Signaler un bug : <https://github.com/YunoHost-Apps/vaultwarden_ynh/issues>
 
 ## Informations pour les développeurs
