@@ -1,0 +1,70 @@
+packaging_format = 2
+
+id = "vaultwarden"
+name = "Vaultwarden"
+description.en = "Manage passwords and other sensitive informations"
+description.fr = "Gérez les mots de passe et autres informations sensibles"
+
+version = "1.29.1~ynh1"
+
+maintainers = ["yalh76"]
+
+[upstream]
+license = "GPL-3.0-or-later"
+demo = "https://vault.bitwarden.com/#/register"
+admindoc = "https://github.com/dani-garcia/vaultwarden/wiki"
+userdoc = "https://help.bitwarden.com/"
+code = "https://github.com/dani-garcia/vaultwarden"
+
+[integration]
+yunohost = ">= 11.2"
+architectures = "all"
+multi_instance = true
+ldap = false
+sso = false
+disk = "50M"
+ram.build = "50M"
+ram.runtime = "50M"
+
+[install]
+    [install.domain]
+    type = "domain"
+
+    [install.path]
+    type = "path"
+    default = "/vaultwarden"
+
+    [install.init_main_permission]
+    type = "group"
+    default = "visitors"
+
+    [install.admin]
+    type = "user"
+
+[resources]
+
+    [resources.system_user]
+    allow_email = true
+
+    [resources.install_dir]
+
+    [resources.data_dir]
+
+    [resources.ports]
+    websocket.default = 3012
+    rocket.default = 8095
+    
+    [resources.permissions]
+    main.url = "/"
+    api.url = "/api"
+    api.additional_urls = ["/identity"]
+    api.allowed = "visitors"
+    api.auth_header = false
+    api.show_tile = false
+    api.protected = true
+    admin.url = "/admin"
+    admin.allowed = "admins"
+    admin.show_tile = false
+
+    [resources.apt]
+    packages = "libpq5, rsync"

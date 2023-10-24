@@ -8,47 +8,13 @@
 
 source _common.sh
 source ynh_docker_image_extract
-source ynh_handle_app_migration
 source /usr/share/yunohost/helpers
-
-#=================================================
-# LOAD SETTINGS
-#=================================================
-ynh_script_progression --message="Loading installation settings..."
-
-app=$YNH_APP_INSTANCE_NAME
-
-domain=$(ynh_app_setting_get --app=$app --key=domain)
-path_url=$(ynh_app_setting_get --app=$app --key=path)
-admin=$(ynh_app_setting_get --app=$app --key=admin)
-final_path=$(ynh_app_setting_get --app=$app --key=final_path)
-datadir=$(ynh_app_setting_get --app=$app --key=datadir)
-
-admin_token=$(ynh_app_setting_get --app=$app --key=admin_token)
-rocket_port=$(ynh_app_setting_get --app=$app --key=rocket_port)
-websocket_port=$(ynh_app_setting_get --app=$app --key=websocket_port)
 
 #=================================================
 # CHECK VERSION
 #=================================================
-ynh_script_progression --message="Checking version..."
 
 upgrade_type=$(ynh_check_app_version_changed)
-
-#=================================================
-# BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
-#=================================================
-ynh_script_progression --message="Backing up the app before upgrading (may take a while)..."
-
-# Backup the current version of the app
-ynh_backup_before_upgrade
-ynh_clean_setup () {
-	ynh_clean_check_starting
-	# Restore it if the upgrade fails
-	ynh_restore_upgradebackup
-}
-# Exit if an error occurs during the execution of the script
-ynh_abort_if_errors
 
 #=================================================
 # STANDARD UPGRADE STEPS
@@ -58,83 +24,6 @@ ynh_abort_if_errors
 ynh_script_progression --message="Stopping a systemd service..."
 
 ynh_systemd_action --service_name=$app --action="stop" --log_path="systemd" --line_match="Stopped"
-
-#=================================================
-# HANDLE MIGRATION FROM BITWARDEN
-#=================================================
-
-ynh_handle_app_migration --migration_id="bitwarden" --migration_list="bitwarden_migration"
-
-if [ $migration_process -eq 1 ]
-then
-	# If a migration has been perform
-	# Reload some values changed by the migration process
-	final_path=$(ynh_app_setting_get --app=$app --key=final_path)
-	db_name=$(ynh_app_setting_get --app=$app --key=db_name)
-
-	# Move config file
-	mv $final_path/live/bitwarden_rs.env $final_path/live/.env
-	ynh_delete_file_checksum --file="/var/www/$old_app/live/bitwarden_rs.env"
-	ynh_store_file_checksum --file="$final_path/live/.env" 
-	ynh_secure_remove --file="$final_path/live/bitwarden_rs"
-
-	# Manage permissions
-	ynh_permission_update --permission="main" --add="all_users"
-	ynh_permission_update --permission="main" --add="visitors"
-
-	# Remove the service from the list of services known by YunoHost (added from `yunohost service add`)
-	if ynh_exec_warn_less yunohost service status $old_app >/dev/null
-	then
-		ynh_script_progression --message="Removing $old_app service integration..."
-		yunohost service remove $old_app
-	fi
-fi
-
-#=================================================
-# ENSURE DOWNWARD COMPATIBILITY
-#=================================================
-ynh_script_progression --message="Ensuring downward compatibility..."
-
-# Cleaning legacy permissions
-if ynh_legacy_permissions_exists; then
-	ynh_legacy_permissions_delete_all
-
-	ynh_app_setting_delete --app=$app --key=is_public
-fi
-
-if ! ynh_permission_exists --permission="admin"; then
-	# Create the required permissions
-	ynh_permission_create --permission="admin" --url="/admin" --allowed=$admin --show_tile="false"
-fi
-
-# Create a permission if needed
-if ! ynh_permission_exists --permission="api"; then
-	ynh_permission_create --permission="api" --url="/api" --additional_urls="/identity" --allowed="visitors" --auth_header="false" --show_tile="false" --protected="true"
-else
-	ynh_permission_url --permission="api" --remove_url="/identity/connect/token" --add_url="/identity"
-fi
-
-# If datadir doesn't exist, create it
-if [ -z $datadir ]; then
-	ynh_script_progression --message="Making sure data directory exists..."
-	datadir=/home/yunohost.app/$app
-	ynh_app_setting_set --app=$app --key=datadir --value=$datadir
-	mkdir -p $datadir
-	rsync -arz "$final_path/live/data/" "$datadir/" --delete-after --remove-source-files
-	ynh_secure_remove --file="$final_path/live/data"
-	ynh_system_user_create --username=$app --home_dir="$final_path"
-	chmod 750 "$datadir"
-	chmod -R o-rwx "$datadir"
-	chown -R $app:$app "$datadir"
-fi
-
-#=================================================
-# CREATE DEDICATED USER
-#=================================================
-ynh_script_progression --message="Making sure dedicated system user exists..."
-
-# Create a dedicated user (if not existing)
-ynh_system_user_create --username=$app --home_dir="$final_path"
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
@@ -150,28 +39,12 @@ then
 	then
 		docker_arg="--os_arch_variant=linux/arm/v7"
 	fi
-	ynh_docker_image_extract --dest_dir="$final_path/build/" --image_spec="$pkg_image:$(ynh_app_upstream_version)" $docker_arg
-	mkdir -p "$final_path/live/"
+	ynh_docker_image_extract --dest_dir="$install_dir/build/" --image_spec="$pkg_image:$(ynh_app_upstream_version)" $docker_arg
+	mkdir -p "$install_dir/live/"
 fi
 
-chmod 750 "$final_path"
-chmod -R o-rwx "$final_path"
-chown -R $app:$app "$final_path"
-
-#=================================================
-# UPGRADE DEPENDENCIES
-#=================================================
-ynh_script_progression --message="Upgrading dependencies..."
-
-ynh_install_app_dependencies $pkg_dependencies
-
-#=================================================
-# NGINX CONFIGURATION
-#=================================================
-ynh_script_progression --message="Upgrading NGINX web server configuration..."
-
-# Create a dedicated NGINX config
-ynh_add_nginx_config
+chmod -R o-rwx "$install_dir"
+chown -R $app:$app "$install_dir"
 
 #=================================================
 # SPECIFIC UPGRADE
@@ -182,50 +55,48 @@ ynh_script_progression --message="Making upgrade..."
 
 if [ "$upgrade_type" == "UPGRADE_APP" ]
 then
-	mv -f "$final_path/build/vaultwarden" "$final_path/live/vaultwarden"
-	ynh_secure_remove --file="$final_path/live/web-vault/"
-	rsync -a "$final_path/build/web-vault/" "$final_path/live/web-vault/"
-	ynh_secure_remove --file="$final_path/build"
+	mv -f "$install_dir/build/vaultwarden" "$install_dir/live/vaultwarden"
+	ynh_secure_remove --file="$install_dir/live/web-vault/"
+	rsync -a "$install_dir/build/web-vault/" "$install_dir/live/web-vault/"
+	ynh_secure_remove --file="$install_dir/build"
 fi
 
-chmod 750 "$final_path"
-chmod -R o-rwx "$final_path"
-chown -R $app:$app "$final_path"
+chmod 750 "$install_dir"
+chmod -R o-rwx "$install_dir"
+chown -R $app:$app "$install_dir"
 
 #=================================================
 # UPDATE A CONFIG FILE
 #=================================================
 ynh_script_progression --message="Updating a configuration file..."
 
-ynh_add_config --template="../conf/vaultwarden.env" --destination="$final_path/live/.env"
+ynh_add_config --template="vaultwarden.env" --destination="$install_dir/live/.env"
 
-chmod 400 "$final_path/live/.env"
-chown $app:$app "$final_path/live/.env"
+chmod 400 "$install_dir/live/.env"
+chown $app:$app "$install_dir/live/.env"
 
 #=================================================
-# SETUP SYSTEMD
+# REAPPLY SYSTEM CONFIGURATIONS
 #=================================================
-ynh_script_progression --message="Upgrading systemd configuration..."
+ynh_script_progression --message="Upgrading system configurations related to $app..." --weight=1
+
+# Create a dedicated NGINX config
+ynh_add_nginx_config
 
 # Create a dedicated systemd config
 ynh_add_systemd_config
-
-#=================================================
-# GENERIC FINALIZATION
-#=================================================
-# SETUP LOGROTATE
-#=================================================
-ynh_script_progression --message="Upgrading logrotate configuration..."
 
 mkdir -p "/var/log/$app"
 chown -R $app:$app "/var/log/$app"
 # Use logrotate to manage app-specific logfile(s)
 ynh_use_logrotate --non-append
 
-#=================================================
-# INTEGRATE SERVICE IN YUNOHOST
-#=================================================
-ynh_script_progression --message="Integrating service in YunoHost..."
+mkdir -p "/var/log/$app"
+touch "/var/log/$app/$app.log"
+chown -R $app:$app "/var/log/$app"
+
+# Create a dedicated Fail2Ban config
+ynh_add_fail2ban_config --logpath="/var/log/$app/$app.log" --failregex="^.*Username or password is incorrect\. Try again\. IP: <ADDR>\. Username:.*$"
 
 yunohost service add $app --description="$app daemon for vaultwarden" --log="/var/log/$app/$app.log"
 
@@ -235,42 +106,6 @@ yunohost service add $app --description="$app daemon for vaultwarden" --log="/va
 ynh_script_progression --message="Starting a systemd service..."
 
 ynh_systemd_action --service_name=$app --action="start" --log_path="systemd" --line_match="Rocket has launched from" --length=100
-
-#=================================================
-# UPGRADE FAIL2BAN
-#=================================================
-ynh_script_progression --message="Reconfiguring Fail2Ban..."
-
-mkdir -p "/var/log/$app"
-touch "/var/log/$app/$app.log"
-chown -R $app:$app "/var/log/$app"
-# Create a dedicated Fail2Ban config
-ynh_add_fail2ban_config --logpath="/var/log/$app/$app.log" --failregex="^.*Username or password is incorrect\. Try again\. IP: <HOST>\. Username:.*$"
-
-#=================================================
-# RELOAD NGINX
-#=================================================
-ynh_script_progression --message="Reloading NGINX web server..."
-
-ynh_systemd_action --service_name=nginx --action=reload
-
-#=================================================
-# FINISH MIGRATION PROCESS
-#=================================================
-
-if [ $migration_process -eq 1 ]
-then
-	ynh_script_progression --message="Bitwarden has been successfully migrated to Vaultwarden! \
-A last scheduled operation will run in a couple of minutes to finish the \
-migration in YunoHost side. Do not proceed any application operation while \
-you don't see Vaultwarden as installed."
-	script_post_migration=bitwarden_post_migration.sh
-	cp ../conf/$script_post_migration /tmp
-	ynh_replace_string --match_string="__OLD_APP__" --replace_string="$old_app" --target_file=/tmp/$script_post_migration
-	ynh_replace_string --match_string="__NEW_APP__" --replace_string="$app" --target_file=/tmp/$script_post_migration
-	chmod +x /tmp/$script_post_migration
-	(cd /tmp; echo "/tmp/$script_post_migration > /tmp/$script_post_migration.log 2>&1" | at now + 2 minutes)
-fi
 
 #=================================================
 # END OF SCRIPT
