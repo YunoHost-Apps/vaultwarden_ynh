@@ -19,6 +19,16 @@ _download_vaultwarden_from_docker() {
         docker_arg="--os_arch_variant=linux/arm/v7"
     fi
     ynh_docker_image_extract --dest_dir="$install_dir/build/" --image_spec="$pkg_image:$(ynh_app_upstream_version)" $docker_arg
+
+    mkdir -p "$install_dir/live/"
+
+    mv -f "$install_dir/build/vaultwarden" "$install_dir/live/vaultwarden"
+    rsync -a "$install_dir/build/web-vault/" "$install_dir/live/web-vault/"
+    ynh_secure_remove --file="$install_dir/build"
+
+    chmod 750 "$install_dir"
+    chmod -R o-rwx "$install_dir"
+    chown -R $app:$app "$install_dir"
 }
 
 #=================================================

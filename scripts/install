@@ -31,11 +31,15 @@ ynh_script_progression --message="Setting up source files..."
 
 _download_vaultwarden_from_docker
 
-mkdir -p "$install_dir/live/"
+#=================================================
+# ADD A CONFIGURATION FILE
+#=================================================
+ynh_script_progression --message="Adding a configuration file..."
 
-chmod 750 "$install_dir"
-chmod -R o-rwx "$install_dir"
-chown -R $app:$app "$install_dir"
+ynh_add_config --template="vaultwarden.env" --destination="$install_dir/live/.env"
+
+chmod 400 "$install_dir/live/.env"
+chown $app:$app "$install_dir/live/.env"
 
 #=================================================
 # SYSTEM CONFIGURATION
@@ -48,42 +52,18 @@ ynh_add_nginx_config
 # Create a dedicated systemd config
 ynh_add_systemd_config
 
-# Use logrotate to manage application logfile(s)
-mkdir -p "/var/log/$app"
-chown -R $app:$app "/var/log/$app"
-
-ynh_use_logrotate
-
-# Create a dedicated Fail2Ban config
+# Create log file for fail2ban
 mkdir -p "/var/log/$app"
 touch "/var/log/$app/$app.log"
 chown -R $app:$app "/var/log/$app"
 
+# Use logrotate to manage application logfile(s)
+ynh_use_logrotate
+
+# Create a dedicated Fail2Ban config
 ynh_add_fail2ban_config --logpath="/var/log/$app/$app.log" --failregex="^.*Username or password is incorrect\. Try again\. IP: <ADDR>\. Username:.*$"
 
 yunohost service add $app --description="$app daemon for vaultwarden" --log="/var/log/$app/$app.log"
-
-#=================================================
-# MAKE INSTALL
-#=================================================
-ynh_script_progression --message="Making install..."
-
-mv -f "$install_dir/build/vaultwarden" "$install_dir/live/vaultwarden"
-rsync -a "$install_dir/build/web-vault/" "$install_dir/live/web-vault/"
-ynh_secure_remove --file="$install_dir/build"
-
-chmod -R o-rwx "$install_dir"
-chown -R $app:$app "$install_dir"
-
-#=================================================
-# ADD A CONFIGURATION
-#=================================================
-ynh_script_progression --message="Adding a configuration file..."
-
-ynh_add_config --template="vaultwarden.env" --destination="$install_dir/live/.env"
-
-chmod 400 "$install_dir/live/.env"
-chown $app:$app "$install_dir/live/.env"
 
 #=================================================
 # START SYSTEMD SERVICE
