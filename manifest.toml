@@ -55,7 +55,7 @@ ram.runtime = "50M"
     [resources.ports]
     websocket.default = 3012
     rocket.default = 8095
-    
+
     [resources.permissions]
     main.url = "/"
     api.url = "/api"
@@ -69,4 +69,4 @@ ram.runtime = "50M"
     admin.show_tile = false
 
     [resources.apt]
-    packages = "libpq5, rsync"
+    packages = "libpq5"
