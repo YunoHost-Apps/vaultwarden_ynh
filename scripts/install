@@ -29,13 +29,8 @@ ynh_app_setting_set --app=$app --key=admin_token --value=$admin_token
 #=================================================
 ynh_script_progression --message="Setting up source files..."
 
-# Download, check integrity, uncompress and patch the source from app.src
-docker_arg=""
-if [ $YNH_ARCH == "armhf" ] 
-then
-	docker_arg="--os_arch_variant=linux/arm/v7"
-fi
-ynh_docker_image_extract --dest_dir="$install_dir/build/" --image_spec="$pkg_image:$(ynh_app_upstream_version)" $docker_arg
+_download_vaultwarden_from_docker
+
 mkdir -p "$install_dir/live/"
 
 chmod 750 "$install_dir"
