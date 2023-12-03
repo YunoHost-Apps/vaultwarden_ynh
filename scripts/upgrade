@@ -33,37 +33,8 @@ if [ "$upgrade_type" == "UPGRADE_APP" ]
 then
 	ynh_script_progression --message="Upgrading source files..."
 
-	# Download, check integrity, uncompress the source of vaultwarden from app.src to his build directory
-	docker_arg=""
-	if [ $YNH_ARCH == "armhf" ] 
-	then
-		docker_arg="--os_arch_variant=linux/arm/v7"
-	fi
-	ynh_docker_image_extract --dest_dir="$install_dir/build/" --image_spec="$pkg_image:$(ynh_app_upstream_version)" $docker_arg
-	mkdir -p "$install_dir/live/"
+	_download_vaultwarden_from_docker
 fi
-
-chmod -R o-rwx "$install_dir"
-chown -R $app:$app "$install_dir"
-
-#=================================================
-# SPECIFIC UPGRADE
-#=================================================
-# MAKE UPGRADE
-#=================================================
-ynh_script_progression --message="Making upgrade..."
-
-if [ "$upgrade_type" == "UPGRADE_APP" ]
-then
-	mv -f "$install_dir/build/vaultwarden" "$install_dir/live/vaultwarden"
-	ynh_secure_remove --file="$install_dir/live/web-vault/"
-	rsync -a "$install_dir/build/web-vault/" "$install_dir/live/web-vault/"
-	ynh_secure_remove --file="$install_dir/build"
-fi
-
-chmod 750 "$install_dir"
-chmod -R o-rwx "$install_dir"
-chown -R $app:$app "$install_dir"
 
 #=================================================
 # UPDATE A CONFIG FILE
@@ -86,14 +57,13 @@ ynh_add_nginx_config
 # Create a dedicated systemd config
 ynh_add_systemd_config
 
-mkdir -p "/var/log/$app"
-chown -R $app:$app "/var/log/$app"
-# Use logrotate to manage app-specific logfile(s)
-ynh_use_logrotate --non-append
-
+# Create log file for fail2ban
 mkdir -p "/var/log/$app"
 touch "/var/log/$app/$app.log"
 chown -R $app:$app "/var/log/$app"
+
+# Use logrotate to manage app-specific logfile(s)
+ynh_use_logrotate --non-append
 
 # Create a dedicated Fail2Ban config
 ynh_add_fail2ban_config --logpath="/var/log/$app/$app.log" --failregex="^.*Username or password is incorrect\. Try again\. IP: <ADDR>\. Username:.*$"
