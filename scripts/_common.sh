@@ -26,6 +26,11 @@ _download_vaultwarden_from_docker() {
     mv -f "$install_dir/build/"{vaultwarden,web-vault} "$install_dir/live/"
     ynh_secure_remove --file="$install_dir/build"
 
+    # fixes the libssl.so.3 not found bug since libssl3 is not available on bullseye
+    if [ ! -f /usr/lib/x86_64-linux-gnu/libssl.so.3 ]; then
+        ln -s /usr/lib/x86_64-linux-gnu/libssl.so /usr/lib/x86_64-linux-gnu/libssl.so.3
+    fi
+
     chmod 750 "$install_dir"
     chmod -R o-rwx "$install_dir"
     chown -R $app:$app "$install_dir"
