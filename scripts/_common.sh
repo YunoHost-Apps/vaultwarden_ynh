@@ -26,9 +26,16 @@ _download_vaultwarden_from_docker() {
     mv -f "$install_dir/build/"{vaultwarden,web-vault} "$install_dir/live/"
     ynh_secure_remove --file="$install_dir/build"
 
+    # fixes the libssl.so.3 not found bug
+    libssl_path=$(which openssl)
+    if ! grep -q "$libssl_path" /etc/ld.so.conf ; then
+        echo "include $libssl_path" >> /etc/ld.so.conf
+        ldconfig
+    fi
+
     chmod 750 "$install_dir"
     chmod -R o-rwx "$install_dir"
-    chown -R $app:$app "$install_dir"
+    chown -R "$app:$app" "$install_dir"
 }
 
 #=================================================
