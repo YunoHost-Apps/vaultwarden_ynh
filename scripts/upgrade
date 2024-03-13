@@ -48,7 +48,7 @@ chown $app:$app "$install_dir/live/.env"
 
 # Fix SMTP configuration
 config_file=$data_dir/config.json
-cat <<< $(jq -r --arg domain "$domain" '.smtp_host = "$domain"' $config_file) > $config_file
+cat <<< $(jq -r --arg domain "$domain" '.smtp_host = $domain' $config_file) > $config_file
 cat <<< $(jq -r '.smtp_security = "starttls"' $config_file) > $config_file
 if [ ! -s "$config_file" ]; then
     ynh_die --message="Something went wrong while setting up the configuration file: it ended up empty."
