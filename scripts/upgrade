@@ -46,6 +46,11 @@ ynh_add_config --template="vaultwarden.env" --destination="$install_dir/live/.en
 chmod 400 "$install_dir/live/.env"
 chown $app:$app "$install_dir/live/.env"
 
+# Fix SMTP configuration
+config_file=$data_dir/config.json
+cat <<< $(jq -r --arg domain "$domain" '.smtp_host = "$domain"' $config_file) > $config_file
+cat <<< $(jq -r '.smtp_security = starttls' $config_file) > $config_file
+
 #=================================================
 # REAPPLY SYSTEM CONFIGURATIONS
 #=================================================
