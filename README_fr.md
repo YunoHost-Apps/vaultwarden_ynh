@@ -17,10 +17,9 @@ Si vous n’avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) po
 ## Vue d’ensemble
 
 Implémentation alternative de l'API du serveur Bitwarden écrite en Rust et compatible avec les clients Bitwarden en amont*, parfaite pour un déploiement auto-hébergé où l'exécution du service officiel gourmand en ressources n'est peut-être pas idéale.
-
 **Version incluse :** 1.29.1~ynh4
 
-**Démo :** https://vault.bitwarden.com/#/register
+**Démo :** <https://vault.bitwarden.com/#/register>
 
 ## Captures d’écran
 
@@ -28,11 +27,11 @@ Implémentation alternative de l'API du serveur Bitwarden écrite en Rust et com
 
 ## Documentations et ressources
 
-* Documentation officielle utilisateur : <https://help.bitwarden.com/>
-* Documentation officielle de l’admin : <https://github.com/dani-garcia/vaultwarden/wiki>
-* Dépôt de code officiel de l’app : <https://github.com/dani-garcia/vaultwarden>
-* YunoHost Store: <https://apps.yunohost.org/app/vaultwarden>
-* Signaler un bug : <https://github.com/YunoHost-Apps/vaultwarden_ynh/issues>
+- Documentation officielle utilisateur : <https://help.bitwarden.com/>
+- Documentation officielle de l’admin : <https://github.com/dani-garcia/vaultwarden/wiki>
+- Dépôt de code officiel de l’app : <https://github.com/dani-garcia/vaultwarden>
+- YunoHost Store : <https://apps.yunohost.org/app/vaultwarden>
+- Signaler un bug : <https://github.com/YunoHost-Apps/vaultwarden_ynh/issues>
 
 ## Informations pour les développeurs
 
@@ -40,7 +39,7 @@ Merci de faire vos pull request sur la [branche testing](https://github.com/Yuno
 
 Pour essayer la branche testing, procédez comme suit.
 
-``` bash
+```bash
 sudo yunohost app install https://github.com/YunoHost-Apps/vaultwarden_ynh/tree/testing --debug
 ou
 sudo yunohost app upgrade vaultwarden -u https://github.com/YunoHost-Apps/vaultwarden_ynh/tree/testing --debug
