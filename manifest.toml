@@ -7,7 +7,7 @@ name = "Vaultwarden"
 description.en = "Manage passwords and other sensitive informations"
 description.fr = "Gérez les mots de passe et autres informations sensibles"
 
-version = "1.29.1~ynh4"
+version = "1.30.5~ynh1"
 
 maintainers = ["yalh76"]
 
