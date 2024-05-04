@@ -9,7 +9,7 @@ description.fr = "Gérez les mots de passe et autres informations sensibles"
 
 version = "1.30.1~ynh1"
 
-maintainers = [ "yalh76" ]
+maintainers = [ ]
 
 [upstream]
 license = "GPL-3.0-or-later"

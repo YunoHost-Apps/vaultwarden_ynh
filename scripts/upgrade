@@ -23,7 +23,7 @@ upgrade_type=$(ynh_check_app_version_changed)
 #=================================================
 ynh_script_progression --message="Stopping a systemd service..."
 
-ynh_systemd_action --service_name=$app --action="stop" --log_path="systemd" --line_match="Stopped"
+ynh_systemd_action --service_name=$app --action="stop" --log_path="systemd" --line_match="Stopping Vaultwarden Server"
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
@@ -45,6 +45,16 @@ ynh_add_config --template="vaultwarden.env" --destination="$install_dir/live/.en
 
 chmod 400 "$install_dir/live/.env"
 chown $app:$app "$install_dir/live/.env"
+
+# Fix SMTP configuration
+config_file=$data_dir/config.json
+if [ -e "$config_file" ]; then
+	cat <<< $(jq -r --arg domain "$domain" '.smtp_host = $domain' $config_file) > $config_file
+	cat <<< $(jq -r '.smtp_security = "starttls"' $config_file) > $config_file
+	if [ ! -s "$config_file" ]; then
+		ynh_die --message="Something went wrong while setting up $config_file: it ended up empty."
+	fi
+fi
 
 #=================================================
 # REAPPLY SYSTEM CONFIGURATIONS
