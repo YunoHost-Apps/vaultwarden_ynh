@@ -3,7 +3,7 @@
 请勿手动编辑。
 -->
 
-# YunoHost 的 Vaultwarden
+# YunoHost 上的 Vaultwarden
 
 [![集成程度](https://dash.yunohost.org/integration/vaultwarden.svg)](https://dash.yunohost.org/appci/app/vaultwarden) ![工作状态](https://ci-apps.yunohost.org/ci/badges/vaultwarden.status.svg) ![维护状态](https://ci-apps.yunohost.org/ci/badges/vaultwarden.maintain.svg)
 
@@ -21,7 +21,7 @@ Vaultwarden is a password manager, allowing generation and storage of passwords 
 Clients exist for [Linux, macOS and Windows](https://bitwarden.com/#download), [Android](https://play.google.com/store/apps/details?id=com.x8bit.bitwarden), [iOS](https://itunes.apple.com/app/bitwarden-free-password-manager/id1137397744?mt=8), and as a web browser plug-ins. It is also possible to manage passwords from the web interface.
 
 
-**分发版本：** 1.30.1~ynh1
+**分发版本：** 1.30.5~ynh1
 
 **演示：** <https://vault.bitwarden.com/#/register>
 
