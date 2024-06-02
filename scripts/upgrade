@@ -11,12 +11,6 @@ source ynh_docker_image_extract
 source /usr/share/yunohost/helpers
 
 #=================================================
-# CHECK VERSION
-#=================================================
-
-upgrade_type=$(ynh_check_app_version_changed)
-
-#=================================================
 # STANDARD UPGRADE STEPS
 #=================================================
 # STOP SYSTEMD SERVICE
@@ -29,12 +23,9 @@ ynh_systemd_action --service_name=$app --action="stop" --log_path="systemd" --li
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 
-if [ "$upgrade_type" == "UPGRADE_APP" ]
-then
-	ynh_script_progression --message="Upgrading source files..."
+ynh_script_progression --message="Upgrading source files..."
 
-	_download_vaultwarden_from_docker
-fi
+_download_vaultwarden_from_docker
 
 #=================================================
 # UPDATE A CONFIG FILE
