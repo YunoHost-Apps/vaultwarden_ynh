@@ -3,7 +3,7 @@
 请勿手动编辑。
 -->
 
-# YunoHost 的 Vaultwarden
+# YunoHost 上的 Vaultwarden
 
 [![集成程度](https://dash.yunohost.org/integration/vaultwarden.svg)](https://dash.yunohost.org/appci/app/vaultwarden) ![工作状态](https://ci-apps.yunohost.org/ci/badges/vaultwarden.status.svg) ![维护状态](https://ci-apps.yunohost.org/ci/badges/vaultwarden.maintain.svg)
 
