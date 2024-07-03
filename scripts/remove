@@ -32,8 +32,6 @@ ynh_remove_nginx_config
 # Remove the dedicated Fail2Ban config
 ynh_remove_fail2ban_config
 
-# Remove the log files
-
 # Remove the config file
 ynh_secure_remove --file="/$data_dir/config.json"
 
