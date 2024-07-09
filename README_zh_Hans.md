@@ -5,7 +5,7 @@
 
 # YunoHost 上的 Vaultwarden
 
-[![集成程度](https://dash.yunohost.org/integration/vaultwarden.svg)](https://dash.yunohost.org/appci/app/vaultwarden) ![工作状态](https://ci-apps.yunohost.org/ci/badges/vaultwarden.status.svg) ![维护状态](https://ci-apps.yunohost.org/ci/badges/vaultwarden.maintain.svg)
+[![集成程度](https://dash.yunohost.org/integration/vaultwarden.svg)](https://ci-apps.yunohost.org/ci/apps/vaultwarden/) ![工作状态](https://ci-apps.yunohost.org/ci/badges/vaultwarden.status.svg) ![维护状态](https://ci-apps.yunohost.org/ci/badges/vaultwarden.maintain.svg)
 
 [![使用 YunoHost 安装 Vaultwarden](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=vaultwarden)
 
