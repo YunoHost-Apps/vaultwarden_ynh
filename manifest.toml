@@ -56,7 +56,6 @@ ram.runtime = "50M"
     [resources.data_dir]
 
     [resources.ports]
-    websocket.default = 3012
     rocket.default = 8095
 
     [resources.permissions]
