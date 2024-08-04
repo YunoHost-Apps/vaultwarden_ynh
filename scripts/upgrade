@@ -22,7 +22,6 @@ ynh_systemd_action --service_name=$app --action="stop" --log_path="systemd" --li
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
-
 ynh_script_progression --message="Upgrading source files..."
 
 _download_vaultwarden_from_docker
@@ -69,7 +68,7 @@ ynh_use_logrotate --non-append
 # Create a dedicated Fail2Ban config
 ynh_add_fail2ban_config --logpath="/var/log/$app/$app.log" --failregex="^.*Username or password is incorrect\. Try again\. IP: <ADDR>\. Username:.*$"
 
-yunohost service add $app --description="$app daemon for vaultwarden" --log="/var/log/$app/$app.log"
+yunohost service add $app --description="$app daemon for Vaultwarden" --log="/var/log/$app/$app.log"
 
 #=================================================
 # START SYSTEMD SERVICE
