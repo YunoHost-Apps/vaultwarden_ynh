@@ -32,7 +32,7 @@ ynh_restore "/etc/nginx/conf.d/$domain.d/$app.conf"
 ynh_restore "/etc/systemd/system/$app.service"
 systemctl enable $app.service --quiet
 
-yunohost service add $app --description="$app daemon for vaultwarden" --log="/var/log/$app/$app.log"
+yunohost service add $app --description="$app daemon for Vaultwarden" --log="/var/log/$app/$app.log"
 
 # Create log file for fail2ban
 mkdir -p "/var/log/$app"

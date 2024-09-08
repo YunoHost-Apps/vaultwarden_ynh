@@ -4,6 +4,10 @@ test_format = 1.0
 
 [default]
 
+    preinstall = """
+    sudo apt-get update >/dev/null && sudo apt-get install rsync -y >/dev/null
+    """
+
     # -------------------------------
     # Commits to test upgrade from
     # -------------------------------
