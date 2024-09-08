@@ -26,8 +26,8 @@ ynh_script_progression "Updating configuration..."
 
 ynh_config_add --template="vaultwarden.env" --destination="$install_dir/live/.env"
 
-#REMOVEME? Assuming the file is setup using ynh_config_add, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod 400 "$install_dir/live/.env"
-#REMOVEME? Assuming the file is setup using ynh_config_add, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown $app:$app "$install_dir/live/.env"
+chmod 400 "$install_dir/live/.env"
+chown $app:$app "$install_dir/live/.env"
 
 #ynh_backup_if_checksum_is_different "$install_dir/live/.env"
 
@@ -41,7 +41,6 @@ ynh_config_add --template="vaultwarden.env" --destination="$install_dir/live/.en
 #=================================================
 ynh_script_progression "Starting $app's systemd service..."
 
-# Start a systemd service
 ynh_systemctl --service=$app --action="start" --log_path="systemd" --wait_until="Rocket has launched from" --length=100
 
 #=================================================
