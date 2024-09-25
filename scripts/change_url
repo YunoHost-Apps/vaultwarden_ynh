@@ -18,8 +18,6 @@ ynh_script_progression "Updating NGINX web server configuration..."
 ynh_config_change_url_nginx
 
 #=================================================
-# SPECIFIC MODIFICATIONS
-#=================================================
 # MODIFY A CONFIG FILE
 #=================================================
 ynh_script_progression "Updating configuration..."

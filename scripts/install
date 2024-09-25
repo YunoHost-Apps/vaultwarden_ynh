@@ -32,9 +32,6 @@ ynh_script_progression "Adding $app's configuration..."
 
 ynh_config_add --template="vaultwarden.env" --destination="$install_dir/live/.env"
 
-#chmod 400 "$install_dir/live/.env"
-#chown $app:$app "$install_dir/live/.env"
-
 #=================================================
 # SYSTEM CONFIGURATION
 #=================================================

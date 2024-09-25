@@ -25,9 +25,6 @@ ynh_script_progression "Updating configuration..."
 
 ynh_config_add --template="vaultwarden.env" --destination="$install_dir/live/.env"
 
-#chmod 400 "$install_dir/live/.env"
-#chown $app:$app "$install_dir/live/.env"
-
 # Fix SMTP configuration
 config_file=$data_dir/config.json
 if [ -e "$config_file" ]; then
