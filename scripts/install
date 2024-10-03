@@ -1,11 +1,5 @@
 #!/bin/bash
 
-#=================================================
-# GENERIC START
-#=================================================
-# IMPORT GENERIC HELPERS
-#=================================================
-
 source _common.sh
 source ynh_docker_image_extract
 source /usr/share/yunohost/helpers
@@ -46,10 +40,8 @@ chown $app:$app "$install_dir/live/.env"
 #=================================================
 ynh_script_progression --message="Adding system configurations related to $app..." --weight=1
 
-# Create a dedicated NGINX config
 ynh_add_nginx_config
 
-# Create a dedicated systemd config
 ynh_add_systemd_config
 
 # Create log file for fail2ban
@@ -57,10 +49,8 @@ mkdir -p "/var/log/$app"
 touch "/var/log/$app/$app.log"
 chown -R $app:$app "/var/log/$app"
 
-# Use logrotate to manage application logfile(s)
 ynh_use_logrotate
 
-# Create a dedicated Fail2Ban config
 ynh_add_fail2ban_config --logpath="/var/log/$app/$app.log" --failregex="^.*Username or password is incorrect\. Try again\. IP: <ADDR>\. Username:.*$"
 
 yunohost service add $app --description="$app daemon for Vaultwarden" --log="/var/log/$app/$app.log"
@@ -70,7 +60,6 @@ yunohost service add $app --description="$app daemon for Vaultwarden" --log="/va
 #=================================================
 ynh_script_progression --message="Starting a systemd service..."
 
-# Start a systemd service
 ynh_systemd_action --service_name=$app --action="start" --log_path="systemd" --line_match="Rocket has launched from" --length=100
 
 #=================================================
