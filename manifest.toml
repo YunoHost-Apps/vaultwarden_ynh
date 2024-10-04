@@ -7,7 +7,7 @@ name = "Vaultwarden"
 description.en = "Manage passwords and other sensitive informations"
 description.fr = "Gérez les mots de passe et autres informations sensibles"
 
-version = "1.32.0~ynh1"
+version = "1.32.1~ynh1"
 
 maintainers = [ ]
 
@@ -19,7 +19,7 @@ userdoc = "https://help.bitwarden.com/"
 code = "https://github.com/dani-garcia/vaultwarden"
 
 [integration]
-yunohost = ">= 12.0.0"
+yunohost = ">= 11.2.20"
 architectures = "all"
 multi_instance = true
 
