@@ -20,7 +20,7 @@ code = "https://github.com/dani-garcia/vaultwarden"
 
 [integration]
 yunohost = ">= 11.2.20"
-architectures = "all"
+architectures = ["amd64", "armhf", "arm64"]
 multi_instance = true
 
 ldap = false
