@@ -9,12 +9,13 @@
 #=================================================
 
 _download_vaultwarden_from_docker() {
-    docker_image="vaultwarden/server"
     debian=$(lsb_release --codename --short)
     if [[ $debian = "bullseye" ]]; then
+        docker_image="p4p4j0hn/vaultwarden_ynh"
         docker_version="$(ynh_app_upstream_version)"
     elif [[ $debian = "bookworm" ]]; then
-        docker_version="$(ynh_app_upstream_version)-alpine"
+        docker_image="vaultwarden/server"
+        docker_version="$(ynh_app_upstream_version)"
     fi
 
     docker_arg=""
