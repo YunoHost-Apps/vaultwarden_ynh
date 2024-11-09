@@ -53,7 +53,7 @@ ynh_use_logrotate
 
 ynh_add_fail2ban_config --logpath="/var/log/$app/$app.log" --failregex="^.*Username or password is incorrect\. Try again\. IP: <ADDR>\. Username:.*$"
 
-yunohost service add $app --description="$app daemon for Vaultwarden" --log="/var/log/$app/$app.log"
+yunohost service add $app --description="Passwords manager" --log="/var/log/$app/$app.log"
 
 #=================================================
 # START SYSTEMD SERVICE
