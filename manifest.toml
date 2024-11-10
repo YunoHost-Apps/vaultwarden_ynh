@@ -7,7 +7,7 @@ name = "Vaultwarden"
 description.en = "Manage passwords and other sensitive informations"
 description.fr = "Gérez les mots de passe et autres informations sensibles"
 
-version = "1.32.2~ynh1"
+version = "1.32.3~ynh1"
 
 maintainers = [ ]
 
@@ -22,9 +22,7 @@ code = "https://github.com/dani-garcia/vaultwarden"
 yunohost = ">= 12.0.0"
 architectures = "all"
 multi_instance = true
-
 ldap = false
-
 sso = false
 
 disk = "50M"
