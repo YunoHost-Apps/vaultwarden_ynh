@@ -1,2 +1,4 @@
 - [x] Add install option to enable LDAP
+- [ ] Check environment variables work correctly in /conf/ldap_config.toml (idk what I'm doing)
+- [ ] What is the LDAP bind password for /conf/ldap_config.toml
 - [ ] 
