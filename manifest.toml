@@ -22,7 +22,7 @@ code = "https://github.com/dani-garcia/vaultwarden"
 yunohost = ">= 12.0.0"
 architectures = "all"
 multi_instance = true
-ldap = false
+ldap = true
 sso = false
 
 disk = "50M"
