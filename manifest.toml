@@ -44,6 +44,12 @@ ram.runtime = "50M"
     [install.admin]
     type = "user"
 
+    [install.ldap_enabled]
+    ask.en = "Would you like to enable LDAP integration?"
+    help.en = "This will invite users added to your server to join this vaultwarden instance via Email"
+    type = "boolean"
+    default = true
+
 [resources]
 
     [resources.system_user]
