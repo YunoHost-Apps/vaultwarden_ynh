@@ -1,0 +1,2 @@
+- [x] Add install option to enable LDAP
+- [ ] 
