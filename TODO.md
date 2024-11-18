@@ -1,4 +1,4 @@
 - [x] Add install option to enable LDAP
 - [ ] Check environment variables work correctly in /conf/ldap_config.toml (idk what I'm doing)
 - [ ] What is the LDAP bind password for /conf/ldap_config.toml
-- [ ] 
+- [ ] Might need to change something here: _common.ssh Line 55: mv -f "$install_dir/build/"{vaultwarden,web-vault} "$install_dir/live/ldap" 
