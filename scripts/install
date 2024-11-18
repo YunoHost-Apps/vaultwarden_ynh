@@ -25,6 +25,10 @@ ynh_script_progression --message="Setting up source files..."
 
 _download_vaultwarden_from_docker
 
+if ["$ldap_enabled" -eq 1]; then
+    _download_vaultwarden_ldap_from_docker
+fi
+
 #=================================================
 # ADD A CONFIGURATION FILE
 #=================================================
