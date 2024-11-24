@@ -5,7 +5,9 @@ Hij mag NIET handmatig aangepast worden.
 
 # Vaultwarden voor Yunohost
 
-[![Integratieniveau](https://dash.yunohost.org/integration/vaultwarden.svg)](https://ci-apps.yunohost.org/ci/apps/vaultwarden/) ![Mate van functioneren](https://ci-apps.yunohost.org/ci/badges/vaultwarden.status.svg) ![Onderhoudsstatus](https://ci-apps.yunohost.org/ci/badges/vaultwarden.maintain.svg)
+[![Integratieniveau](https://apps.yunohost.org/badge/integration/vaultwarden)](https://ci-apps.yunohost.org/ci/apps/vaultwarden/)
+![Mate van functioneren](https://apps.yunohost.org/badge/state/vaultwarden)
+![Onderhoudsstatus](https://apps.yunohost.org/badge/maintained/vaultwarden)
 
 [![Vaultwarden met Yunohost installeren](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=vaultwarden)
 

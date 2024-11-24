@@ -5,7 +5,9 @@ EZ editatu eskuz.
 
 # Vaultwarden YunoHost-erako
 
-[![Integrazio maila](https://dash.yunohost.org/integration/vaultwarden.svg)](https://ci-apps.yunohost.org/ci/apps/vaultwarden/) ![Funtzionamendu egoera](https://ci-apps.yunohost.org/ci/badges/vaultwarden.status.svg) ![Mantentze egoera](https://ci-apps.yunohost.org/ci/badges/vaultwarden.maintain.svg)
+[![Integrazio maila](https://apps.yunohost.org/badge/integration/vaultwarden)](https://ci-apps.yunohost.org/ci/apps/vaultwarden/)
+![Funtzionamendu egoera](https://apps.yunohost.org/badge/state/vaultwarden)
+![Mantentze egoera](https://apps.yunohost.org/badge/maintained/vaultwarden)
 
 [![Instalatu Vaultwarden YunoHost-ekin](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=vaultwarden)
 

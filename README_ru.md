@@ -5,7 +5,9 @@
 
 # Vaultwarden для YunoHost
 
-[![Уровень интеграции](https://dash.yunohost.org/integration/vaultwarden.svg)](https://ci-apps.yunohost.org/ci/apps/vaultwarden/) ![Состояние работы](https://ci-apps.yunohost.org/ci/badges/vaultwarden.status.svg) ![Состояние сопровождения](https://ci-apps.yunohost.org/ci/badges/vaultwarden.maintain.svg)
+[![Уровень интеграции](https://apps.yunohost.org/badge/integration/vaultwarden)](https://ci-apps.yunohost.org/ci/apps/vaultwarden/)
+![Состояние работы](https://apps.yunohost.org/badge/state/vaultwarden)
+![Состояние сопровождения](https://apps.yunohost.org/badge/maintained/vaultwarden)
 
 [![Установите Vaultwarden с YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=vaultwarden)
 

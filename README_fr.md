@@ -5,7 +5,9 @@ Il NE doit PAS être modifié à la main.
 
 # Vaultwarden pour YunoHost
 
-[![Niveau d’intégration](https://dash.yunohost.org/integration/vaultwarden.svg)](https://ci-apps.yunohost.org/ci/apps/vaultwarden/) ![Statut du fonctionnement](https://ci-apps.yunohost.org/ci/badges/vaultwarden.status.svg) ![Statut de maintenance](https://ci-apps.yunohost.org/ci/badges/vaultwarden.maintain.svg)
+[![Niveau d’intégration](https://apps.yunohost.org/badge/integration/vaultwarden)](https://ci-apps.yunohost.org/ci/apps/vaultwarden/)
+![Statut du fonctionnement](https://apps.yunohost.org/badge/state/vaultwarden)
+![Statut de maintenance](https://apps.yunohost.org/badge/maintained/vaultwarden)
 
 [![Installer Vaultwarden avec YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=vaultwarden)
 

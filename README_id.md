@@ -5,7 +5,9 @@ Ini TIDAK boleh diedit dengan tangan.
 
 # Vaultwarden untuk YunoHost
 
-[![Tingkat integrasi](https://dash.yunohost.org/integration/vaultwarden.svg)](https://ci-apps.yunohost.org/ci/apps/vaultwarden/) ![Status kerja](https://ci-apps.yunohost.org/ci/badges/vaultwarden.status.svg) ![Status pemeliharaan](https://ci-apps.yunohost.org/ci/badges/vaultwarden.maintain.svg)
+[![Tingkat integrasi](https://apps.yunohost.org/badge/integration/vaultwarden)](https://ci-apps.yunohost.org/ci/apps/vaultwarden/)
+![Status kerja](https://apps.yunohost.org/badge/state/vaultwarden)
+![Status pemeliharaan](https://apps.yunohost.org/badge/maintained/vaultwarden)
 
 [![Pasang Vaultwarden dengan YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=vaultwarden)
 
