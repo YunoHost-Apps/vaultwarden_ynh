@@ -39,7 +39,7 @@ ynh_add_config --template="vaultwarden.env" --destination="$install_dir/live/.en
 chmod 400 "$install_dir/live/.env"
 chown $app:$app "$install_dir/live/.env"
 
-if ["$ldap_enabled" -eq 1]; then
+if [ "$ldap_enabled" -eq 1]; then
   ynh_add_config --template="ldap_config.toml" --destination="$install_dir/live/ldap/config.toml"
 
   chmod 400 "$install_dir/live/ldap/config.toml"

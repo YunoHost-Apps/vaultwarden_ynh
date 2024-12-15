@@ -35,12 +35,12 @@ _download_vaultwarden_from_docker() {
 _download_vaultwarden_ldap_from_docker() {
     docker_image="vividboarder/vaultwarden_ldap"
 
-    ynh_docker_image_extract --dest_dir="$install_dir/build/ldap" --image_spec="$docker_image:2.0.2"
+    ynh_docker_image_extract --dest_dir="$install_dir/build/ldap/" --image_spec="$docker_image:2.0.2"
 
     # Move files from the extract to the live directory
     ynh_secure_remove --file="$install_dir/live/ldap/"
     mkdir -p "$install_dir/live/ldap/"
-    mv -f "$install_dir/build/ldap/usr/local/bin/"{vaultwarden_ldap} "$install_dir/live/ldap/"
+    mv -f "$install_dir/build/ldap/usr/local/bin/vaultwarden_ldap" "$install_dir/live/ldap/"
     ynh_secure_remove --file="$install_dir/build/ldap/"
 
     chmod 750 "$install_dir/ldap/"
