@@ -8,10 +8,6 @@ source /usr/share/yunohost/helpers
 #=================================================
 ynh_script_progression --message="Removing system configurations related to $app..." --weight=1
 
-if ynh_exec_warn_less yunohost service status $app >/dev/null; then
-	yunohost service remove $app
-fi
-
 ynh_remove_systemd_config
 
 ynh_remove_nginx_config
@@ -19,6 +15,14 @@ ynh_remove_nginx_config
 ynh_remove_fail2ban_config
 
 ynh_secure_remove --file="/$data_dir/config.json"
+
+if ynh_exec_warn_less yunohost service status $app >/dev/null; then
+	yunohost service remove $app
+
+	yunohost service remove "vaultwarden_ldap"
+
+	ynh_remove_systemd_config -s "vaultwarden_ldap"
+fi
 
 #=================================================
 # END OF SCRIPT
