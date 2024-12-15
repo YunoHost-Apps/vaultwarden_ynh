@@ -43,7 +43,7 @@ _download_vaultwarden_ldap_from_docker() {
     mv -f "$install_dir/build/ldap/usr/local/bin/vaultwarden_ldap" "$install_dir/live/ldap/"
     ynh_secure_remove --file="$install_dir/build/ldap/"
 
-    chmod 750 "$install_dir/ldap/"
-    chmod -R o-rwx "$install_dir/ldap/"
-    chown -R $app:$app "$install_dir/ldap/"
+    chmod 750 "$install_dir/live/ldap/"
+    chmod -R o-rwx "$install_dir/live/ldap/"
+    chown -R $app:$app "$install_dir/live/ldap/"
 }
