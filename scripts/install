@@ -25,7 +25,7 @@ ynh_script_progression --message="Setting up source files..."
 
 _download_vaultwarden_from_docker
 
-if ["$ldap_enabled" -eq 1]; then
+if [ "$ldap_enabled" -eq 1 ]; then
   _download_vaultwarden_ldap_from_docker
 fi
 
@@ -54,7 +54,7 @@ ynh_script_progression --message="Adding system configurations related to $app..
 ynh_add_nginx_config
 
 ynh_add_systemd_config
-if ["$ldap_enabled" -eq 1]; then
+if [ "$ldap_enabled" -eq 1]; then
   ynh_add_systemd_config -s "vaultwarden_ldap" -t "ldap_systemd"
   yunohost service add "vaultwarden_ldap" --description"LDAP for vaultwarden"
 fi
@@ -76,7 +76,7 @@ yunohost service add $app --description="Passwords manager" --log="/var/log/$app
 ynh_script_progression --message="Starting a systemd service..."
 
 ynh_systemd_action --service_name=$app --action="start" --log_path="systemd" --line_match="Rocket has launched from" --length=100
-if ["$ldap_enabled" -eq 1]; then
+if [ "$ldap_enabled" -eq 1]; then
   ynh_systemd_action --service_name="vaultwarden_ldap" --action="start" --log_path="systemd" --line_match="" --length=100
 fi
 
