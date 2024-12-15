@@ -41,6 +41,7 @@ ynh_docker_image_extract() {
 
 	# Extract source into the app dir
 	mkdir --parents "$dest_dir"
+h
 
 	if [ -n "${install_dir:-}" ] && [ "$dest_dir" == "$install_dir" ]; then
 		_ynh_apply_default_permissions $dest_dir

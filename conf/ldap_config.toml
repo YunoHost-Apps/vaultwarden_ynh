@@ -1,8 +1,7 @@
-vaultwarden_url = "https://__DOMAIN____PATH__"
+vaultwarden_url = "https://__DOMAIN____PATH__" # Could this just be localhost:port?
 vaultwarden_admin_token = "__ADMIN_TOKEN__"
 ldap_host = "localhost"
 ldap_bind_dn = "ou=users,dc=yunohost,dc=org"
 ldap_bind_password = "readonly"
 ldap_search_base_dn = "dc=yunohost,dc=org"
 ldap_search_filter = "(&(|(objectclass=posixAccount))(uid=%uid)(permission=cn=$__APP__.main,ou=permission,dc=yunohost,dc=org))"
-ldap_sync_loop = false
