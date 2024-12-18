@@ -56,8 +56,8 @@ ynh_add_nginx_config
 ynh_add_systemd_config
 
 if [ $ldap_enabled -eq 1 ]; then
-  ynh_add_systemd_config -s "vaultwarden_ldap" -t "ldap_systemd"
-  yunohost service add "vaultwarden_ldap" --description"LDAP for vaultwarden"
+  ynh_add_systemd_config --service="vaultwarden_ldap" --template="ldap_systemd.service"
+  yunohost service add "vaultwarden_ldap" --description="LDAP for vaultwarden"
 fi
 
 # Create log file for fail2ban
