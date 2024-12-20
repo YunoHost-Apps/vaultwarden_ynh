@@ -19,7 +19,7 @@ userdoc = "https://help.bitwarden.com/"
 code = "https://github.com/dani-garcia/vaultwarden"
 
 [integration]
-yunohost = ">= 12.0.8"
+yunohost = ">= 12.0.9"
 architectures = "all"
 multi_instance = true
 
