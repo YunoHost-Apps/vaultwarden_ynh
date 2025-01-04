@@ -1,4 +1,6 @@
 - [x] Add install option to enable LDAP
 - [ ] Check environment variables work correctly in /conf/ldap_config.toml (idk what I'm doing)
-- [ ] What is the LDAP bind password for /conf/ldap_config.toml
-- [ ] Might need to change something here: _common.ssh Line 55: mv -f "$install_dir/build/"{vaultwarden,web-vault} "$install_dir/live/ldap" 
+- [ ] Might need to change something here: _common.ssh Line 55: mv -f "$install_dir/build/"{vaultwarden,web-vault} "$install_dir/live/ldap"
+- [ ] Idk what im doing with ldap_systemd.service (LimitNOFILE=1048576; LimitNPROC=64; After=network.target)
+- [ ] remove live/ldap and just move everything to live/
+- [ ] Merge _download_vaultwarden_from_docker() and _download_vaultwarden_ldap_from_docker()?
