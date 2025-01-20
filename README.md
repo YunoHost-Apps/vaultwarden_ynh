@@ -5,7 +5,9 @@ It shall NOT be edited by hand.
 
 # Vaultwarden for YunoHost
 
-[![Integration level](https://dash.yunohost.org/integration/vaultwarden.svg)](https://ci-apps.yunohost.org/ci/apps/vaultwarden/) ![Working status](https://ci-apps.yunohost.org/ci/badges/vaultwarden.status.svg) ![Maintenance status](https://ci-apps.yunohost.org/ci/badges/vaultwarden.maintain.svg)
+[![Integration level](https://apps.yunohost.org/badge/integration/vaultwarden)](https://ci-apps.yunohost.org/ci/apps/vaultwarden/)
+![Working status](https://apps.yunohost.org/badge/state/vaultwarden)
+![Maintenance status](https://apps.yunohost.org/badge/maintained/vaultwarden)
 
 [![Install Vaultwarden with YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=vaultwarden)
 
@@ -21,7 +23,7 @@ Vaultwarden is a password manager, allowing generation and storage of passwords 
 Clients exist for [Linux, macOS and Windows](https://bitwarden.com/#download), [Android](https://play.google.com/store/apps/details?id=com.x8bit.bitwarden), [iOS](https://itunes.apple.com/app/bitwarden-free-password-manager/id1137397744?mt=8), and as a web browser plug-ins. It is also possible to manage passwords from the web interface.
 
 
-**Shipped version:** 1.32.3~ynh1
+**Shipped version:** 1.32.7~ynh1
 
 **Demo:** <https://vault.bitwarden.com/#/register>
 
