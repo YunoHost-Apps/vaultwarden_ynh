@@ -15,7 +15,7 @@
 # example: ynh_docker_image_extract --dest_dir="dest_dir" --image_spec="hello-world"
 #
 # Same as above; tag defaults from 'latest' for a specific OS/ARCH.
-# example: ynh_docker_image_extract --dest_dir="dest_dir" --image_spec="hello-world "--os_arch_variant=="linux/arm/v6"
+# example: ynh_docker_image_extract --dest_dir="dest_dir" --image_spec="hello-world" --os_arch_variant="linux/arm/v6"
 #
 # Same as above, but specify the image by digest, don't require the specific OS/ARCH.
 # example: ynh_docker_image_extract --dest_dir="dest_dir" --image_spec="hello-world:sha256:90659bf80b44ce6be8234e6ff90a1ac34acbeb826903b02cfa0da11c82cbc042"
