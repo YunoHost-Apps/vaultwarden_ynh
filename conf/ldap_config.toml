@@ -1,4 +1,4 @@
-vaultwarden_url = "http://localhost:__ROCKET_PORT__"
+vaultwarden_url = "http://localhost:__PORT_ROCKET__"
 vaultwarden_admin_token = "__ADMIN_TOKEN__"
 ldap_host = "localhost"
 ldap_bind_dn = ""

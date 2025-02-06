@@ -18,6 +18,10 @@ ynh_script_progression --message="Upgrading source files..."
 
 _download_vaultwarden_from_docker
 
+if [ $ldap_enabled -eq 1 ]; then
+  _download_vaultwarden_ldap_from_docker
+fi
+
 #=================================================
 # UPDATE A CONFIG FILE
 #=================================================
@@ -27,6 +31,13 @@ ynh_add_config --template="vaultwarden.env" --destination="$install_dir/live/.en
 
 chmod 400 "$install_dir/live/.env"
 chown $app:$app "$install_dir/live/.env"
+
+if [ $ldap_enabled -eq 1 ]; then
+  ynh_add_config --template="ldap_config.toml" --destination="$install_dir/live/ldap/config.toml"
+
+  chmod 400 "$install_dir/live/ldap/config.toml"
+  chown $app:$app "$install_dir/live/ldap/config.toml"
+fi
 
 # Fix SMTP configuration
 config_file=$data_dir/config.json
@@ -47,6 +58,11 @@ ynh_add_nginx_config
 
 ynh_add_systemd_config
 
+if [ $ldap_enabled -eq 1 ]; then
+  ynh_add_systemd_config --service="vaultwarden_ldap" --template="ldap_systemd.service"
+  yunohost service add "vaultwarden_ldap" --description="LDAP for vaultwarden"
+fi
+
 mkdir -p "/var/log/$app"
 touch "/var/log/$app/$app.log"
 chown -R $app:$app "/var/log/$app"
@@ -63,6 +79,10 @@ yunohost service add $app --description="Passwords manager" --log="/var/log/$app
 ynh_script_progression --message="Starting a systemd service..."
 
 ynh_systemd_action --service_name=$app --action="start" --log_path="systemd" --line_match="Rocket has launched from" --length=100
+
+if [ $ldap_enabled -eq 1] ; then
+  ynh_systemd_action --service_name="vaultwarden_ldap" --action="start" --log_path="systemd" --line_match="" --length=100
+fi
 
 #=================================================
 # END OF SCRIPT
