@@ -7,7 +7,11 @@ name = "Vaultwarden"
 description.en = "Manage passwords and other sensitive informations"
 description.fr = "Gérez les mots de passe et autres informations sensibles"
 
+<<<<<<< HEAD
 version = "1.32.3~ynh2"
+=======
+version = "1.33.1~ynh1"
+>>>>>>> ff14272b250f6c86b2e9e435e12583bbb43e2dfd
 
 maintainers = [ ]
 
@@ -19,10 +23,15 @@ userdoc = "https://help.bitwarden.com/"
 code = "https://github.com/dani-garcia/vaultwarden"
 
 [integration]
-yunohost = ">= 12.0.0"
+yunohost = ">= 12.0.9"
 architectures = "all"
 multi_instance = true
+<<<<<<< HEAD
 ldap = true
+=======
+
+ldap = false
+>>>>>>> ff14272b250f6c86b2e9e435e12583bbb43e2dfd
 sso = false
 
 disk = "50M"

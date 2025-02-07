@@ -5,7 +5,9 @@ Hij mag NIET handmatig aangepast worden.
 
 # Vaultwarden voor Yunohost
 
-[![Integratieniveau](https://dash.yunohost.org/integration/vaultwarden.svg)](https://ci-apps.yunohost.org/ci/apps/vaultwarden/) ![Mate van functioneren](https://ci-apps.yunohost.org/ci/badges/vaultwarden.status.svg) ![Onderhoudsstatus](https://ci-apps.yunohost.org/ci/badges/vaultwarden.maintain.svg)
+[![Integratieniveau](https://apps.yunohost.org/badge/integration/vaultwarden)](https://ci-apps.yunohost.org/ci/apps/vaultwarden/)
+![Mate van functioneren](https://apps.yunohost.org/badge/state/vaultwarden)
+![Onderhoudsstatus](https://apps.yunohost.org/badge/maintained/vaultwarden)
 
 [![Vaultwarden met Yunohost installeren](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=vaultwarden)
 
@@ -21,7 +23,7 @@ Vaultwarden is a password manager, allowing generation and storage of passwords 
 Clients exist for [Linux, macOS and Windows](https://bitwarden.com/#download), [Android](https://play.google.com/store/apps/details?id=com.x8bit.bitwarden), [iOS](https://itunes.apple.com/app/bitwarden-free-password-manager/id1137397744?mt=8), and as a web browser plug-ins. It is also possible to manage passwords from the web interface.
 
 
-**Geleverde versie:** 1.32.3~ynh1
+**Geleverde versie:** 1.33.1~ynh1
 
 **Demo:** <https://vault.bitwarden.com/#/register>
 
