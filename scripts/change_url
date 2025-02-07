@@ -10,6 +10,10 @@ ynh_script_progression --message="Stopping a systemd service..."
 
 ynh_systemd_action --service_name=$app --action="stop" --log_path="systemd" --line_match="Vaultwarden process exited"
 
+if [ $ldap_enabled -eq 1 ]; then
+  ynh_systemd_action --service_name=${app}_ldap --action="stop" --log_path="systemd"
+fi
+
 #=================================================
 # MODIFY URL IN NGINX CONF
 #=================================================
@@ -32,6 +36,8 @@ if [ $ldap_enabled -eq 1 ]; then
 
   chmod 400 "$install_dir/live/ldap/config.toml"
   chown $app:$app "$install_dir/live/ldap/config.toml"
+
+
 fi
 
 #ynh_backup_if_checksum_is_different --file="$install_dir/live/.env"
@@ -48,6 +54,10 @@ ynh_script_progression --message="Starting a systemd service..."
 
 # Start a systemd service
 ynh_systemd_action --service_name=$app --action="start" --log_path="systemd" --line_match="Rocket has launched from" --length=100
+
+if [ $ldap_enabled -eq 1 ]; then
+  ynh_systemd_action --service_name=${app}_ldap --action="start" --log_path="systemd"
+fi
 
 #=================================================
 # END OF SCRIPT
