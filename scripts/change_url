@@ -27,6 +27,13 @@ ynh_add_config --template="vaultwarden.env" --destination="$install_dir/live/.en
 chmod 400 "$install_dir/live/.env"
 chown $app:$app "$install_dir/live/.env"
 
+if [ $ldap_enabled -eq 1 ]; then
+  ynh_add_config --template="ldap_config.toml" --destination="$install_dir/live/ldap/config.toml"
+
+  chmod 400 "$install_dir/live/ldap/config.toml"
+  chown $app:$app "$install_dir/live/ldap/config.toml"
+fi
+
 #ynh_backup_if_checksum_is_different --file="$install_dir/live/.env"
 
 #ynh_replace_string --match_string="DOMAIN=https://$old_domain$old_path" --replace_string="DOMAIN=https://$new_domain$new_path" --target_file="$install_dir/live/.env"
