@@ -56,8 +56,8 @@ ynh_add_nginx_config
 ynh_add_systemd_config
 
 if [ $ldap_enabled -eq 1 ]; then
-  ynh_add_systemd_config --service="vaultwarden_ldap" --template="ldap_systemd.service"
-  yunohost service add "vaultwarden_ldap" --description="LDAP for vaultwarden"
+  ynh_add_systemd_config --service="$app_ldap" --template="ldap_systemd.service"
+  yunohost service add "$app_ldap" --description="LDAP for vaultwarden"
 fi
 
 # Create log file for fail2ban
@@ -78,8 +78,8 @@ ynh_script_progression --message="Starting a systemd service..."
 
 ynh_systemd_action --service_name=$app --action="start" --log_path="systemd" --line_match="Rocket has launched from" --length=100
 
-if [ $ldap_enabled -eq 1] ; then
-  ynh_systemd_action --service_name="vaultwarden_ldap" --action="start" --log_path="systemd" --line_match="" --length=100
+if [ $ldap_enabled -eq 1]; then
+  ynh_systemd_action --service_name="$app_ldap" --action="start" --log_path="systemd" --line_match="" --length=100
 fi
 
 

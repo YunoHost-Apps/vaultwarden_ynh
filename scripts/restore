@@ -34,6 +34,13 @@ systemctl enable $app.service --quiet
 
 yunohost service add $app --description="Passwords manager" --log="/var/log/$app/$app.log"
 
+if [ $ldap_enabled -eq 1 ]; then
+    ynh_restore_file --src_path="/etc/systemd/system/$app_ldap.service"
+    systemctl enable $app_ldap.service --quiet
+
+    yunohost service add "$app_ldap" --description="LDAP for vaultwarden"
+fi
+
 # Create log file for fail2ban
 mkdir -p "/var/log/$app"
 touch "/var/log/$app/$app.log"

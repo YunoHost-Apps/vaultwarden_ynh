@@ -10,6 +10,7 @@ Group=__APP__
 WorkingDirectory=__INSTALL_DIR__/live/ldap/
 ReadWriteDirectories=__INSTALL_DIR__/live/ldap/
 ExecStart=__INSTALL_DIR__/live/ldap/vaultwarden_ldap
+Restart=always
 
 # Set reasonable connection and process limits
 LimitNOFILE=1048576

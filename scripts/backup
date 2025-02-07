@@ -33,6 +33,10 @@ ynh_backup --src_path="/etc/logrotate.d/$app"
 
 ynh_backup --src_path="/etc/systemd/system/$app.service"
 
+if [ $ldap_enabled -eq 1 ]; then
+    ynh_backup --src_path="/etc/systemd/system/$app_ldap.service"
+fi
+
 #=================================================
 # END OF SCRIPT
 #=================================================

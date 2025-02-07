@@ -80,7 +80,7 @@ ynh_script_progression --message="Starting a systemd service..."
 
 ynh_systemd_action --service_name=$app --action="start" --log_path="systemd" --line_match="Rocket has launched from" --length=100
 
-if [ $ldap_enabled -eq 1] ; then
+if [ $ldap_enabled -eq 1]; then
   ynh_systemd_action --service_name="vaultwarden_ldap" --action="start" --log_path="systemd" --line_match="" --length=100
 fi
 
