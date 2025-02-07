@@ -36,7 +36,6 @@ yunohost service add $app --description="Passwords manager" --log="/var/log/$app
 
 if [ $ldap_enabled -eq 1 ]; then
     ynh_restore_file --src_path="/etc/systemd/system/${app}_ldap.service"
-    systemctl enable ${app}_ldap.service --quiet
 
     yunohost service add "${app}_ldap" --description="LDAP for vaultwarden"
 fi
