@@ -23,13 +23,13 @@ Vaultwarden is a password manager, allowing generation and storage of passwords 
 Clients exist for [Linux, macOS and Windows](https://bitwarden.com/#download), [Android](https://play.google.com/store/apps/details?id=com.x8bit.bitwarden), [iOS](https://itunes.apple.com/app/bitwarden-free-password-manager/id1137397744?mt=8), and as a web browser plug-ins. It is also possible to manage passwords from the web interface.
 
 
-**分发版本：** 1.32.7~ynh1
+**分发版本：** 1.33.2~ynh1
 
 **演示：** <https://vault.bitwarden.com/#/register>
 
 ## 截图
 
-![Vaultwarden 的截图](./doc/screenshots/screenshot1.png)
+![Vaultwarden 的截图](./doc/screenshots/screenshot.png)
 
 ## 文档与资源
 
