@@ -29,7 +29,7 @@ Clients exist for [Linux, macOS and Windows](https://bitwarden.com/#download), [
 
 ## 截图
 
-![Vaultwarden 的截图](./doc/screenshots/screenshot1.png)
+![Vaultwarden 的截图](./doc/screenshots/screenshot.png)
 
 ## 文档与资源
 

@@ -29,7 +29,7 @@ Clients exist for [Linux, macOS and Windows](https://bitwarden.com/#download), [
 
 ## Zrzuty ekranu
 
-![Zrzut ekranu z Vaultwarden](./doc/screenshots/screenshot1.png)
+![Zrzut ekranu z Vaultwarden](./doc/screenshots/screenshot.png)
 
 ## Dokumentacja i zasoby
 

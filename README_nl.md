@@ -29,7 +29,7 @@ Clients exist for [Linux, macOS and Windows](https://bitwarden.com/#download), [
 
 ## Schermafdrukken
 
-![Schermafdrukken van Vaultwarden](./doc/screenshots/screenshot1.png)
+![Schermafdrukken van Vaultwarden](./doc/screenshots/screenshot.png)
 
 ## Documentatie en bronnen
 
