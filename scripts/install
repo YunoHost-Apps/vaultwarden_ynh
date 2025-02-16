@@ -25,6 +25,10 @@ ynh_script_progression --message="Setting up source files..."
 
 _download_vaultwarden_from_docker
 
+if [ $ldap_enabled -eq 1 ]; then
+  _download_vaultwarden_ldap_from_docker
+fi
+
 #=================================================
 # ADD A CONFIGURATION FILE
 #=================================================
@@ -35,6 +39,13 @@ ynh_add_config --template="vaultwarden.env" --destination="$install_dir/live/.en
 chmod 400 "$install_dir/live/.env"
 chown $app:$app "$install_dir/live/.env"
 
+if [ $ldap_enabled -eq 1 ]; then
+  ynh_add_config --template="ldap_config.toml" --destination="$install_dir/live/ldap/config.toml"
+
+  chmod 400 "$install_dir/live/ldap/config.toml"
+  chown $app:$app "$install_dir/live/ldap/config.toml"
+fi
+
 #=================================================
 # SYSTEM CONFIGURATION
 #=================================================
@@ -43,6 +54,11 @@ ynh_script_progression --message="Adding system configurations related to $app..
 ynh_add_nginx_config
 
 ynh_add_systemd_config
+
+if [ $ldap_enabled -eq 1 ]; then
+  ynh_add_systemd_config --service="${app}_ldap" --template="ldap_systemd.service"
+  yunohost service add "${app}_ldap" --description="LDAP for vaultwarden"
+fi
 
 # Create log file for fail2ban
 mkdir -p "/var/log/$app"
@@ -61,6 +77,11 @@ yunohost service add $app --description="Passwords manager" --log="/var/log/$app
 ynh_script_progression --message="Starting a systemd service..."
 
 ynh_systemd_action --service_name=$app --action="start" --log_path="systemd" --line_match="Rocket has launched from" --length=100
+
+if [ $ldap_enabled -eq 1 ]; then
+  ynh_systemd_action --service_name="${app}_ldap" --action="start" --log_path="systemd" --length=100
+fi
+
 
 #=================================================
 # END OF SCRIPT
