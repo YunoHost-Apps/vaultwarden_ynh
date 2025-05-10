@@ -44,7 +44,7 @@ ynh_systemctl --action=restart --service=fail2ban
 #=================================================
 ynh_script_progression "Reloading NGINX web server and $app's service..."
 
-ynh_systemctl --service=$app --action="start" --log_path="systemd" --wait_until="Rocket has launched from" --length=100
+ynh_systemctl --service=$app --action="start" --log_path="systemd" --wait_until="Rocket has launched from" #--length=100
 
 ynh_systemctl --service=nginx --action=reload
 
