@@ -30,7 +30,7 @@ ynh_script_progression "Updating configuration..."
 ynh_config_add --template="vaultwarden.env" --destination="$install_dir/live/.env"
 
 if [ $ldap_enabled -eq 1 ]; then
-  ynh_add_config --template="ldap_config.toml" --destination="$install_dir/live/ldap/config.toml"
+  ynh_config_add --template="ldap_config.toml" --destination="$install_dir/live/ldap/config.toml"
 
   chmod 400 "$install_dir/live/ldap/config.toml"
   chown $app:$app "$install_dir/live/ldap/config.toml"
