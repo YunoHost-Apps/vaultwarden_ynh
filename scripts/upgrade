@@ -60,7 +60,7 @@ ynh_add_systemd_config
 
 if [ $ldap_enabled -eq 1 ]; then
   ynh_add_systemd_config --service="vaultwarden_ldap" --template="ldap_systemd.service"
-  yunohost service add "vaultwarden_ldap" --description="LDAP for vaultwarden"
+  yunohost service add "${app}_ldap" --description="LDAP for vaultwarden"
 fi
 
 mkdir -p "/var/log/$app"
