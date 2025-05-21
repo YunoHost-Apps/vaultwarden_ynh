@@ -56,7 +56,7 @@ ynh_config_add_nginx
 ynh_config_add_systemd
 
 if [ $ldap_enabled -eq 1 ]; then
-  ynh_add_systemd_config --service="vaultwarden_ldap" --template="ldap_systemd.service"
+  ynh_config_add_systemd --service="vaultwarden_ldap" --template="ldap_systemd.service"
   yunohost service add "${app}_ldap" --description="LDAP for vaultwarden"
 fi
 
