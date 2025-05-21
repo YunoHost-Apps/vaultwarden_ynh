@@ -60,7 +60,7 @@ yunohost service add $app --description="Passwords manager" --log="/var/log/$app
 #=================================================
 ynh_script_progression "Starting $app's systemd service..."
 
-ynh_systemctl --service=$app --action="start" --log_path="systemd" #--wait_until="Rocket has launched from" #--length=100
+ynh_systemctl --service=$app --action="start" --log_path="systemd"
 
 #=================================================
 # END OF SCRIPT
