@@ -1,14 +1,18 @@
 #!/bin/bash
 
+#=================================================
+# IMPORT GENERIC HELPERS
+#=================================================
+
 source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
 # STOP SYSTEMD SERVICE
 #=================================================
-ynh_script_progression --message="Stopping a systemd service..."
+ynh_script_progression "Stopping $app's systemd service..."
 
-ynh_systemd_action --service_name=$app --action="stop" --log_path="systemd" --line_match="Vaultwarden process exited"
+ynh_systemctl --service=$app --action="stop" --log_path="systemd"
 
 if [ $ldap_enabled -eq 1 ]; then
   ynh_systemd_action --service_name=${app}_ldap --action="stop" --log_path="systemd"
@@ -17,43 +21,37 @@ fi
 #=================================================
 # MODIFY URL IN NGINX CONF
 #=================================================
-ynh_script_progression --message="Updating NGINX web server configuration..."
+ynh_script_progression "Updating NGINX web server configuration..."
 
-ynh_change_url_nginx_config
+ynh_config_change_url_nginx
 
 #=================================================
 # MODIFY A CONFIG FILE
 #=================================================
-ynh_script_progression --message="Modifying a config file..."
+ynh_script_progression "Updating configuration..."
 
-ynh_add_config --template="vaultwarden.env" --destination="$install_dir/live/.env"
+ynh_config_add --template="vaultwarden.env" --destination="$install_dir/live/.env"
 
-chmod 400 "$install_dir/live/.env"
-chown $app:$app "$install_dir/live/.env"
+#ynh_backup_if_checksum_is_different "$install_dir/live/.env"
 
 if [ $ldap_enabled -eq 1 ]; then
   ynh_add_config --template="ldap_config.toml" --destination="$install_dir/live/ldap/config.toml"
 
   chmod 400 "$install_dir/live/ldap/config.toml"
   chown $app:$app "$install_dir/live/ldap/config.toml"
-
-
 fi
 
-#ynh_backup_if_checksum_is_different --file="$install_dir/live/.env"
-
-#ynh_replace_string --match_string="DOMAIN=https://$old_domain$old_path" --replace_string="DOMAIN=https://$new_domain$new_path" --target_file="$install_dir/live/.env"
+#ynh_replace --match="DOMAIN=https://$old_domain$old_path" --replace="DOMAIN=https://$new_domain$new_path" --file="$install_dir/live/.env"
 
 # Recalculate and store the checksum of the file for the next upgrade.
-#ynh_store_file_checksum --file="$install_dir/live/.env"
+#ynh_store_file_checksum "$install_dir/live/.env"
 
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================
-ynh_script_progression --message="Starting a systemd service..."
+ynh_script_progression "Starting $app's systemd service..."
 
-# Start a systemd service
-ynh_systemd_action --service_name=$app --action="start" --log_path="systemd" --line_match="Rocket has launched from" --length=100
+ynh_systemctl --service=$app --action="start" --log_path="systemd"
 
 if [ $ldap_enabled -eq 1 ]; then
   ynh_systemd_action --service_name=${app}_ldap --action="start" --log_path="systemd"
@@ -63,4 +61,4 @@ fi
 # END OF SCRIPT
 #=================================================
 
-ynh_script_progression --message="Change of URL completed for $app"
+ynh_script_progression "Change of URL completed for $app"
