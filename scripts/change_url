@@ -15,7 +15,7 @@ ynh_script_progression "Stopping $app's systemd service..."
 ynh_systemctl --service=$app --action="stop" --log_path="systemd"
 
 if [ $ldap_enabled -eq 1 ]; then
-  ynh_systemd_action --service_name=${app}_ldap --action="stop" --log_path="systemd"
+  ynh_systemctl --service=${app}_ldap --action="stop" --log_path="systemd"
 fi
 
 #=================================================
@@ -54,7 +54,7 @@ ynh_script_progression "Starting $app's systemd service..."
 ynh_systemctl --service=$app --action="start" --log_path="systemd"
 
 if [ $ldap_enabled -eq 1 ]; then
-  ynh_systemd_action --service_name=${app}_ldap --action="start" --log_path="systemd"
+  ynh_systemctl --service=${app}_ldap --action="start" --log_path="systemd"
 fi
 
 #=================================================
