@@ -1,4 +1,4 @@
-The admin interface is available at <https://__DOMAIN____PATH__/admin>
+The admin interface is available at <https://__DOMAIN____PATH__admin>
 
 The admin token is: `__ADMIN_TOKEN__`
 

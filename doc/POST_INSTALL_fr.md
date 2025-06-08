@@ -1,4 +1,4 @@
-L'interface d'administration est accessible à <https://__DOMAIN____PATH__/admin>
+L'interface d'administration est accessible à <https://__DOMAIN____PATH__admin>
 
 Le jeton d'administration est : `__ADMIN_TOKEN__`
 
