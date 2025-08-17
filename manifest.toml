@@ -90,7 +90,7 @@ ram.runtime = "70M"
     admin.show_tile = false
 
     [resources.apt]
-    packages = "libpq5, argon2, postgresql, pgloader"
+    packages = "argon2, postgresql, pgloader"
 
-        [resources.database]
+    [resources.database]
     type = "postgresql"
