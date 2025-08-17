@@ -32,7 +32,10 @@ _download_vaultwarden_from_docker() {
     chown -R $app:$app "$install_dir"
 }
 
-_db_migration() {
+sqlit-to-pg() {
+
+    ynh_print_info "Migrating to PostgreSQL database..."
+    
     pgloader config/bitwarden.load
 }
 

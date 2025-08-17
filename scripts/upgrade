@@ -12,6 +12,19 @@ ynh_script_progression "Stopping $app's systemd service..."
 ynh_systemctl --service=$app --action="stop" --log_path="systemd" --wait_until="Stopping Vaultwarden Server"
 
 #=================================================
+# MIGRATING DATABASE
+#=================================================
+
+# Check if using PostgreSQL
+# This migration should be done before the upgrade
+if psqlshow | grep -q "^| $db_name "; then
+	ynh_print_info "You already have a PostgreSQL database ..."
+else
+    # Migrate the database from SQLite3 to PostgreSQL
+    sqlit-to-pg	
+fi
+
+#=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 ynh_script_progression "Upgrading source files..."
