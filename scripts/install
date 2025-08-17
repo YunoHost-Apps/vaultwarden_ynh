@@ -60,7 +60,7 @@ ynh_config_add_fail2ban --logpath="/var/log/$app/$app.log" --failregex="^.*Usern
 #=================================================
 ynh_script_progression "Starting $app's systemd service..."
 
-ynh_systemctl --service=$app --action="start" --log_path="systemd"
+ynh_systemctl --service=$app --action="start"
 
 #=================================================
 # END OF SCRIPT

@@ -20,8 +20,6 @@ ynh_config_remove_systemd
 
 ynh_config_remove_nginx
 
-ynh_safe_rm "/$data_dir/config.json"
-
 #=================================================
 # END OF SCRIPT
 #=================================================
