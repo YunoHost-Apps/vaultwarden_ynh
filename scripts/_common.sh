@@ -34,6 +34,11 @@ _download_vaultwarden_from_docker() {
 
 sqlite3-to-postgresql() {
     ynh_print_info "Migrating SQLite3 to PostgreSQL database..."
-    pgloader ..config/bitwarden.load
+
+    tmpdir="$(mktemp -d)"
+    ynh_config_add --template="bitwarden.load" --destination="$tmpdir/commands.load"
+
+    pgloader $tmpdir/commands.load
+    ynh_safe_rm "$tmpdir/commands.load"
 }
 
