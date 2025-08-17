@@ -71,4 +71,7 @@ ram.runtime = "100M"
     admin.show_tile = false
 
     [resources.apt]
-    packages = "libpq5"
+    packages = "postgresql, libpq5"
+
+    [resources.database]
+    type = "postgresql"
