@@ -33,7 +33,7 @@ _download_vaultwarden_from_docker() {
 }
 
 sqlite3-to-postgresql() {
-    ynh_print_info "Migrating to PostgreSQL database..."
-    pgloader config/bitwarden.load
+    ynh_print_info "Migrating SQLite3 to PostgreSQL database..."
+    pgloader ..config/bitwarden.load
 }
 
