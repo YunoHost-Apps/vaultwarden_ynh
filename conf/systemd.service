@@ -1,15 +1,15 @@
 [Unit]
-Description=Vaultwarden Server (Rust Edition)
+Description=Vaultwarden: password manager
 Documentation=https://github.com/dani-garcia/vaultwarden
 After=network.target
 
 [Service]
 User=__APP__
 Group=__APP__
-WorkingDirectory=__INSTALL_DIR__/live/
-ReadWriteDirectories=__INSTALL_DIR__/live/ __DATA_DIR__/ /var/log/__APP__/
-EnvironmentFile=__INSTALL_DIR__/live/.env
-ExecStart=__INSTALL_DIR__/live/vaultwarden
+WorkingDirectory=__INSTALL_DIR__/
+ReadWriteDirectories=__INSTALL_DIR__/ __DATA_DIR__/ /var/log/__APP__/
+EnvironmentFile=__INSTALL_DIR__/.env
+ExecStart=__INSTALL_DIR__/vaultwarden
 StandardOutput=append:/var/log/__APP__/__APP__.log
 StandardError=inherit
 

@@ -1,0 +1,7 @@
+load database
+     from sqlite:///__DATA_DIR__/db.sqlite3 
+     into postgresql://__DB_USER__:__DB_PWD__@127.0.0.1:5432/__DB_NAME__
+     WITH data only, include no drop, reset sequences
+     EXCLUDING TABLE NAMES LIKE '__diesel_schema_migrations'
+     ALTER SCHEMA 'bitwarden' RENAME TO 'public'
+;
