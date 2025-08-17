@@ -63,6 +63,11 @@ ram.runtime = "70M"
     armhf.url = "https://github.com/czyt/vaultwarden-binary/releases/download/1.34.3-extracted/vaultwarden-linux-armv7-extracted.zip"
     armhf.sha256 = "62bfeeb9595479a3cb8d31522d42ae843df9137581562e5c30af3596f21b2464"
 
+    autoupdate.strategy = "latest_github_release"
+    autoupdate.asset.amd64 = "^vaultwarden-linux-amd64-extracted.zip"
+    autoupdate.asset.arm64 = "^vaultwarden-linux-arm64-extracted.zip"
+    autoupdate.asset.armhf = "^vaultwarden-linux-armv7-extracted.zip"
+
     [resources.system_user]
     allow_email = true
 
@@ -71,7 +76,6 @@ ram.runtime = "70M"
     [resources.data_dir]
 
     [resources.ports]
-    #main.default = 8083
 
     [resources.permissions]
     main.url = "/"
