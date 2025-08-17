@@ -68,7 +68,6 @@ ram.runtime = "100M"
     [resources.data_dir]
 
     [resources.ports]
-    rocket.default = 8095
 
     [resources.permissions]
     main.url = "/"
