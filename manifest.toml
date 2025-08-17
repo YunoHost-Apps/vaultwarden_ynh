@@ -13,7 +13,6 @@ maintainers = [ ]
 
 [upstream]
 license = "GPL-3.0-or-later"
-demo = "https://vault.bitwarden.com/#/register"
 admindoc = "https://github.com/dani-garcia/vaultwarden/wiki"
 userdoc = "https://help.bitwarden.com/"
 code = "https://github.com/dani-garcia/vaultwarden"
