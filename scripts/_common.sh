@@ -31,3 +31,8 @@ _download_vaultwarden_from_docker() {
     chmod -R o-rwx "$install_dir"
     chown -R $app:$app "$install_dir"
 }
+
+_db_migration() {
+    pgloader config/bitwarden.load
+}
+
