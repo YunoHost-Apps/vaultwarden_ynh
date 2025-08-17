@@ -1,5 +1,5 @@
 [Unit]
-Description=Vaultwarden Server (Rust Edition)
+Description=Vaultwarden: password manager
 Documentation=https://github.com/dani-garcia/vaultwarden
 After=network.target
 
