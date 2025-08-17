@@ -12,8 +12,8 @@ source /usr/share/yunohost/helpers
 #=================================================
 
 admin_mail=$(ynh_user_get_info --username=$admin --key=mail)
-#admin_token=$(ynh_string_random --length=48 | base64)
-admin_token=$(echo -n "$password" | argon2 "$(openssl rand -base64 32)" -e -id -k 65540 -t 3 -p 4)
+#admin_token=$(ynh_string_random --length=32 | base64)
+admin_token=$(echo -n "$password" | argon2 "$(ynh_string_random --length=32 | base64)" -e -id -k 65540 -t 3 -p 4)
 
 #=================================================
 # STORE SETTINGS FROM MANIFEST
@@ -34,7 +34,7 @@ ynh_setup_source --dest_dir="$install_dir"
 #=================================================
 ynh_script_progression "Adding $app's configuration..."
 
-ynh_config_add --template="vaultwarden.env" --destination="$install_dir/live/.env"
+ynh_config_add --template="vaultwarden.env" --destination="$install_dir/.env"
 
 #=================================================
 # SYSTEM CONFIGURATION

@@ -15,14 +15,14 @@ ynh_systemctl --service=$app --action="stop" --log_path="systemd"
 #=================================================
 ynh_script_progression "Upgrading source files..."
 
-ynh_setup_source --dest_dir="$install_dir" --full_replace --keep="live/.env"
+ynh_setup_source --dest_dir="$install_dir" --full_replace --keep=".env"
 
 #=================================================
 # UPDATE A CONFIG FILE
 #=================================================
 ynh_script_progression "Updating configuration..."
 
-ynh_config_add --template="vaultwarden.env" --destination="$install_dir/live/.env"
+ynh_config_add --template="vaultwarden.env" --destination="$install_dir/.env"
 
 # Fix SMTP configuration
 config_file=$data_dir/config.json
