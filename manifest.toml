@@ -71,6 +71,7 @@ ram.runtime = "100M"
     [resources.data_dir]
 
     [resources.ports]
+    main.default = 8083
 
     [resources.permissions]
     main.url = "/"
