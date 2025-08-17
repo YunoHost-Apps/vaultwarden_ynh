@@ -48,6 +48,18 @@ ram.runtime = "100M"
 
 [resources]
 
+    [resources.sources]
+
+    [resources.sources.main]
+    #https://github.com/czyt/vaultwarden-binary/
+    in_subdir = false
+    amd64.url = "https://github.com/czyt/vaultwarden-binary/releases/download/1.34.3-extracted/vaultwarden-linux-amd64-extracted.zip"
+    amd64.sha256 = "8b1804bc906e556ee46e82ae54ba6ae2158ffacb8248e0b724692eaeee61212e"
+    arm64.url = "https://github.com/czyt/vaultwarden-binary/releases/download/1.34.3-extracted/vaultwarden-linux-arm64-extracted.zip"
+    arm64.sha256 = "abea4e10053325bfda74738a7ab00960ba2aac03fc8c3ee4d6a145d98e6554b3"
+    armhf.url = "https://github.com/czyt/vaultwarden-binary/releases/download/1.34.3-extracted/vaultwarden-linux-armv7-extracted.zip"
+    armhf.sha256 = "62bfeeb9595479a3cb8d31522d42ae843df9137581562e5c30af3596f21b2464"
+
     [resources.system_user]
     allow_email = true
 
