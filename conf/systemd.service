@@ -6,10 +6,10 @@ After=network.target
 [Service]
 User=__APP__
 Group=__APP__
-WorkingDirectory=__INSTALL_DIR__/live/
-ReadWriteDirectories=__INSTALL_DIR__/live/ __DATA_DIR__/ /var/log/__APP__/
+WorkingDirectory=__INSTALL_DIR__/
+ReadWriteDirectories=__INSTALL_DIR__/ __DATA_DIR__/ /var/log/__APP__/
 EnvironmentFile=__INSTALL_DIR__/.env
-ExecStart=__INSTALL_DIR__/live/vaultwarden
+ExecStart=__INSTALL_DIR__/vaultwarden
 StandardOutput=append:/var/log/__APP__/__APP__.log
 StandardError=inherit
 
