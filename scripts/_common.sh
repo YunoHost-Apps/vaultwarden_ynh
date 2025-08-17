@@ -11,5 +11,5 @@ sqlite3-to-postgresql() {
     ynh_config_add --template="bitwarden.load" --destination="$tmpdir/"bitwarden.load"
 
     pgloader $tmpdir/"bitwarden.load
-    ynh_safe_rm "$tmpdir/"bitwarden.load"
+    ynh_safe_rm "$tmpdir/bitwarden.load"
 }
