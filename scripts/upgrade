@@ -13,6 +13,7 @@ ynh_systemctl --service=$app --action="stop"
 #=================================================
 # MIGRATING DATABASE
 #=================================================
+ynh_script_progression "Migrating database..."
 
 # Check if using PostgreSQL database exits
 if psql -lqt | cut -d \| -f 1 | grep -qw "$db_name"; then
