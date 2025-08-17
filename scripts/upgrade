@@ -21,7 +21,7 @@ if psqlshow | grep -q "^| $db_name "; then
 	ynh_print_info "You already have a PostgreSQL database ..."
 else
     # Migrate the database from SQLite3 to PostgreSQL
-    sqlit-to-pg	
+    sqlite3-to-postgresql
 fi
 
 #=================================================
