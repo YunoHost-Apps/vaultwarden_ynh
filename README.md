@@ -11,12 +11,16 @@ It shall NOT be edited by hand.
 Manage passwords and other sensitive informations
 
 [![App Demo](https://img.shields.io/badge/App_Demo-blue?style=for-the-badge)](https://vault.bitwarden.com/#/register)
-[![Version: 1.34.1~ynh1](https://img.shields.io/badge/Version-1.34.1~ynh1-rgba(0,150,0,1)?style=for-the-badge)](https://ci-apps.yunohost.org/ci/apps/vaultwarden/)
+[![Version: 1.34.3~ynh1](https://img.shields.io/badge/Version-1.34.3~ynh1-rgb(18,138,11)?style=for-the-badge)](https://ci-apps.yunohost.org/ci/apps/vaultwarden/)
 
 <div align="center">
 <a href="https://apps.yunohost.org/app/vaultwarden"><img height="100px" src="https://github.com/YunoHost/yunohost-artwork/raw/refs/heads/main/badges/neopossum-badges/badge_more_info_on_the_appstore.svg"/></a>
 <a href="https://github.com/YunoHost-Apps/vaultwarden_ynh/issues"><img height="100px" src="https://github.com/YunoHost/yunohost-artwork/raw/refs/heads/main/badges/neopossum-badges/badge_report_an_issue.svg"/></a>
 </div>
+
+
+## Screenshots
+![Screenshot of Vaultwarden](./doc/screenshots/screenshot.png)
 
 ## 📦 Developer info
 
