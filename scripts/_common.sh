@@ -41,4 +41,3 @@ sqlite3-to-postgresql() {
     pgloader $tmpdir/"bitwarden.load
     ynh_safe_rm "$tmpdir/"bitwarden.load"
 }
-
