@@ -14,7 +14,7 @@ ynh_systemctl --service=$app --action="stop"
 # MIGRATING DATABASE
 #=================================================
 
-# Check if using PostgreSQL
+# Check if using PostgreSQL database exits
 if psql -lqt | cut -d | -f 1 | grep -qw "$db_name"; then
 	ynh_print_info "You already have a PostgreSQL database..."
 else
