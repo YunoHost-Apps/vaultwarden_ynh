@@ -15,7 +15,7 @@ ynh_systemctl --service=$app --action="stop"
 #=================================================
 
 # Check if using PostgreSQL
-if psqlshow | grep -q "^| $db_name "; then
+if psql -lqt | cut -d | -f 1 | grep -qw "$db_name"; then
 	ynh_print_info "You already have a PostgreSQL database..."
 else
     # Migrate the database from SQLite3 to PostgreSQL
