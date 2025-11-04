@@ -45,6 +45,9 @@ ram.runtime = "100M"
     [install.admin]
     type = "user"
 
+    [install.password]
+    type = "password"
+
 [resources]
 
     [resources.system_user]
@@ -70,4 +73,4 @@ ram.runtime = "100M"
     admin.show_tile = false
 
     [resources.apt]
-    packages = "libpq5"
+    packages = "libpq5, argon2"
