@@ -89,7 +89,4 @@ ram.runtime = "70M"
     admin.show_tile = false
 
     [resources.apt]
-    packages = "argon2, postgresql, pgloader"
-
-    [resources.database]
-    type = "postgresql"
+    packages = "argon2"

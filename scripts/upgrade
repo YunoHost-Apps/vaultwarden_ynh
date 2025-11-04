@@ -11,19 +11,6 @@ ynh_script_progression "Stopping $app's systemd service..."
 ynh_systemctl --service=$app --action="stop"
 
 #=================================================
-# MIGRATING DATABASE
-#=================================================
-ynh_script_progression "Migrating database..."
-
-# Check if using PostgreSQL database exits
-if psql -lqt | cut -d \| -f 1 | grep -qw "$db_name"; then
-	ynh_print_info "You already have a PostgreSQL database..."
-else
-    # Migrate the database from SQLite3 to PostgreSQL
-    sqlite3-to-postgresql
-fi
-
-#=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 ynh_script_progression "Upgrading source files..."
