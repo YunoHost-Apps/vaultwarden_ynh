@@ -24,7 +24,7 @@ _download_vaultwarden_from_docker() {
     # Move files from the extract to the live directory
     ynh_safe_rm "$install_dir/live/"
     mkdir -p "$install_dir/live/"
-    mv -f "$install_dir/build/"{vaultwarden,web-vault} "$install_dir/live/"
+    mv "$install_dir/build/"{vaultwarden,web-vault} "$install_dir/live/"
     ynh_safe_rm "$install_dir/build"
 
     chmod 750 "$install_dir"

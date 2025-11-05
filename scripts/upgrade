@@ -9,7 +9,7 @@ source /usr/share/yunohost/helpers
 #=================================================
 ynh_script_progression "Stopping $app's systemd service..."
 
-ynh_systemctl --service=$app --action="stop" --log_path="systemd" --wait_until="Stopping Vaultwarden Server"
+ynh_systemctl --service=$app --action="stop" --log_path="systemd"
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE

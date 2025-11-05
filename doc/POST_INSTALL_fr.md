@@ -1,5 +1,1 @@
-L'interface d'administration est accessible à <https://__DOMAIN____PATH__/admin>
-
-Le jeton d'administration est : `__ADMIN_TOKEN__`
-
-Vous pourrez inviter des utilisateurs dans votre instance de Vaultwarden.
+L'interface d'administration est accessible à l'adresse <https://__DOMAIN____PATH__admin> avec le mot de passe choisi lors de l'installation.
