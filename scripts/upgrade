@@ -16,7 +16,7 @@ ynh_systemctl --service=$app --action="stop" --log_path="systemd"
 #=================================================
 
 # This migration should be done before the upgrade
-if psql -lqt | cut -d \| -f 1 | grep -qw "$db_name"; then
+if ynh_app_upgrading_from_version_before 1.34.3~ynh1; then
 	ynh_print_info "You already have a PostgreSQL database ..."
 else
     # Migrate the database from SQLite3 to PostgreSQL
