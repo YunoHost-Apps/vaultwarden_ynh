@@ -22,8 +22,7 @@ yunohost = ">= 12.1.17"
 helpers_version = "2.1"
 architectures = "all"
 multi_instance = true
-
-ldap = false
+ldap = true
 sso = false
 
 disk = "50M"
@@ -44,6 +43,12 @@ ram.runtime = "100M"
 
     [install.admin]
     type = "user"
+
+    [install.ldap_enabled]
+    ask.en = "Would you like to enable LDAP integration? (amd64 architecture only!!)"
+    help.en = "This will invite users added to your server to join this vaultwarden instance via Email"
+    type = "boolean"
+    default = true
 
     [install.password]
     type = "password"

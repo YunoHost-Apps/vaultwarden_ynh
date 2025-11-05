@@ -14,6 +14,10 @@ ynh_script_progression "Stopping $app's systemd service..."
 
 ynh_systemctl --service=$app --action="stop" --log_path="systemd"
 
+if [ $ldap_enabled -eq 1 ]; then
+  ynh_systemctl --service=${app}_ldap --action="stop" --log_path="systemd"
+fi
+
 #=================================================
 # MODIFY URL IN NGINX CONF
 #=================================================
@@ -30,6 +34,13 @@ ynh_config_add --template="vaultwarden.env" --destination="$install_dir/live/.en
 
 #ynh_backup_if_checksum_is_different "$install_dir/live/.env"
 
+if [ $ldap_enabled -eq 1 ]; then
+  ynh_config_add --template="ldap_config.toml" --destination="$install_dir/live/ldap/config.toml"
+
+  #chmod 400 "$install_dir/live/ldap/config.toml"
+  #chown $app:$app "$install_dir/live/ldap/config.toml"
+fi
+
 #ynh_replace --match="DOMAIN=https://$old_domain$old_path" --replace="DOMAIN=https://$new_domain$new_path" --file="$install_dir/live/.env"
 
 # Recalculate and store the checksum of the file for the next upgrade.
@@ -41,6 +52,10 @@ ynh_config_add --template="vaultwarden.env" --destination="$install_dir/live/.en
 ynh_script_progression "Starting $app's systemd service..."
 
 ynh_systemctl --service=$app --action="start" --log_path="systemd"
+
+if [ $ldap_enabled -eq 1 ]; then
+  ynh_systemctl --service=${app}_ldap --action="start" --log_path="systemd"
+fi
 
 #=================================================
 # END OF SCRIPT

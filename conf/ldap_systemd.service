@@ -1,0 +1,29 @@
+[Unit]
+Description=LDAP user invites for vaultwarden
+Documentation=https://github.com/ViViDboarder/vaultwarden_ldap
+After=network.target
+
+[Service]
+# The user/group vaultwarden is run under. the working directory (see below) should allow write and read access to this user/group
+User=__APP__
+Group=__APP__
+WorkingDirectory=__INSTALL_DIR__/live/ldap/
+ReadWriteDirectories=__INSTALL_DIR__/live/ldap/
+ExecStart=__INSTALL_DIR__/live/ldap/vaultwarden_ldap
+Restart=always
+
+# Set reasonable connection and process limits
+LimitNOFILE=1048576
+LimitNPROC=64
+
+# Sandboxing options to harden security
+# Depending on specificities of your service/app, you may need to tweak these
+# .. but this should be a good baseline
+# Details for these options: https://www.freedesktop.org/software/systemd/man/systemd.exec.html
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectHome=false
+ProtectSystem=strict
+
+[Install]
+WantedBy=multi-user.target
