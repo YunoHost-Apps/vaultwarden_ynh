@@ -7,7 +7,7 @@ name = "Vaultwarden"
 description.en = "Manage passwords and other sensitive informations"
 description.fr = "Gérez les mots de passe et autres informations sensibles"
 
-version = "1.34.3~ynh1"
+version = "1.34.3~ynh2"
 
 maintainers = [ ]
 
@@ -44,6 +44,9 @@ ram.runtime = "100M"
 
     [install.admin]
     type = "user"
+
+    [install.password]
+    type = "password"
 
 [resources]
 
