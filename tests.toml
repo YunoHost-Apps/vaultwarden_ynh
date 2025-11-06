@@ -4,12 +4,8 @@ test_format = 1.0
 
 [default]
 
-    preinstall = """
-    sudo apt-get update >/dev/null && sudo apt-get install rsync -y >/dev/null
-    """
-
     # -------------------------------
     # Commits to test upgrade from
     # -------------------------------
 
-    #test_upgrade_from.8899759a3264b9200920cf5f546fc519297b78ac.name = "Upgrade from 1.28.1~ynh1"
+    test_upgrade_from.d2a91e14c0c1537f286c33d8d6a05c0eb4ebdbc3.name = "Upgrade from 1.34.3~ynh1"
