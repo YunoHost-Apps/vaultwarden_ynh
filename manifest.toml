@@ -4,10 +4,10 @@ packaging_format = 2
 
 id = "vaultwarden"
 name = "Vaultwarden"
-description.en = "Manage passwords and other sensitive informations"
-description.fr = "Gérez les mots de passe et autres informations sensibles"
+description.en = "Encrypted end-to-end password manager"
+description.fr = "Gestionnaire de mots de passe chiffré de bout en bout"
 
-version = "1.34.3~ynh3"
+version = "1.34.3~ynh4"
 
 maintainers = [ ]
 
@@ -27,8 +27,8 @@ ldap = false
 sso = false
 
 disk = "50M"
-ram.build = "120M"
-ram.runtime = "100M"
+ram.build = "80M"
+ram.runtime = "70M"
 
 [install]
     [install.domain]
@@ -50,6 +50,23 @@ ram.runtime = "100M"
 
 [resources]
 
+    [resources.sources]
+
+    [resources.sources.main]
+    #https://github.com/czyt/vaultwarden-binary/
+    in_subdir = false
+    amd64.url = "https://github.com/czyt/vaultwarden-binary/releases/download/1.34.3-extracted/vaultwarden-linux-amd64-extracted.zip"
+    amd64.sha256 = "8b1804bc906e556ee46e82ae54ba6ae2158ffacb8248e0b724692eaeee61212e"
+    arm64.url = "https://github.com/czyt/vaultwarden-binary/releases/download/1.34.3-extracted/vaultwarden-linux-arm64-extracted.zip"
+    arm64.sha256 = "abea4e10053325bfda74738a7ab00960ba2aac03fc8c3ee4d6a145d98e6554b3"
+    armhf.url = "https://github.com/czyt/vaultwarden-binary/releases/download/1.34.3-extracted/vaultwarden-linux-armv7-extracted.zip"
+    armhf.sha256 = "62bfeeb9595479a3cb8d31522d42ae843df9137581562e5c30af3596f21b2464"
+
+    autoupdate.strategy = "latest_github_release"
+    autoupdate.asset.amd64 = "^vaultwarden-linux-amd64-extracted.zip"
+    autoupdate.asset.arm64 = "^vaultwarden-linux-arm64-extracted.zip"
+    autoupdate.asset.armhf = "^vaultwarden-linux-armv7-extracted.zip"
+
     [resources.system_user]
     allow_email = true
 
@@ -58,7 +75,6 @@ ram.runtime = "100M"
     [resources.data_dir]
 
     [resources.ports]
-    rocket.default = 8095
 
     [resources.permissions]
     main.url = "/"
@@ -73,4 +89,4 @@ ram.runtime = "100M"
     admin.show_tile = false
 
     [resources.apt]
-    packages = "libpq5, argon2"
+    packages = "argon2"
