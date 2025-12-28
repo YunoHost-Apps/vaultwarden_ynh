@@ -8,7 +8,7 @@ It shall NOT be edited by hand.
   Vaultwarden, packaged for YunoHost
 </h1>
 
-Manage passwords and other sensitive informations
+Encrypted end-to-end password manager
 
 [![Version: 1.35.0~ynh1](https://img.shields.io/badge/Version-1.35.0~ynh1-rgb(18,138,11)?style=for-the-badge)](https://ci-apps.yunohost.org/ci/apps/vaultwarden/)
 

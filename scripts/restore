@@ -27,7 +27,7 @@ ynh_restore "/etc/nginx/conf.d/$domain.d/$app.conf"
 ynh_restore "/etc/systemd/system/$app.service"
 systemctl enable $app.service --quiet
 
-yunohost service add $app --description="Passwords manager" --log="/var/log/$app/$app.log"
+yunohost service add $app --description="Password manager" --log="/var/log/$app/$app.log"
 
 mkdir -p "/var/log/$app"
 touch "/var/log/$app/$app.log"
@@ -44,7 +44,7 @@ ynh_systemctl --action=restart --service=fail2ban
 #=================================================
 ynh_script_progression "Reloading NGINX web server and $app's service..."
 
-ynh_systemctl --service=$app --action="start" --log_path="systemd" --length=100
+ynh_systemctl --service=$app --action="start"
 
 ynh_systemctl --service=nginx --action=reload
 

@@ -34,7 +34,7 @@ chown -R $app:$app "$install_dir"
 #=================================================
 ynh_script_progression "Adding $app's configuration..."
 
-ynh_config_add --template="vaultwarden.env" --destination="$install_dir/live/.env"
+ynh_config_add --template="vaultwarden.env" --destination="$install_dir/.env"
 
 #=================================================
 # SYSTEM CONFIGURATION
@@ -45,6 +45,8 @@ ynh_config_add_nginx
 
 ynh_config_add_systemd
 
+yunohost service add $app --description="Password manager" --log="/var/log/$app/$app.log"
+
 mkdir -p "/var/log/$app"
 touch "/var/log/$app/$app.log"
 chown -R $app:$app "/var/log/$app"
@@ -53,14 +55,12 @@ ynh_config_add_logrotate
 
 ynh_config_add_fail2ban --logpath="/var/log/$app/$app.log" --failregex="^.*Username or password is incorrect\. Try again\. IP: <ADDR>\. Username:.*$"
 
-yunohost service add $app --description="Passwords manager" --log="/var/log/$app/$app.log"
-
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================
 ynh_script_progression "Starting $app's systemd service..."
 
-ynh_systemctl --service=$app --action="start" --log_path="systemd"
+ynh_systemctl --service=$app --action="start"
 
 #=================================================
 # END OF SCRIPT
