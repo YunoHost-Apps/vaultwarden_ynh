@@ -1,7 +1,5 @@
 #!/bin/bash
 
-source _common.sh
-source ynh_docker_image_extract
 source /usr/share/yunohost/helpers
 
 #=================================================
@@ -16,7 +14,17 @@ ynh_systemctl --service=$app --action="stop" --log_path="systemd"
 #=================================================
 ynh_script_progression "Upgrading source files..."
 
-_download_vaultwarden_from_docker
+ynh_setup_source --dest_dir="$install_dir/build" --full_replace
+
+# Move files from the extract to the live directory
+ynh_safe_rm "$install_dir/live/"
+mkdir -p "$install_dir/live/"
+mv "$install_dir/build/"{vaultwarden,web-vault} "$install_dir/live/"
+ynh_safe_rm "$install_dir/build"
+
+chmod 750 "$install_dir"
+chmod -R o-rwx "$install_dir"
+chown -R $app:$app "$install_dir"
 
 #=================================================
 # UPDATE A CONFIG FILE

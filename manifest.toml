@@ -50,6 +50,21 @@ ram.runtime = "100M"
 
 [resources]
 
+
+    [resources.sources.main]
+    format = "docker"
+    extract = true
+    prefetch = false
+    amd64.url = "vaultwarden/server:__YNH_APP_UPSTREAM_VERSION__-alpine"
+    amd64.sha256sum = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    arm64.url = "vaultwarden/server:__YNH_APP_UPSTREAM_VERSION__-alpine"
+    arm64.sha256sum = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    i386.url = "vaultwarden/server:__YNH_APP_UPSTREAM_VERSION__-alpine"
+    i386.sha256sum = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    armhf.url = "vaultwarden/server:__YNH_APP_UPSTREAM_VERSION__-alpine"
+    amrhf.sha256sum = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    amrhf.platform = "linux/arm/v7"
+
     [resources.system_user]
     allow_email = true
 

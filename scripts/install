@@ -1,16 +1,6 @@
 #!/bin/bash
 
-#=================================================
-# IMPORT GENERIC HELPERS
-#=================================================
-
-source _common.sh
-source ynh_docker_image_extract
 source /usr/share/yunohost/helpers
-
-#=================================================
-# RETRIEVE ARGUMENTS FROM THE MANIFEST
-#=================================================
 
 admin_mail=$(ynh_user_get_info --username=$admin --key=mail)
 admin_token=$(echo -n "$password" | argon2 "$(ynh_string_random --length=32 | base64)" -e -id -k 65540 -t 3 -p 4)
@@ -27,7 +17,17 @@ ynh_app_setting_set --key=admin_token --value=$admin_token
 #=================================================
 ynh_script_progression "Setting up source files..."
 
-_download_vaultwarden_from_docker
+ynh_setup_source --dest_dir="$install_dir/build" --full_replace
+
+# Move files from the extract to the live directory
+ynh_safe_rm "$install_dir/live/"
+mkdir -p "$install_dir/live/"
+mv "$install_dir/build/"{vaultwarden,web-vault} "$install_dir/live/"
+ynh_safe_rm "$install_dir/build"
+
+chmod 750 "$install_dir"
+chmod -R o-rwx "$install_dir"
+chown -R $app:$app "$install_dir"
 
 #=================================================
 # ADD A CONFIGURATION FILE
