@@ -7,7 +7,7 @@ name = "Vaultwarden"
 description.en = "Encrypted end-to-end password manager"
 description.fr = "Gestionnaire de mots de passe chiffré de bout en bout"
 
-version = "1.34.3~ynh4"
+version = "1.35.0~ynh1"
 
 maintainers = [ ]
 
