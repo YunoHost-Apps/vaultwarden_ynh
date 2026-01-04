@@ -63,6 +63,7 @@ ram.runtime = "70M"
     armhf.sha256 = "0e88a009afbd24bd503e2b2d63ff1b23cf96daa6c9c0b7d8b1e8404f050c9d18"
 
     autoupdate.strategy = "latest_github_release"
+    autoupdate.upstream = "https://github.com/czyt/vaultwarden-binary"
     autoupdate.asset.amd64 = "^vaultwarden-linux-amd64-extracted.zip"
     autoupdate.asset.arm64 = "^vaultwarden-linux-arm64-extracted.zip"
     autoupdate.asset.armhf = "^vaultwarden-linux-armv7-extracted.zip"
