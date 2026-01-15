@@ -67,7 +67,6 @@ ram.runtime = "70M"
     autoupdate.asset.amd64 = "^vaultwarden-linux-amd64-extracted.zip"
     autoupdate.asset.arm64 = "^vaultwarden-linux-arm64-extracted.zip"
     autoupdate.asset.armhf = "^vaultwarden-linux-armv7-extracted.zip"
-    autoupdate.upstream = "https://github.com/czyt/vaultwarden-binary"
     autoupdate.version_regex="(\\d+\\.\\d+\\.\\d+)-extracted"
 
     [resources.system_user]
