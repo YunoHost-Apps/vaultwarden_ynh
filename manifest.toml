@@ -7,7 +7,7 @@ name = "Vaultwarden"
 description.en = "Encrypted end-to-end password manager"
 description.fr = "Gestionnaire de mots de passe chiffré de bout en bout"
 
-version = "1.35.6~ynh1"
+version = "1.35.7~ynh1"
 
 maintainers = [ ]
 
@@ -18,7 +18,7 @@ userdoc = "https://help.bitwarden.com/"
 code = "https://github.com/dani-garcia/vaultwarden"
 
 [integration]
-yunohost = ">= 12.1.38"
+yunohost = ">= 12.1.39"
 helpers_version = "2.1"
 architectures = ["amd64", "arm64", "armhf"]
 multi_instance = true
@@ -55,12 +55,12 @@ ram.runtime = "70M"
     [resources.sources.main]
     #https://github.com/czyt/vaultwarden-binary/
     in_subdir = false
-    amd64.url = "https://github.com/czyt/vaultwarden-binary/releases/download/1.35.6-extracted/vaultwarden-linux-amd64-extracted.zip"
-    amd64.sha256 = "6a0ef5e69dc7dfa21a17dbf2a88b0cb23626f92e43de1b86700fe5cbde2d83e0"
-    arm64.url = "https://github.com/czyt/vaultwarden-binary/releases/download/1.35.6-extracted/vaultwarden-linux-arm64-extracted.zip"
-    arm64.sha256 = "0eccc9431dd43508143149360ac08f41ee7231bf8f3f74bc31d1d3fdba7e67ad"
-    armhf.url = "https://github.com/czyt/vaultwarden-binary/releases/download/1.35.6-extracted/vaultwarden-linux-armv7-extracted.zip"
-    armhf.sha256 = "738adb3ddce9cf0a1156b3cddac8fcfa908a64539d143012ebc7b6762bc48ebb"
+    amd64.url = "https://github.com/czyt/vaultwarden-binary/releases/download/1.35.7-extracted/vaultwarden-linux-amd64-extracted.zip"
+    amd64.sha256 = "844353a47c9330297ecadd0999f482c76503543e88e5c37d27192f377258ba47"
+    arm64.url = "https://github.com/czyt/vaultwarden-binary/releases/download/1.35.7-extracted/vaultwarden-linux-arm64-extracted.zip"
+    arm64.sha256 = "48a987823a0154cd75ae68e7a89043d67b977774aca18502730b4a7d4dcbafd3"
+    armhf.url = "https://github.com/czyt/vaultwarden-binary/releases/download/1.35.7-extracted/vaultwarden-linux-armv7-extracted.zip"
+    armhf.sha256 = "2667b5fe3cba40057136e520c9a60f95baeb62d12e41748bd19506ab24463472"
 
     autoupdate.strategy = "latest_github_release"
     autoupdate.upstream = "https://github.com/czyt/vaultwarden-binary"
