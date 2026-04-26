@@ -7,7 +7,7 @@ name = "Vaultwarden"
 description.en = "Encrypted end-to-end password manager"
 description.fr = "Gestionnaire de mots de passe chiffré de bout en bout"
 
-version = "1.35.7~ynh1"
+version = "1.35.8~ynh1"
 
 maintainers = [ ]
 
@@ -55,12 +55,12 @@ ram.runtime = "70M"
     [resources.sources.main]
     #https://github.com/czyt/vaultwarden-binary/
     in_subdir = false
-    amd64.url = "https://github.com/czyt/vaultwarden-binary/releases/download/1.35.7-extracted/vaultwarden-linux-amd64-extracted.zip"
-    amd64.sha256 = "844353a47c9330297ecadd0999f482c76503543e88e5c37d27192f377258ba47"
-    arm64.url = "https://github.com/czyt/vaultwarden-binary/releases/download/1.35.7-extracted/vaultwarden-linux-arm64-extracted.zip"
-    arm64.sha256 = "48a987823a0154cd75ae68e7a89043d67b977774aca18502730b4a7d4dcbafd3"
-    armhf.url = "https://github.com/czyt/vaultwarden-binary/releases/download/1.35.7-extracted/vaultwarden-linux-armv7-extracted.zip"
-    armhf.sha256 = "2667b5fe3cba40057136e520c9a60f95baeb62d12e41748bd19506ab24463472"
+    amd64.url = "https://github.com/czyt/vaultwarden-binary/releases/download/1.35.8-extracted/vaultwarden-linux-amd64-extracted.zip"
+    amd64.sha256 = "5ab08bbacafeb9594a870c4a25ff482415947edea380e6cfbf4a83b09f5fe7d0"
+    arm64.url = "https://github.com/czyt/vaultwarden-binary/releases/download/1.35.8-extracted/vaultwarden-linux-arm64-extracted.zip"
+    arm64.sha256 = "b217fd5769494021aa9cba4d3f899d2217bceaf5a1e82f143d323b52219c6cc8"
+    armhf.url = "https://github.com/czyt/vaultwarden-binary/releases/download/1.35.8-extracted/vaultwarden-linux-armv7-extracted.zip"
+    armhf.sha256 = "c290120a3e437a89b48bc74d2cfd41daeee754c569e3fc2d000dbe07feef6ebc"
 
     autoupdate.strategy = "latest_github_release"
     autoupdate.upstream = "https://github.com/czyt/vaultwarden-binary"
