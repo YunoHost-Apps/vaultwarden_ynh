@@ -31,6 +31,7 @@ ram.build = "80M"
 ram.runtime = "70M"
 
 [install]
+
     [install.domain]
     type = "domain"
 
