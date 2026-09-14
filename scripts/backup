@@ -34,6 +34,13 @@ ynh_backup "/etc/fail2ban/jail.d/$app.conf"
 ynh_backup "/etc/fail2ban/filter.d/$app.conf"
 
 #=================================================
+# BACKUP THE POSTGRESQL DATABASE
+#=================================================
+ynh_print_info "Backing up the PostgreSQL database..."
+
+ynh_psql_dump_db > db.sql
+
+#=================================================
 # END OF SCRIPT
 #=================================================
 
