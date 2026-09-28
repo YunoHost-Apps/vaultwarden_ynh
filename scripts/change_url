@@ -18,7 +18,7 @@ ynh_systemctl --service=$app --action="stop"
 # MODIFY URL IN NGINX CONF
 #=================================================
 
-if [ "$sso_enabled" = "true" ]; then
+if [ "$sso_enabled" = "1" ]; then
     setup_dex
 fi
 
