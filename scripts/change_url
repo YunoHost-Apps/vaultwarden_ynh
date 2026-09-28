@@ -16,9 +16,18 @@ ynh_systemctl --service=$app --action="stop"
 #=================================================
 # MODIFY URL IN NGINX CONF
 #=================================================
+
+if [ -n "$(ynh_app_setting_get --key=dex)" ]; then
+    ynh_script_progression "Update Dex to change the redirect URL..."
+	setup_dex
+fi
+
+
 ynh_script_progression "Updating NGINX web server configuration..."
 
 ynh_config_change_url_nginx
+
+
 
 #=================================================
 # MODIFY A CONFIG FILE
