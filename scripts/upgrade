@@ -1,6 +1,13 @@
 #!/bin/bash
 
+source _common.sh
 source /usr/share/yunohost/helpers
+
+if ynh_app_upgrading_from_version_before 1.37.3~ynh2; then
+	sso_enabled=false
+	dex_domain_path=""
+	oidc_secret=""
+fi
 
 #=================================================
 # STOP SYSTEMD SERVICE
@@ -17,6 +24,14 @@ ynh_script_progression "Upgrading source files..."
 ynh_setup_source --dest_dir="$install_dir" --full_replace --keep=".env"
 
 chmod +x $install_dir/vaultwarden
+
+#=================================================
+# SETUP DEX FOR OIDC
+#=================================================
+
+if [ "$sso_enabled" = "1" ]; then
+    setup_dex
+fi
 
 #=================================================
 # UPDATE A CONFIG FILE

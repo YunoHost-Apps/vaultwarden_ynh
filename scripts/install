@@ -4,7 +4,19 @@
 # IMPORT GENERIC HELPERS
 #=================================================
 
+source _common.sh
 source /usr/share/yunohost/helpers
+
+#=================================================
+# SETUP DEX FOR OIDC
+#=================================================
+
+dex_domain_path=""
+oidc_secret=""
+
+if [ "$sso_enabled" = "1" ]; then
+    setup_dex
+fi
 
 #=================================================
 # RETRIEVE ARGUMENTS FROM THE MANIFEST
