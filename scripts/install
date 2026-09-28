@@ -11,12 +11,11 @@ source /usr/share/yunohost/helpers
 # SETUP DEX FOR OIDC
 #=================================================
 
-sso_enabled=false
 dex_domain_path=""
 oidc_secret=""
 
-if [ -n "$(ynh_app_setting_get --key=dex)" ]; then
-	setup_dex
+if [ "$sso_enabled" = "true" ]; then
+    setup_dex
 fi
 
 #=================================================
