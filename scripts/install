@@ -4,7 +4,16 @@
 # IMPORT GENERIC HELPERS
 #=================================================
 
+source _common.sh
 source /usr/share/yunohost/helpers
+
+#=================================================
+# SETUP DEX FOR OIDC
+#=================================================
+
+if [ -n "$(ynh_app_setting_get --key=dex)" ]; then
+	setup_dex
+fi
 
 #=================================================
 # RETRIEVE ARGUMENTS FROM THE MANIFEST
