@@ -54,8 +54,8 @@ ram.runtime = "70M"
     filter = "match(id, '^(dex)(__[0-9+])?$')"
     ask.en = "(Optional) Select the Dex app that will handle authentication."
     ask.fr = "(Optionnel) Sélectionnez l'app Dex qui gérera l'authentification."
-    help.en = "You need to have at least one instance of Dex installed beforehand on your server."
-    help.fr = "Vous devez avoir au moins une instance de Dex préalablement installée sur votre serveur."
+    help.en = "You need to have at least one instance of Dex installed beforehand on your server. You will need to remove a security in dex to use it with vaultwarden"
+    help.fr = "Vous devez avoir au moins une instance de Dex préalablement installée sur votre serveur. Il faudra retirer une sécurité à dex pour l'utiliser avec vaultwarden"
     optional = true
 
 [resources]
