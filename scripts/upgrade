@@ -1,5 +1,6 @@
 #!/bin/bash
 
+source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
@@ -17,6 +18,14 @@ ynh_script_progression "Upgrading source files..."
 ynh_setup_source --dest_dir="$install_dir" --full_replace --keep=".env"
 
 chmod +x $install_dir/vaultwarden
+
+#=================================================
+# SETUP DEX FOR OIDC
+#=================================================
+
+if [ -n "$(ynh_app_setting_get --key=dex)" ]; then
+	setup_dex
+fi
 
 #=================================================
 # UPDATE A CONFIG FILE
