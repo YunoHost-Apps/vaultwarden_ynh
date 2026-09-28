@@ -30,7 +30,7 @@ setup_dex() {
     dex_install_dir="$(ynh_app_setting_get --app $dex --key install_dir)"
     dex_domain="$(ynh_app_setting_get --app $dex --key domain)"
     dex_path="$(ynh_app_setting_get --app $dex --key path)"
-    oidc_callback="https://$domain${path%/}/api/v1.0/callback/"
+    oidc_callback="https://$domain${path%/}/identity/connect/oidc-signin"
 
     # Create Dex URIs
     dex_domain_path="${dex_domain}${dex_path}"
