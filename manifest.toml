@@ -53,8 +53,6 @@ ram.runtime = "70M"
     type = "boolean"
     ask.en = "Use Dex to handle authentication"
     ask.fr = "Utiliser Dex pour gérer l'authentification"
-    yes = true
-    no = false
     
     [install.dex]
     type = "app"
