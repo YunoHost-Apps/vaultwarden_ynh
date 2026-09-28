@@ -29,7 +29,7 @@ chmod +x $install_dir/vaultwarden
 # SETUP DEX FOR OIDC
 #=================================================
 
-if [ "$sso_enabled" = "true" ]; then
+if [ "$sso_enabled" = "1" ]; then
     setup_dex
 fi
 
