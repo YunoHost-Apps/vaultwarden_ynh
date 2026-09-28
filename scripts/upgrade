@@ -29,8 +29,8 @@ chmod +x $install_dir/vaultwarden
 # SETUP DEX FOR OIDC
 #=================================================
 
-if [ -n "$(ynh_app_setting_get --key=dex)" ]; then
-	setup_dex
+if [ "$sso_enabled" = "true" ]; then
+    setup_dex
 fi
 
 #=================================================
