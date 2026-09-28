@@ -23,8 +23,8 @@ chown -R "$app:$app" "$data_dir"
 # RESTORE THE SETUP DEX FOR OIDC
 #=================================================
 
-if [ -n "$(ynh_app_setting_get --key=dex)" ]; then
-	setup_dex
+if [ "$sso_enabled" = "true" ]; then
+    setup_dex
 fi
 
 #=================================================
