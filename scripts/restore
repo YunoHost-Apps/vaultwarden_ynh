@@ -23,7 +23,7 @@ chown -R "$app:$app" "$data_dir"
 # RESTORE THE SETUP DEX FOR OIDC
 #=================================================
 
-if [ "$sso_enabled" = "true" ]; then
+if [ "$sso_enabled" = "1" ]; then
     setup_dex
 fi
 
