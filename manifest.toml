@@ -49,6 +49,11 @@ ram.runtime = "70M"
     [install.password]
     type = "password"
 
+    [install.sso_enabled]
+    type = "boolean"
+    ask.en = "Use Dex to handle authentication"
+    ask.fr = "Utiliser Dex pour gérer l'authentification"
+    
     [install.dex]
     type = "app"
     filter = "match(id, '^(dex)(__[0-9+])?$')"
@@ -57,6 +62,7 @@ ram.runtime = "70M"
     help.en = "You need to have at least one instance of Dex installed beforehand on your server. You will need to disable a Dex's security feature to use it with vaultwarden"
     help.fr = "Vous devez avoir au moins une instance de Dex préalablement installée sur votre serveur. Il faudra désactiver une sécurité de Dex pour l'utiliser avec vaultwarden"
     optional = true
+    visible = "sso_enabled"
 
 [resources]
 
