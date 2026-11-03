@@ -71,12 +71,12 @@ ram.runtime = "70M"
     [resources.sources.main]
     #https://github.com/czyt/vaultwarden-binary/
     in_subdir = false
-    amd64.url = "https://github.com/czyt/vaultwarden-binary/releases/download/1.37.3-extracted/vaultwarden-linux-amd64-extracted.zip"
-    amd64.sha256 = "818731be0514254a194b5a367acd6add39ed41a39bc0d590982aec1901d46a05"
-    arm64.url = "https://github.com/czyt/vaultwarden-binary/releases/download/1.37.3-extracted/vaultwarden-linux-arm64-extracted.zip"
-    arm64.sha256 = "46bfcd49af8a04d6828249d191dec92755918be408443225ed98212cf4a12dfc"
-    armhf.url = "https://github.com/czyt/vaultwarden-binary/releases/download/1.37.3-extracted/vaultwarden-linux-armv7-extracted.zip"
-    armhf.sha256 = "805620c98bccd5a7bef232a080e09eefca1ced39acd675611773c2f55c34c972"
+    amd64.url = "https://github.com/czyt/vaultwarden-binary/releases/download/1.37.5-extracted/vaultwarden-linux-amd64-extracted.zip"
+    amd64.sha256 = "f60815f717ddf28c6ac12e4463d3474a3467504113170a086165fdece62e3b7a"
+    arm64.url = "https://github.com/czyt/vaultwarden-binary/releases/download/1.37.5-extracted/vaultwarden-linux-arm64-extracted.zip"
+    arm64.sha256 = "e50b8f2850bbc5614f2d3d50c8521ed2d01ef2d7ab777cfb0319c6bfbeb92456"
+    armhf.url = "https://github.com/czyt/vaultwarden-binary/releases/download/1.37.5-extracted/vaultwarden-linux-armv7-extracted.zip"
+    armhf.sha256 = "169ce80a11aa6c452cae6a2e8e2721a0e5869bbad21da9cbb7bd1cd59586d33b"
 
     autoupdate.strategy = "latest_github_release"
     autoupdate.upstream = "https://github.com/czyt/vaultwarden-binary"
