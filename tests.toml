@@ -4,6 +4,17 @@ test_format = 1.0
 
 [default]
 
+
+
+    preinstall = """
+    sudo yunohost tools update apps
+    sudo yunohost domain add dex.domain.tld
+    sudo yunohost app install dex -f -a "domain=dex.domain.tld&path=/&oidc_name=&oidc_secret=&oidc_callback"
+
+    echo "End of preinstall"
+    """
+    args.dex = "dex"
+    
     # -------------------------------
     # Commits to test upgrade from
     # -------------------------------

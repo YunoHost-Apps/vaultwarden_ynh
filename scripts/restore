@@ -1,5 +1,6 @@
 #!/bin/bash
 
+source ../settings/scripts/_common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
@@ -16,6 +17,15 @@ ynh_script_progression "Restoring the data directory..."
 
 ynh_restore "$data_dir"
 chown -R "$app:$app" "$data_dir"
+
+
+#=================================================
+# RESTORE THE SETUP DEX FOR OIDC
+#=================================================
+
+if [ "$sso_enabled" = "1" ]; then
+    setup_dex
+fi
 
 #=================================================
 # RESTORE SYSTEM CONFIGURATIONS
