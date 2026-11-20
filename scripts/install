@@ -12,6 +12,7 @@ source /usr/share/yunohost/helpers
 
 admin_mail=$(ynh_user_get_info --username=$admin --key=mail)
 admin_token=$(echo -n "$password" | argon2 "$(ynh_string_random --length=32 | base64)" -e -id -k 65540 -t 3 -p 4)
+main_domain=$(cat /etc/yunohost/current_host)
 
 #=================================================
 # STORE SETTINGS FROM MANIFEST
